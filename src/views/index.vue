@@ -1,0 +1,141 @@
+<template>
+	<div id="grid1">
+		<van-nav-bar title="首页" id="bar"/>
+		<div id="row2">
+			<van-progress :percentage="(5/24)*100" pivot-text="第5/24周" stroke-width="100%" id="progr" color="#2c2c2c"/>
+		</div>
+		<van-row align="bottom" id="row">
+			<van-grid :column-num="2" id="g" :border="false" :clickable="true">
+			  <van-grid-item v-on:click="login">
+				<van-image
+					src="/src/assets/login.png" 
+					class="img"
+				/>
+				<p class="text">登录</p>
+			  </van-grid-item>
+			  <van-grid-item v-on:click="logout">
+				<van-image
+					src="/src/assets/logout.png" 
+					class="img"
+				/>
+				<p class="text">退出登录</p>
+			  </van-grid-item>
+			  <van-grid-item v-on:click="getCourses">
+				<van-image
+					src="/src/assets/table.png" 
+					class="img"
+				/>
+				<p class="text">课程表</p>
+			  </van-grid-item>
+			  <van-grid-item  v-on:click="getExam">
+				  <van-image
+					src="/src/assets/exam.png" 
+					class="img"
+				  />
+				  <p class="text">考试</p>
+			  </van-grid-item  >
+			  <van-grid-item>
+				  <van-image
+					src="/src/assets/score.png" 
+					class="img"
+				  />
+				  <p class="text">成绩</p>
+			  </van-grid-item>
+			  <van-grid-item>
+				  <van-image
+					src="/src/assets/date.png" 
+					class="img"
+				  />
+				  <p class="text">校历</p>
+			  </van-grid-item>
+			</van-grid>
+		</van-row>
+	</div>
+</template>
+
+<script>
+	
+	import {getExam} from "/src/api/getExam"
+	import {captcha} from "/src/api/getCaptcha"
+	import {logout} from "/src/api/logout"
+import { Toast } from "vant"
+	export default {
+		name: "indexPanel",
+		data() {
+			return {
+				captcha: 0,
+				imgUrl: ""
+			}
+		},
+		methods: {
+			login: function() {
+				this.$router.push("/login")
+			},
+			logout: function() {
+				logout().then((resp) => {
+					Toast("退出成功");
+				})
+			},
+			getCourses: function() {
+				this.$router.push("/course")
+
+			},
+			getExam: function() {
+				getExam();
+			},
+			getCaptcha: function() {
+				captcha().then((res) => {
+					console.log(res.data);
+					this.imgUrl = "data:image/png;base64," + res.data;
+				})
+			}
+		},
+	}
+</script>
+
+<style scoped>
+	#progr {
+		border-radius: 10px;
+	}
+	.img {
+		max-width: 50%;
+		max-height: 100%;
+	}
+	#bar {
+		box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 20px 0 rgba(0, 0, 0, 0.1)
+	}
+	#row {
+		left: 5%;
+		padding: 5%;
+		max-width: 90%;
+		position: absolute;
+		bottom: 10%;
+		border-radius: 15px;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		background-color: white;
+	}
+	#row2 {
+		left: 5%;
+		padding: 0px;
+		width: 90%;
+		height: 20%;
+		max-width: 90%;
+		top:10%;
+		position: absolute;
+		border-radius: 15px;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		background-color: white;
+	}
+	#bg {
+		height: 100%;
+	}
+	.text {
+		color: black;
+	}
+	#grid1 {
+		position: relative;
+		background-color: white;
+		width: 100%;
+		height: 100%;
+	}
+</style>
