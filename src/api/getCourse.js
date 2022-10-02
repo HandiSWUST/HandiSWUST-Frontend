@@ -1,10 +1,16 @@
 import axios from "axios"
 
-export function getCourse() {
-		axios.defaults.withCredentials = true;
-		return axios({
-			url: "/api/course",
-			method: "get",
-			withCredentials: true,
-		})
+export function getCourse(isCur) {
+	var url;
+	if(isCur) {
+		url = "/api/course/cur";
+	}else {
+		url = "/api/course/all";
+	}
+	axios.defaults.withCredentials = true;
+	return axios({
+		url: url,
+		method: "get",
+		withCredentials: true,
+	})
 }

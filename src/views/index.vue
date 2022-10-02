@@ -2,7 +2,7 @@
 	<div id="grid1">
 		<van-nav-bar title="首页" id="bar"/>
 		<div id="row2">
-			<van-progress :percentage="(5/24)*100" pivot-text="第5/24周" stroke-width="100%" id="progr" color="#2c2c2c"/>
+			<van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#2c2c2c"/>
 		</div>
 		<van-row align="bottom" id="row">
 			<van-grid :column-num="2" id="g" :border="false" :clickable="true">
@@ -54,7 +54,8 @@
 </template>
 
 <script>
-	
+	import {START_TIME} from "/src/common/final.js"
+	import {TOTAL_WEEK} from "/src/common/final.js"
 	import {getExam} from "/src/api/getExam"
 	import {captcha} from "/src/api/getCaptcha"
 	import {logout} from "/src/api/logout"
@@ -64,7 +65,20 @@ import { Toast } from "vant"
 		data() {
 			return {
 				captcha: 0,
-				imgUrl: ""
+				imgUrl: "",
+				curWeek: 0
+			}
+		},
+		computed: {
+			week: function() {
+				console.log(START_TIME);
+				console.log(new Date().getTime())
+				var cur = Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
+				this.curWeek = cur;
+				return "第" + cur.toString() + "/" + TOTAL_WEEK + "周";
+			},
+			percent: function() {
+				return (this.curWeek / TOTAL_WEEK)*100;
 			}
 		},
 		methods: {

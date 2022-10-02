@@ -1,15 +1,22 @@
 <template>
 	<div id="grid1">
+		<van-overlay :show="show" :z-index="999">
+			  <div id="loading">
+			    <van-loading color="#1989fa" size="20%"/>
+			  </div>
+			
+		</van-overlay>
 		<van-nav-bar 
 		title="课程表" 
 		:border="false" 
 		left-text="返回" 
 		left-arrow 
 		@click-left="goBack"
-		right-text="刷新"
-		@click-right="get"/>
+		:right-text="lessonType"
+		@click-right="get"
+		style="height: 5%;"/>
 		<van-row id="table">
-		  <van-col span="3"><p class="time">5周</p></van-col>
+		  <van-col span="3"><p class="time">{{ curWeek }}周</p></van-col>
 		  <van-col span="3"><p class="time">周一</p></van-col>
 		  <van-col span="3"><p class="time">周二</p></van-col>
 		  <van-col span="3"><p class="time">周三</p></van-col>
@@ -40,8 +47,13 @@
 					<lesson
 					v-for="l in lessons" 
 					:course_name="l.jw_course_name" 
-					:base_room_name="l.base_room_name"
-					:style='{ "top": computeTop(l.section_start), "left": computeLeft(l.week_day)}'>
+					:base_room_name="l.base_room_name" 
+					:week="l.week" 
+					:teacher="l.base_teacher_name" 
+					:week_day="l.week_day" 
+					:start="l.section_start" 
+					:end="l.section_end" 
+					:style='{ "top": computeTop(l.section_start), "left": computeLeft(l.week_day), "background-color": randomColor()}'>
 					</lesson>
 				</van-row>
 			</van-col>
@@ -50,9 +62,10 @@
 </template>
 
 <script>
+	import { START_TIME } from "/src/common/final.js"
 	import { Toast } from "vant";
 	import lesson from "../components/class.vue"
-	import {getCourse} from "/src/api/getCourse"
+	import { getCourse } from "/src/api/getCourse"
 	export default {
 		name: "courseTable",
 		components: {
@@ -60,7 +73,17 @@
 		},
 		data() {
 			return {
-				lessons: []
+				lessons: [],
+				lessonType: "当前周课程",
+				cur: true,
+				show: false
+			}
+		},
+		computed: {
+			curWeek: function() {
+				console.log(START_TIME);
+				console.log(new Date().getTime())
+				return Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
 			}
 		},
 		methods: {
@@ -68,7 +91,8 @@
 				this.$router.push("/");
 			},
 			get: function() {
-				getCourse().then((response) => {
+				this.show = true;
+				getCourse(this.cur).then((response) => {
 					if(response.data == "3401 LOGOUT") {
 						Toast.fail("未登录");
 						this.$router.push("/login");
@@ -76,22 +100,48 @@
 						console.log(response.data);
 						this.lessons = response.data;
 					}
+					this.show = false;
 				})
+				if(this.cur) {
+					this.lessonType = "所有课程";
+					this.cur = false;
+				}else {
+					this.lessonType = "当前周课程";
+					this.cur = true;
+				}
 			},
 			computeTop: function(num) {
-				return (num * 7.5 + 1).toString() + "%";
+				return (num * 7.5 + 2.5).toString() + "%";
 			},
 			computeLeft: function(num) {
 				return (num * 12.5).toString() + "%";
 			},
 			computeHeight: function(num, num1) {
 				return ((num - num1 + 1) * 7.5).toString() + "%";
+			},
+			randomColor: function() {
+				var a = Math.ceil(Math.random() * 200);
+				var b = Math.ceil(Math.random() * 200);
+				var c = Math.ceil(Math.random() * 200);
+				return "#" + a.toString(16) + b.toString(16) + c.toString(16);
 			}
+		},
+		mounted() {
+			this.get();
 		}
 	}
 </script>
 
 <style scoped>
+	#loading {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+
+	}
 	#grid1 {
 		position: relative;
 		background-color: white;
@@ -100,6 +150,7 @@
 		max-height: 100%;
 	}
 	#table {
+		height: 5%;
 		padding: 1%;
 		top: 0%;
 		background-color: white;

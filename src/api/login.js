@@ -2,10 +2,10 @@ import axios from "axios"
 import {getKey} from "./getKey.js"
 import "/src/js/security.js"
 import Cookies from 'js-cookie'
-import {getCourse} from "/src/api/getCourse"
 import { Toast } from "vant"
+import { Base64 } from "js-base64"
 
-export function login(username, password, captcha) {
+export function login(username, password, captcha, remember) {
 		var formData = new FormData();
 		axios.defaults.withCredentials = true;
 		getKey().then((resp) => {
@@ -25,13 +25,20 @@ export function login(username, password, captcha) {
 				method: 'post',
 				withCredentials: true,
 				data: formData
-			}).then((resp) => {
-				console.log(resp.data);
-				if(resp.data == "1200 LOGIN SUCCESS") {
-					window.location.href = "/";
-				}else {
-					Toast.fail("登录失败，请检查账号密码及验证码是否正确")
-				}
-			})
+			}).then((response) => {
+					console.log(response.data);
+					if(response.data == "1200 LOGIN SUCCESS") {
+						if(remember) {
+							var pwd = Base64.encode(password);
+							var user = Base64.encode(username);
+							Cookies.set("user", user, { expires: 14 });
+							Cookies.set("pwd", pwd, { expires: 14 });
+							console.log(remember)
+						}
+						window.location.href = "/";
+					}else {
+						Toast.fail("登录失败，请检查账号密码及验证码是否正确")
+					}
+				});
 		});
 }
