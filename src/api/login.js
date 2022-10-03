@@ -34,6 +34,9 @@ export function login(username, password, captcha, remember) {
 							Cookies.set("user", user, { expires: 14 });
 							Cookies.set("pwd", pwd, { expires: 14 });
 							console.log(remember)
+						}else {
+							Cookies.remove("user");
+							Cookies.remove("pwd");
 						}
 						window.location.href = "/";
 					}else {

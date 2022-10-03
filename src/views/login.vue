@@ -1,5 +1,11 @@
 <template>
 	<div id="login">
+		<van-overlay :show="show" :z-index="999">
+			  <div id="loading_login">
+			    <van-loading color="#1989fa" size="20%"/>
+			  </div>
+			
+		</van-overlay>
 		<van-nav-bar title="登录" id="bar"/>
 		<van-form @submit="login" id="form">
 		  <van-cell-group inset>
@@ -30,7 +36,7 @@
 				  
 			  </div>
 			  <van-checkbox v-model="remember" checked-color="#2c2c2c" style="margin-top: 5%; margin-left: 3%;">记住密码</van-checkbox>
-			  
+			  <p style="margin-top: 3%; margin-left: 3%; color: #2c2c2c;">登录即代表您同意我们的<a href="https://note.shirakawatyu.top/#/article/53">隐私政策</a></p>
 		  </van-cell-group>
 		
 		  <div style="margin: 16px;">
@@ -55,7 +61,8 @@ import { Base64 } from "js-base64"
 				password: "",
 				captcha: "",
 				imgUrl: "",
-				remember: false
+				remember: true,
+				show: false
 			}
 		},
 		mounted() {
@@ -63,6 +70,7 @@ import { Base64 } from "js-base64"
 		},
 		methods: {
 			login: function() {
+				this.show = true;
 				login(this.username, this.password, this.captcha, this.remember);
 			},
 			getCaptcha: function() {
@@ -89,6 +97,14 @@ import { Base64 } from "js-base64"
 </script>
 
 <style>
+	#loading_login {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
 	#box {
 		justify-content: left;
 		vertical-align: middle;

@@ -17,6 +17,7 @@ import { Toast } from 'vant';
 import { Popup } from 'vant';
 import { Overlay } from 'vant';
 import { Checkbox, CheckboxGroup } from 'vant';
+import { Collapse, CollapseItem } from 'vant';
 
 import axios from "axios";
 
@@ -43,4 +44,6 @@ app.use(Row);
 app.use(Progress);
 app.use(Button);
 app.use(Popup);
+app.use(Collapse);
+app.use(CollapseItem);
 app.mount('#app')

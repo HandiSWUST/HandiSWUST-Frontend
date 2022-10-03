@@ -17,14 +17,14 @@
 		<van-image
 		  width="5%"
 		  height="5%"
-		  src="/src/assets/week.png"
+		  src="/week.png"
 		/>
 		{{ week+" Week" }}</p>
 		<p id="weeks">
 		<van-image
 		  width="5%"
 		  height="5%"
-		  src="/src/assets/teacher.png"
+		  src="/teacher.png"
 		/>
 		{{ teacher }}</p>
 		</van-popup>
@@ -48,7 +48,7 @@
 					this.show = true;
 				}
 				
-				console.log(this.show);
+				// console.log(this.show);
 			}
 		}
 	}

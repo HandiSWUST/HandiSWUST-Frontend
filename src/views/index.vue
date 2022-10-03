@@ -1,6 +1,13 @@
 <template>
 	<div id="grid1">
-		<van-nav-bar title="首页" id="bar"/>
+		<van-nav-bar 
+		title="首页" 
+		id="bar" 
+		left-text="下载APP" 
+		@click-left="downApp"
+		right-text="关于"
+		@click-right="about"/>
+		
 		<div id="row2">
 			<van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#2c2c2c"/>
 		</div>
@@ -8,42 +15,42 @@
 			<van-grid :column-num="2" id="g" :border="false" :clickable="true">
 			  <van-grid-item v-on:click="login">
 				<van-image
-					src="/src/assets/login.png" 
+					src="/login.png" 
 					class="img"
 				/>
 				<p class="text">登录</p>
 			  </van-grid-item>
 			  <van-grid-item v-on:click="logout">
 				<van-image
-					src="/src/assets/logout.png" 
+					src="/logout.png" 
 					class="img"
 				/>
 				<p class="text">退出登录</p>
 			  </van-grid-item>
 			  <van-grid-item v-on:click="getCourses">
 				<van-image
-					src="/src/assets/table.png" 
+					src="/table.png" 
 					class="img"
 				/>
 				<p class="text">课程表</p>
 			  </van-grid-item>
 			  <van-grid-item  v-on:click="getExam">
 				  <van-image
-					src="/src/assets/exam.png" 
+					src="/exam.png" 
 					class="img"
 				  />
 				  <p class="text">考试</p>
 			  </van-grid-item  >
 			  <van-grid-item>
 				  <van-image
-					src="/src/assets/score.png" 
+					src="/score.png" 
 					class="img"
 				  />
 				  <p class="text">成绩</p>
 			  </van-grid-item>
 			  <van-grid-item>
 				  <van-image
-					src="/src/assets/date.png" 
+					src="/date.png" 
 					class="img"
 				  />
 				  <p class="text">校历</p>
@@ -59,7 +66,7 @@
 	import {getExam} from "/src/api/getExam"
 	import {captcha} from "/src/api/getCaptcha"
 	import {logout} from "/src/api/logout"
-import { Toast } from "vant"
+	import { Toast } from "vant"
 	export default {
 		name: "indexPanel",
 		data() {
@@ -99,9 +106,15 @@ import { Toast } from "vant"
 			},
 			getCaptcha: function() {
 				captcha().then((res) => {
-					console.log(res.data);
+					// console.log(res.data);
 					this.imgUrl = "data:image/png;base64," + res.data;
 				})
+			},
+			downApp: function() {
+				
+			},
+			about:function() {
+				this.$router.push("/about");
 			}
 		},
 	}

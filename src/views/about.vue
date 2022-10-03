@@ -1,0 +1,80 @@
+<template>
+	<div id="about" >
+		<van-collapse v-model="activeNames">
+			<van-nav-bar title="关于" id="bar"	left-text="返回" left-arrow @click-left="goBack"/>
+			  <van-collapse-item title="作者" name="1">
+				  <p>前端 & 代理端: </p>
+				  <p>卓计2101 Alice-in-oven</p>
+				  <p>计科2101 ShirakawaTyu</p>
+			  </van-collapse-item>
+			  <van-collapse-item title="隐私协议" name="2">
+				  <textarea id="privacy" rows="20">
+# 隐私协议
+## 隐私协议：一般说明
+本隐私策略的目的是说明当您访问和使用本网站时我们可能会搜集的资料, 我们会怎样使用这些资料, 是否会透露给第三方, 以及您对这些资料的使用及修改方面的选择权利. 本隐私策略适用于本网站,您需要仔细阅读本隐私策略.
+
+### 适用范围
+a) 在您使用本网站时。
+
+### 信息的使用
+a) 我们尊重您的隐私, 正常来说, 本网站会自动收集使用者的Cookies等内容. 这些内容可能包含可识别个人身份的信息
+
+b) 网站将可能使用 Cookies和本地存储 技术来增强您的浏览体验, 或是用于您的访问验证
+
+### 信息披露
+a) 本软件只会在本地存储您的信息，我们的代理服务器不存储任何您的信息，也不会将您的信息在未经您同意的情况下披露给任何的第三方。
+
+### 信息存储和交换
+您的信息和资料会被上传到云端服务器上，这些信息和资料不会被传送至您所在国家、地区或本软件收集信息和资料所在地的境外并在境外被访问、存储和展示。
+
+### 信息安全
+a) 您的一站式认证账号密码将会在**前端**由**西南科技大学一站式认证服务器**下发的公钥**加密**后再传输至我们的代理服务器进行认证，我们的代理服务器**不会接触**到您的明文密码，并且**无法也不会**对密文进行解密
+
+b) 我们会在**本地**以**加密**的方式存储您的认证信息，但不会以任何形式上传至我们的代理服务器或第三方服务器，同时我们会尽最大努力保护您的信息不被泄露
+
+c) 我们的代理服务器将会获取您的课表、考试、成绩等信息，但不会将其进行存储
+
+### 隐私策略的变动
+
+如果我们需要改变平台的隐私策略, 我们会把相关的改动在此页面发布, 以便您能随时了解我们会收集什么信息, 我们可能会如何使用这些信息以及我们是否会把此信息透露给第三方.
+
+### 隐私问题
+在本协议中未声明的其他一切权利，仍归本团队所有。本团队保留对本协议的最终解释权利。
+				  </textarea>
+			  </van-collapse-item>
+		</van-collapse>
+	</div>
+</template>
+
+<script>
+	export default {
+		name: "aboutUs",
+		data() {
+			return {
+				activeNames: ["1", "2"]
+			}
+		},
+		methods: {
+			goBack: function() {
+				this.$router.push("/");
+			}
+		}
+	}
+</script>
+
+<style>
+	#about {
+		position: relative;
+		background-color: white;
+		width: 100%;
+		height: 100%;
+	}
+	#txt {
+		color: black;
+		margin: 5%;
+	}
+	#privacy {
+		width: 100%;
+		resize: none;
+	}
+</style>
