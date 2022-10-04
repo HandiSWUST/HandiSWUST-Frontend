@@ -23,6 +23,21 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 const app = createApp(App);
+axios.interceptors.response.use(response => {
+    console.log(response.data)
+    if (response.data) {
+        // 数据正常，进行的逻辑功能
+        return response
+    } else {
+        // 如果返回的 success 是 false，表明业务出错，直接触发 reject
+        // 抛出的错误，被 catch 捕获
+        return Promise.reject(new Error(response.data.message))
+    }
+}, error => {
+    // 对响应错误做点什么
+    location.reload();
+    return Promise.reject(error)
+})
 
 app.use(Checkbox);
 app.use(CheckboxGroup);

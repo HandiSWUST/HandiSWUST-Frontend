@@ -41,14 +41,14 @@
 				  />
 				  <p class="text">考试</p>
 			  </van-grid-item  >
-			  <van-grid-item>
+			  <van-grid-item v-on:click="getScore">
 				  <van-image
 					src="/score.png" 
 					class="img"
 				  />
 				  <p class="text">成绩</p>
 			  </van-grid-item>
-			  <van-grid-item>
+			  <van-grid-item >
 				  <van-image
 					src="/date.png" 
 					class="img"
@@ -101,6 +101,10 @@
 				this.$router.push("/course")
 
 			},
+      getScore: function() {
+        this.$router.push("/score")
+
+      },
 			getExam: function() {
 				getExam();
 			},
