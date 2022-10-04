@@ -5,10 +5,10 @@ import Cookies from 'js-cookie'
 import { Toast } from "vant"
 import { Base64 } from "js-base64"
 
-export function login(username, password, captcha, remember) {
+export async function login(username, password, captcha, remember, show) {
 		var formData = new FormData();
 		axios.defaults.withCredentials = true;
-		getKey().then((resp) => {
+		await getKey().then((resp) => {
 			var data = resp.data;
 			var Modulus = data["modulus"];
 			var public_exponent = data["exponent"];
@@ -20,28 +20,11 @@ export function login(username, password, captcha, remember) {
 			formData.append("username", username);
 			formData.append("password", encrypedPwd);
 			formData.append("captcha", captcha);
-			axios({
-				url: '/api/login',
-				method: 'post',
-				withCredentials: true,
-				data: formData
-			}).then((response) => {
-					console.log(response.data);
-					if(response.data == "1200 LOGIN SUCCESS") {
-						if(remember) {
-							var pwd = Base64.encode(password);
-							var user = Base64.encode(username);
-							Cookies.set("user", user, { expires: 14 });
-							Cookies.set("pwd", pwd, { expires: 14 });
-							console.log(remember)
-						}else {
-							Cookies.remove("user");
-							Cookies.remove("pwd");
-						}
-						window.location.href = "/";
-					}else {
-						Toast.fail("登录失败，请检查账号密码及验证码是否正确")
-					}
-				});
 		});
+		return axios({
+			url: '/api/login',
+			method: 'post',
+			withCredentials: true,
+			data: formData
+		})
 }

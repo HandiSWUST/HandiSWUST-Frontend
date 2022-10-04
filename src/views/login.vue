@@ -53,6 +53,7 @@ import Cookies from 'js-cookie'
 import { login } from '../api/login'
 import axios from "axios"
 import { Base64 } from "js-base64"
+import {Toast} from "_vant@3.6.3@vant";
 	export default {
 		name: "loginPanel",
 		data() {
@@ -71,7 +72,27 @@ import { Base64 } from "js-base64"
 		methods: {
 			login: function() {
 				this.show = true;
-				login(this.username, this.password, this.captcha, this.remember);
+				login(this.username, this.password, this.captcha, this.remember).then((response) => {
+				  console.log(response.data);
+				  if(response.data == "1200 LOGIN SUCCESS") {
+					if(this.remember) {
+					  var pwd = Base64.encode(this.password);
+					  var user = Base64.encode(this.username);
+					  Cookies.set("user", user, { expires: 14 });
+					  Cookies.set("pwd", pwd, { expires: 14 });
+					  console.log(this.remember)
+					}else {
+					  Cookies.remove("user");
+					  Cookies.remove("pwd");
+					}
+					this.$router.push("/");
+				  }else {
+					Toast.fail("登录失败，请检查账号密码及验证码是否正确");
+					this.getCaptcha();
+				  }
+				}).finally(() => {
+				  this.show = false;
+				});
 			},
 			getCaptcha: function() {
 				axios.defaults.withCredentials = true;
