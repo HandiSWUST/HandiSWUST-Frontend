@@ -1,9 +1,6 @@
 import axios from "axios"
 import {getKey} from "./getKey.js"
 import "/src/js/security.js"
-import Cookies from 'js-cookie'
-import { Toast } from "vant"
-import { Base64 } from "js-base64"
 
 export async function login(username, password, captcha, remember, show) {
 		var formData = new FormData();
