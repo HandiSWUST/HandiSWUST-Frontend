@@ -53,7 +53,7 @@ import Cookies from 'js-cookie'
 import { login } from '../api/login'
 import axios from "axios"
 import { Base64 } from "js-base64"
-import {Toast} from "_vant@3.6.3@vant";
+import {Toast} from "vant";
 	export default {
 		name: "loginPanel",
 		data() {
