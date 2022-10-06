@@ -18,13 +18,15 @@ import { Popup } from 'vant';
 import { Overlay } from 'vant';
 import { Checkbox, CheckboxGroup } from 'vant';
 import { Collapse, CollapseItem } from 'vant';
+import { Dialog } from 'vant';
+
 
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
 const app = createApp(App);
 axios.interceptors.response.use(response => {
-    console.log(response.data)
+    // console.log(response.data)
     if (response.data) {
         // 数据正常，进行的逻辑功能
         return response
@@ -40,6 +42,7 @@ axios.interceptors.response.use(response => {
 })
 
 app.use(Checkbox);
+app.use(Dialog);
 app.use(CheckboxGroup);
 app.use(Overlay);
 app.use(Loading);

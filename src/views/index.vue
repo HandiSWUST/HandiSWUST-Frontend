@@ -21,10 +21,13 @@
 				<p class="text">登录</p>
 			  </van-grid-item>
         <van-grid-item v-on:click="getLibrary" v-if="isLogin">
-          <van-icon name="description" size="54"/>
+          <van-image
+              src="/lib.png"
+              class="img"
+          />
           <p class="text">图书借阅信息</p>
         </van-grid-item>
-			  <van-grid-item v-on:click="logout">
+			  <van-grid-item v-on:click="logout" v-if="isLogin">
 				<van-image
 					src="/logout.png" 
 					class="img"
@@ -52,7 +55,7 @@
 				  />
 				  <p class="text">成绩</p>
 			  </van-grid-item>
-			  <van-grid-item >
+			  <van-grid-item v-on:click="calendar">
 				  <van-image
 					src="/date.png" 
 					class="img"
@@ -70,7 +73,7 @@
 	import {getExam} from "/src/api/getExam"
 	import {captcha} from "/src/api/getCaptcha"
 	import {logout} from "/src/api/logout"
-	import { Toast } from "vant"
+  import {Dialog, Toast} from "vant"
   import axios from "axios";
 	export default {
 		name: "indexPanel",
@@ -88,8 +91,8 @@
 		},
 		computed: {
 			week: function() {
-				console.log(START_TIME);
-				console.log(new Date().getTime())
+				// console.log(START_TIME);
+				// console.log(new Date().getTime())
 				var cur = Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
 				this.curWeek = cur;
 				return "第" + cur.toString() + "/" + TOTAL_WEEK + "周";
@@ -143,11 +146,20 @@
 				})
 			},
 			downApp: function() {
-				
+        Dialog.alert({
+          message: '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
+              '提取码: 2333',
+        })
 			},
 			about:function() {
 				this.$router.push("/about");
-			}
+			},
+      calendar: function () {
+        Dialog.alert({
+          message: '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
+              '提取码: 2333',
+        })
+      }
 		},
 	}
 </script>

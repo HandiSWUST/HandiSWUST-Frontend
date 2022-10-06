@@ -80,7 +80,7 @@ import {Toast} from "vant";
 					  var user = Base64.encode(this.username);
 					  Cookies.set("user", user, { expires: 14 });
 					  Cookies.set("pwd", pwd, { expires: 14 });
-					  console.log(this.remember)
+					  // console.log(this.remember)
 					}else {
 					  Cookies.remove("user");
 					  Cookies.remove("pwd");
@@ -101,7 +101,7 @@ import {Toast} from "vant";
 					url: "/api/captcha",
 					withCredentials: true
 				}).then((res) => {
-					console.log(res.data);
+					// console.log(res.data);
 					this.imgUrl = "data:image/png;base64," + res.data;
 				})
 			},
