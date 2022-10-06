@@ -23,19 +23,13 @@
   <div id="loading">
     <van-loading  v-show="ifLoading" size="50px"  vertical a>加载中...</van-loading>
   </div>
-
-
-
-
-
-
-
 </div>
 </template>
 
 <script>
 import TableVant from "../components/table.vue"
 import axios from "axios"
+import {Toast} from "vant";
 
 
 
@@ -57,6 +51,7 @@ export default {
   components:{TableVant},
   name: "score",
   methods:{
+
     getScore() {
       axios.defaults.withCredentials = true;
       return axios({
@@ -64,11 +59,19 @@ export default {
         method: "get",
         withCredentials: true,
       }).then((resp)=>{
-        this.ifLoading=false;
-        if(resp.status===500)Toast.fail(resData.msg);
-        else{
-          this.tableData = resp.data;
+        if(resp.data=="3401 LOGOUT")
+        {
+          Toast.fail("未登录");
+          this.$router.push("/login");
+        }else{
+          this.ifLoading=false;
+
+          if(resp.status===500)Toast.fail(resData.msg);
+          else{
+            this.tableData = resp.data;
+          }
         }
+
       });
     }
   },

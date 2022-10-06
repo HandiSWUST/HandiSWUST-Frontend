@@ -13,13 +13,17 @@
 		</div>
 		<van-row align="bottom" id="row">
 			<van-grid :column-num="2" id="g" :border="false" :clickable="true">
-			  <van-grid-item v-on:click="login">
+			  <van-grid-item v-on:click="login" v-if="!isLogin">
 				<van-image
 					src="/login.png" 
 					class="img"
 				/>
 				<p class="text">登录</p>
 			  </van-grid-item>
+        <van-grid-item v-on:click="getLibrary" v-if="isLogin">
+          <van-icon name="description" size="54"/>
+          <p class="text">图书借阅信息</p>
+        </van-grid-item>
 			  <van-grid-item v-on:click="logout">
 				<van-image
 					src="/logout.png" 
@@ -67,13 +71,19 @@
 	import {captcha} from "/src/api/getCaptcha"
 	import {logout} from "/src/api/logout"
 	import { Toast } from "vant"
+  import axios from "axios";
 	export default {
 		name: "indexPanel",
-		data() {
+    mounted() {
+      this.loginCheck();
+
+    },
+    data() {
 			return {
 				captcha: 0,
 				imgUrl: "",
-				curWeek: 0
+				curWeek: 0,
+        isLogin:false
 			}
 		},
 		computed: {
@@ -89,14 +99,32 @@
 			}
 		},
 		methods: {
+      loginCheck: function(){
+        axios.defaults.withCredentials = true;
+        return axios({
+          method: "get",
+          url: "/api/loginCheck",
+          withCredentials: true
+        }).then((resp)=>{
+          if(resp.data=="3401 LOGOUT")this.isLogin=false;
+          else this.isLogin=true;
+        })
+
+      },
 			login: function() {
 				this.$router.push("/login")
 			},
 			logout: function() {
+        if(this.isLogin)
 				logout().then((resp) => {
 					Toast("退出成功");
+          location.reload();
 				})
+        else Toast("未登录");
 			},
+      getLibrary:function () {
+        Toast("开发中")
+      },
 			getCourses: function() {
 				this.$router.push("/course")
 
