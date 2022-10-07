@@ -81,8 +81,6 @@
 		},
 		computed: {
 			curWeek: function() {
-				// console.log(START_TIME);
-				// console.log(new Date().getTime())
 				return Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
 			}
 		},
@@ -93,7 +91,6 @@
             Toast.fail("未登录");
             this.$router.push("/login");
           }else {
-            // console.log(response.data);
             this.lessons = response.data;
           }
       })

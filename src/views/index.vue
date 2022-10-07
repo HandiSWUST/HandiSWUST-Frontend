@@ -72,10 +72,11 @@
 	import {TOTAL_WEEK} from "/src/common/final.js"
 	import {getExam} from "/src/api/getExam"
 	import {captcha} from "/src/api/getCaptcha"
-	import {logout} from "/src/api/logout"
   import {Dialog, Toast} from "vant"
+  import {checkLogin} from "../api/loginCheck";
   import axios from "axios";
   import { BASE_URL } from "../common/final.js"
+  import {logOut} from "../api/logout";
 	export default {
 		name: "indexPanel",
     mounted() {
@@ -92,8 +93,6 @@
 		},
 		computed: {
 			week: function() {
-				// console.log(START_TIME);
-				// console.log(new Date().getTime())
 				var cur = Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
 				this.curWeek = cur;
 				return "第" + cur.toString() + "/" + TOTAL_WEEK + "周";
@@ -104,12 +103,7 @@
 		},
 		methods: {
       loginCheck: function(){
-        axios.defaults.withCredentials = true;
-        return axios({
-          method: "get",
-          url: BASE_URL+"/api/loginCheck",
-          withCredentials: true
-        }).then((resp)=>{
+        checkLogin().then((resp)=>{
           if(resp.data=="3401 LOGOUT")this.isLogin=false;
           else this.isLogin=true;
         })
@@ -120,7 +114,7 @@
 			},
 			logout: function() {
         if(this.isLogin)
-				logout().then((resp) => {
+				logOut().then(() => {
 					Toast("退出成功");
           location.reload();
 				})
@@ -142,7 +136,6 @@
 			},
 			getCaptcha: function() {
 				captcha().then((res) => {
-					// console.log(res.data);
 					this.imgUrl = "data:image/png;base64," + res.data;
 				})
 			},
@@ -156,10 +149,6 @@
 				this.$router.push("/about");
 			},
       calendar: function () {
-        // Dialog.alert({
-        //   message: '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
-        //       '提取码: 2333',
-        // })
         this.$router.push("/calender")
       }
 		},
