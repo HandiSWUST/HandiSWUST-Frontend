@@ -19,9 +19,9 @@ import { Overlay } from 'vant';
 import { Checkbox, CheckboxGroup } from 'vant';
 import { Collapse, CollapseItem } from 'vant';
 import { Dialog } from 'vant';
-
-
 import axios from "axios";
+import { PullRefresh } from 'vant';
+
 
 axios.defaults.withCredentials = true;
 const app = createApp(App);
@@ -41,6 +41,8 @@ axios.interceptors.response.use(response => {
     return Promise.reject(error)
 })
 
+
+app.use(PullRefresh);
 app.use(Checkbox);
 app.use(Dialog);
 app.use(CheckboxGroup);

@@ -76,7 +76,7 @@
 				lessons: [],
 				lessonType: "当前周课程",
 				cur: true,
-				show: false
+				show: false,
 			}
 		},
 		computed: {
@@ -87,6 +87,17 @@
 			}
 		},
 		methods: {
+      onRefresh: function() {
+        getCourse(this.cur).then((response) => {
+          if(response.data == "3401 LOGOUT") {
+            Toast.fail("未登录");
+            this.$router.push("/login");
+          }else {
+            // console.log(response.data);
+            this.lessons = response.data;
+          }
+      })
+      },
 			goBack: function() {
 				this.$router.push("/");
 			},
@@ -114,7 +125,7 @@
 				return (num * 7.5 + 2.5).toString() + "%";
 			},
 			computeLeft: function(num) {
-				return (num * 12.1).toString() + "%";
+				return (num * 12.5).toString() + "%";
 			},
 			computeHeight: function(num, num1) {
 				return ((num - num1 + 1) * 7.5).toString() + "%";

@@ -64,7 +64,7 @@
 		max-height: 15%;
 		height: 14%;
 		background-color: #588505;
-		width: 10%;
+		width: 10.945%;
 		border-radius: 10px;
 		margin: 1.5%;
 		margin-top: 2.3%;

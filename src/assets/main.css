@@ -4,8 +4,8 @@
 
   font-weight: normal;
   font-weight: normal;
-  overflow-x: hidden;
-  overflow-y: auto;
+  /* overflow-x: hidden; */
+  /* overflow-y: auto; */
   -webkit-overflow-scrolling: touch;
 }
 
