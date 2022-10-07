@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {Toast} from "vant";
 
 export function getExam() {
 	// return axios({
@@ -6,4 +7,5 @@ export function getExam() {
 	// 	method: "get",
 	// 	withCredentials: true
 	// })
+    Toast("开发中");
 }
