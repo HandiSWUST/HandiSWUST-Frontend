@@ -69,7 +69,7 @@ import { BASE_URL } from "../common/final.js"
 		},
 		mounted() {
 			this.getPwd();
-      this.getCaptcha();
+      // this.getCaptcha();
 		},
 		methods: {
 			login: function() {
