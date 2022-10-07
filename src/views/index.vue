@@ -72,7 +72,7 @@
 	import {TOTAL_WEEK} from "/src/common/final.js"
 	import {getExam} from "/src/api/getExam"
 	import {captcha} from "/src/api/getCaptcha"
-  import {Dialog, Toast} from "vant"
+  import {Dialog, Notify, Toast} from "vant"
   import {checkLogin} from "../api/loginCheck";
   import axios from "axios";
   import { BASE_URL } from "../common/final.js"
@@ -81,7 +81,7 @@
 		name: "indexPanel",
     mounted() {
       this.loginCheck();
-
+      Notify({ type: 'primary', message: '每晚0:00一站式认证接口维护' });
     },
     data() {
 			return {
