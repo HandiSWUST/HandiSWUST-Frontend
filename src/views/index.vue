@@ -155,10 +155,11 @@
 				this.$router.push("/about");
 			},
       calendar: function () {
-        Dialog.alert({
-          message: '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
-              '提取码: 2333',
-        })
+        // Dialog.alert({
+        //   message: '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
+        //       '提取码: 2333',
+        // })
+        this.$router.push("/calender")
       }
 		},
 	}

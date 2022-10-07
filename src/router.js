@@ -5,6 +5,7 @@ import aboutUs from "./views/about.vue"
 import score from "./views/score.vue";
 import { createRouter, createWebHashHistory } from 'vue-router'
 import library from "./views/library.vue";
+import calender from "./views/calender.vue";
 
 const routers = [
 	{path: "/", component: indexPanel},
@@ -12,7 +13,8 @@ const routers = [
 	{path: "/course", component: courseTable},
 	{path: "/about", component: aboutUs},
 	{path: "/score",component: score},
-	{path: "/library",component: library}
+	{path: "/library",component: library},
+	{path: "/calender",component: calender}
 
 ];
 
