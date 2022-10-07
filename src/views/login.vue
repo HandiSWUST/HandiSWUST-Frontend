@@ -68,7 +68,8 @@ import { BASE_URL } from "../common/final.js"
 			}
 		},
 		mounted() {
-			this.getCookie();
+			this.getPwd();
+      this.getCaptcha();
 		},
 		methods: {
 			login: function() {
@@ -79,12 +80,12 @@ import { BASE_URL } from "../common/final.js"
 					if(this.remember) {
 					  var pwd = Base64.encode(this.password);
 					  var user = Base64.encode(this.username);
-					  Cookies.set("user", user, { expires: 14 });
-					  Cookies.set("pwd", pwd, { expires: 14 });
+            window.localStorage.setItem("user", user);
+            window.localStorage.setItem("pwd", pwd);
 					  // console.log(this.remember)
 					}else {
-					  Cookies.remove("user");
-					  Cookies.remove("pwd");
+            window.localStorage.removeItem("user");
+            window.localStorage.removeItem("password");
 					}
 					this.$router.push("/");
 				  }else {
@@ -106,10 +107,10 @@ import { BASE_URL } from "../common/final.js"
 					this.imgUrl = "data:image/png;base64," + res.data;
 				})
 			},
-			getCookie() {
-			  var pwd = Cookies.get("pwd");
-			  var user = Cookies.get("user");
-			  if(user != undefined && pwd != undefined) {
+			getPwd() {
+			  var pwd = window.localStorage.getItem("pwd");
+			  var user = window.localStorage.getItem("user");
+			  if(user != null && pwd != null) {
 				  this.username = Base64.decode(user);
 				  this.password = Base64.decode(pwd);
 			  }
