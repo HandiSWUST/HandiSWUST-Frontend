@@ -30,7 +30,7 @@
 import TableVant from "../components/table.vue"
 import axios from "axios"
 import {Toast} from "vant";
-
+import { BASE_URL } from "../common/final.js"
 
 
 
@@ -55,7 +55,7 @@ export default {
     getScore() {
       axios.defaults.withCredentials = true;
       return axios({
-        url: "/api/scores",
+        url: BASE_URL+"/api/scores",
         method: "get",
         withCredentials: true,
       }).then((resp)=>{

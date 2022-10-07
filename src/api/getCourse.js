@@ -1,11 +1,12 @@
 import axios from "axios"
+import { BASE_URL } from "../common/final.js"
 
 export function getCourse(isCur) {
 	var url;
 	if(isCur) {
-		url = "/api/course/cur";
+		url = BASE_URL+"/api/course/cur";
 	}else {
-		url = "/api/course/all";
+		url = BASE_URL+"/api/course/all";
 	}
 	axios.defaults.withCredentials = true;
 	return axios({

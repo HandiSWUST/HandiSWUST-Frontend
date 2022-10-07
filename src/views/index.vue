@@ -75,6 +75,7 @@
 	import {logout} from "/src/api/logout"
   import {Dialog, Toast} from "vant"
   import axios from "axios";
+  import { BASE_URL } from "../common/final.js"
 	export default {
 		name: "indexPanel",
     mounted() {
@@ -106,7 +107,7 @@
         axios.defaults.withCredentials = true;
         return axios({
           method: "get",
-          url: "/api/loginCheck",
+          url: BASE_URL+"/api/loginCheck",
           withCredentials: true
         }).then((resp)=>{
           if(resp.data=="3401 LOGOUT")this.isLogin=false;

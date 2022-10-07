@@ -54,6 +54,7 @@ import { login } from '../api/login'
 import axios from "axios"
 import { Base64 } from "js-base64"
 import {Toast} from "vant";
+import { BASE_URL } from "../common/final.js"
 	export default {
 		name: "loginPanel",
 		data() {
@@ -73,7 +74,7 @@ import {Toast} from "vant";
 			login: function() {
 				this.show = true;
 				login(this.username, this.password, this.captcha, this.remember).then((response) => {
-				  console.log(response.data);
+				  // console.log(response.data);
 				  if(response.data == "1200 LOGIN SUCCESS") {
 					if(this.remember) {
 					  var pwd = Base64.encode(this.password);
@@ -98,7 +99,7 @@ import {Toast} from "vant";
 				axios.defaults.withCredentials = true;
 				axios({
 					method: "get",
-					url: "/api/captcha",
+					url: BASE_URL+"/api/captcha",
 					withCredentials: true
 				}).then((res) => {
 					// console.log(res.data);

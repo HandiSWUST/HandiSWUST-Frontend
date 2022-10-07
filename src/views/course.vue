@@ -114,7 +114,7 @@
 				return (num * 7.5 + 2.5).toString() + "%";
 			},
 			computeLeft: function(num) {
-				return (num * 12.5).toString() + "%";
+				return (num * 12.1).toString() + "%";
 			},
 			computeHeight: function(num, num1) {
 				return ((num - num1 + 1) * 7.5).toString() + "%";
