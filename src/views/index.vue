@@ -124,7 +124,7 @@ export default {
       else Toast("未登录");
     },
     getLibrary: function () {
-      Toast("开发中")
+      this.$router.push("/library")
     },
     getCourses: function () {
       this.$router.push("/course")

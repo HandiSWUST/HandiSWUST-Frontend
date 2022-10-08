@@ -1,5 +1,5 @@
-import axios from "_axios@0.27.2@axios";
-import {BASE_URL} from "@/common/final";
+import axios from "axios"
+import { BASE_URL } from "../common/final.js"
 
 export function checkLogin() {
     axios.defaults.withCredentials = true;
