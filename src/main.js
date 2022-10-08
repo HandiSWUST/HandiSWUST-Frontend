@@ -4,6 +4,7 @@ import { Grid, GridItem } from 'vant';
 import { Icon } from 'vant';
 import { Loading } from 'vant';
 import { Image as VanImage } from 'vant';
+import {Card} from "vant";
 import router from './router.js'
 import './assets/main.css'
 import 'vant/lib/index.css';
@@ -66,4 +67,5 @@ app.use(Button);
 app.use(Popup);
 app.use(Collapse);
 app.use(CollapseItem);
+app.use(Card);
 app.mount('#app')

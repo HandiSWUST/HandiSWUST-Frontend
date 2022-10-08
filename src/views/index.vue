@@ -62,6 +62,13 @@
 				  />
 				  <p class="text">校历</p>
 			  </van-grid-item>
+        <van-grid-item v-on:click="calendar">
+          <van-image
+              src="/date.png"
+              class="img"
+          />
+          <p class="text">校历</p>
+        </van-grid-item>
 			</van-grid>
 		</van-row>
 	</div>
@@ -127,7 +134,8 @@
         else Toast("未登录");
 			},
       getLibrary:function () {
-        Toast("开发中")
+        this.$router.push("/library");
+        // Toast("开发中")
       },
 			getCourses: function() {
 				this.$router.push("/course")

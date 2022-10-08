@@ -1,7 +1,7 @@
 <template>
   <div id="library" >
     <van-nav-bar
-        title="成绩"
+        title="图书借阅信息"
         left-text="返回"
         left-arrow
         @click-left="onClickLeft"
@@ -9,16 +9,19 @@
 
     <van-row>
       <van-col span="24">
-        <ul v-for="(termScore,key,i) in tableData" :key="i" >
-          <li>
-            <van-cell-group inset :title="key" >
-              <Table-vant :option="option" :tableData="termScore"></Table-vant>
-            </van-cell-group>
-          </li>
 
+        <ul v-show="!ifLoading" >
+          <van-cell-group inset title="记得按时还书哦！">
+            <Table-vant :option="option" :tableData="tableData"></Table-vant>
+          </van-cell-group>
         </ul>
-      </van-col>
 
+
+
+
+
+
+      </van-col>
     </van-row>
     <div id="loading">
       <van-loading  v-show="ifLoading" size="50px"  vertical a>加载中...</van-loading>
@@ -27,10 +30,13 @@
 </template>
 
 <script>
+import TableVant from "../components/table.vue"
 import axios from "axios";
 import {Toast} from "vant";
+import {BASE_URL} from "../common/final";
 
 export default {
+  components:{TableVant},
   setup() {
     const onClickLeft = () => history.back();
 
@@ -45,39 +51,42 @@ export default {
   },
   data() {
     return {
-      tableData:{},
+      tableData:[],
       terms:[],
       ifLoading:true,
+
 
       //th
       option: {
         column: [
           {
-            label: '书名/作者',
-            tableDataprop: 'course',
+            label: '书名',
+            tableDataprop: 'bookName'
           },
           {
             label: '借阅日期',
-            tableDataprop: 'credit'
+            tableDataprop: 'borrowTime'
           },
           {
             label: '应还日期',
-            tableDataprop: 'catalog'
+            tableDataprop: 'expire'
           },
           {
             label: '馆藏地',
-            tableDataprop: 'scroll'
+            tableDataprop: 'location'
           }
+
         ]
       },
     }
 
   },
   methods:{
-    getLibrary(){
+
+    getLibrary() {
       axios.defaults.withCredentials = true;
       return axios({
-        url: "/api/library",
+        url: BASE_URL+"/api/library",
         method: "get",
         withCredentials: true,
       }).then((resp)=>{
@@ -85,17 +94,21 @@ export default {
         {
           Toast.fail("未登录");
           this.$router.push("/login");
-        }else{
+        }
+
+        else{
+          if(resp.data.length==0){
+            Toast.fail("你还没有未还的书呢");
+          }else{
+            this.tableData = resp.data;
+          }
           this.ifLoading=false;
-
-          console.log(resp.data);
-
 
         }
 
       });
     }
-  }
+  },
 }
 </script>
 

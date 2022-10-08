@@ -9,13 +9,13 @@
 
   <van-row>
     <van-col span="24">
+
       <ul v-for="(termScore,key,i) in tableData" :key="i" >
         <li>
           <van-cell-group inset :title="key" >
             <Table-vant :option="option" :tableData="termScore"></Table-vant>
           </van-cell-group>
         </li>
-
       </ul>
     </van-col>
 
@@ -65,11 +65,8 @@ export default {
           this.$router.push("/login");
         }else{
           this.ifLoading=false;
+          this.tableData = resp.data;
 
-          if(resp.status===500)Toast.fail(resData.msg);
-          else{
-            this.tableData = resp.data;
-          }
         }
 
       });
