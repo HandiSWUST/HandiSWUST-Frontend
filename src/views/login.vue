@@ -6,7 +6,7 @@
       </div>
 
     </van-overlay>
-    <van-nav-bar title="登录" id="bar"/>
+    <van-nav-bar title="登录" id="bar" left-text="首页" left-arrow @click-left="goIndex"/>
     <van-form @submit="login" id="form">
       <van-cell-group inset>
         <van-field
@@ -77,6 +77,9 @@ export default {
     this.getPwd();
   },
   methods: {
+    goIndex: function () {
+      this.$router.push("/");
+    },
     login: function () {
       this.show = true;
       login(this.username, this.password, this.captcha, this.remember).then((response) => {
