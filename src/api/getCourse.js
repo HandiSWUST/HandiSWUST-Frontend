@@ -15,3 +15,13 @@ export function getCourse(isCur) {
 		withCredentials: true,
 	})
 }
+
+export function selectedCourse(week) {
+	var url = BASE_URL+"/api/course/select/"+week;
+	axios.defaults.withCredentials = true;
+	return axios({
+		url: url,
+		method: "get",
+		withCredentials: true,
+	})
+}

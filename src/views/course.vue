@@ -4,17 +4,25 @@
 			  <div id="loading">
 			    <van-loading color="#1989fa" size="20%"/>
 			  </div>
-			
+
 		</van-overlay>
-		<van-nav-bar 
-		title="课程表" 
-		:border="false" 
-		left-text="返回" 
-		left-arrow 
-		@click-left="goBack"
-		:right-text="lessonType"
-		@click-right="get"
-		style="height: 5%;"/>
+		<van-nav-bar
+		title="课程表"
+		:border="false"
+		left-text="返回"
+		left-arrow
+		@click-left="goBack">
+      <template #right>
+        <van-pagination v-model="week" :page-count="totalWeek" mode="simple" @change="getSelect">
+          <template #prev-text>
+            <van-icon name="arrow-left" />
+          </template>
+          <template #next-text>
+            <van-icon name="arrow" />
+          </template>
+        </van-pagination>
+      </template>
+    </van-nav-bar>
 		<van-row id="table">
 		  <van-col span="3"><p class="time">{{ curWeek }}周</p></van-col>
 		  <van-col span="3"><p class="time">周一</p></van-col>
@@ -45,14 +53,14 @@
 			<van-col span="21" style="max-height: 100%;">
 				<van-row>
 					<lesson
-					v-for="l in lessons" 
-					:course_name="l.jw_course_name" 
-					:base_room_name="l.base_room_name" 
-					:week="l.week" 
-					:teacher="l.base_teacher_name" 
-					:week_day="l.week_day" 
-					:start="l.section_start" 
-					:end="l.section_end" 
+					v-for="l in lessons"
+					:course_name="l.jw_course_name"
+					:base_room_name="l.base_room_name"
+					:week="l.week"
+					:teacher="l.base_teacher_name"
+					:week_day="l.week_day"
+					:start="l.section_start"
+					:end="l.section_end"
 					:style='{ "top": computeTop(l.section_start), "left": computeLeft(l.week_day), "background-color": randomColor()}'>
 					</lesson>
 				</van-row>
@@ -63,9 +71,11 @@
 
 <script>
 	import { START_TIME } from "/src/common/final.js"
+  import { TOTAL_WEEK } from "/src/common/final.js"
 	import { Toast } from "vant";
 	import lesson from "../components/class.vue"
 	import { getCourse } from "/src/api/getCourse"
+  import {selectedCourse} from "@/api/getCourse";
 	export default {
 		name: "courseTable",
 		components: {
@@ -74,17 +84,19 @@
 		data() {
 			return {
 				lessons: [],
-				lessonType: "当前周课程",
+				// lessonType: "当前周课程",
 				cur: true,
+        week: 0,
 				show: false,
 			}
 		},
 		computed: {
 			curWeek: function() {
-				// console.log(START_TIME);
-				// console.log(new Date().getTime())
 				return Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
-			}
+			},
+      totalWeek: function () {
+        return TOTAL_WEEK;
+      },
 		},
 		methods: {
       onRefresh: function() {
@@ -93,7 +105,6 @@
             Toast.fail("未登录");
             this.$router.push("/login");
           }else {
-            // console.log(response.data);
             this.lessons = response.data;
           }
       })
@@ -103,24 +114,49 @@
 			},
 			get: function() {
 				this.show = true;
-				getCourse(this.cur).then((response) => {
-					if(response.data == "3401 LOGOUT") {
-						Toast.fail("未登录");
-						this.$router.push("/login");
-					}else {
-						// console.log(response.data);
-						this.lessons = response.data;
-					}
-					this.show = false;
-				})
-				if(this.cur) {
-					this.lessonType = "所有课程";
-					this.cur = false;
-				}else {
-					this.lessonType = "当前周课程";
-					this.cur = true;
-				}
+        var temp = window.localStorage.getItem("lessons");
+        // console.log(temp);
+        if(temp != null && window.localStorage.getItem("cur") == this.curWeek.toString()) {
+          this.lessons = JSON.parse(temp);
+          this.show = false;
+        }else {
+          getCourse(this.cur).then((response) => {
+            if(response.data == "3401 LOGOUT") {
+              Toast.fail("未登录");
+              this.$router.push("/login");
+            }else {
+              // console.log(response.data);
+              this.lessons = response.data;
+              window.localStorage.setItem("cur", this.curWeek.toString())
+              window.localStorage.setItem("lessons", JSON.stringify(response.data));
+            }
+            this.show = false;
+          })
+        }
+
+				// if(this.cur) {
+				// 	this.lessonType = "所有课程";
+				// 	this.cur = false;
+				// }else {
+				// 	this.lessonType = "当前周课程";
+				// 	this.cur = true;
+				// }
 			},
+      getSelect: function() {
+        this.show = true;
+        selectedCourse(this.week).then((response) => {
+          if(response.data == "3401 LOGOUT") {
+            Toast.fail("未登录");
+            this.$router.push("/login");
+          }else {
+            this.lessons = response.data;
+            if(this.week == this.curWeek) {
+              window.localStorage.setItem("lessons", JSON.stringify(response.data))
+            }
+          }
+          this.show = false;
+        })
+      },
 			computeTop: function(num) {
 				return (num * 7.5 + 2.5).toString() + "%";
 			},
@@ -139,6 +175,7 @@
 		},
 		mounted() {
 			this.get();
+      this.week = Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
 		}
 	}
 </script>

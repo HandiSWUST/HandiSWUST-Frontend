@@ -111,15 +111,17 @@ export default {
 #score{
 
   background-color: #f2f2f2;
+  height: 100%;
+  width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 #loading{
-  vertical-align: center;
+  vertical-align: top;
   align-items: center;
 
-  top:50%
+  /* top:50% */
 
 
 }

@@ -4,7 +4,6 @@ import { Grid, GridItem } from 'vant';
 import { Icon } from 'vant';
 import { Loading } from 'vant';
 import { Image as VanImage } from 'vant';
-import {Card} from "vant";
 import router from './router.js'
 import './assets/main.css'
 import 'vant/lib/index.css';
@@ -22,6 +21,8 @@ import { Collapse, CollapseItem } from 'vant';
 import { Dialog } from 'vant';
 import axios from "axios";
 import { PullRefresh } from 'vant';
+import { Pagination } from 'vant';
+
 
 
 axios.defaults.withCredentials = true;
@@ -67,5 +68,5 @@ app.use(Button);
 app.use(Popup);
 app.use(Collapse);
 app.use(CollapseItem);
-app.use(Card);
+app.use(Pagination);
 app.mount('#app')
