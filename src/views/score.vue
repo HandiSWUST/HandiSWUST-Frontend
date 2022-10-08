@@ -123,6 +123,5 @@ export default {
 
   /* top:50% */
 
-
 }
 </style>
