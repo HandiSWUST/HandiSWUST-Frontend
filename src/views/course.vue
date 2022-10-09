@@ -133,14 +133,6 @@
             this.show = false;
           })
         }
-
-				// if(this.cur) {
-				// 	this.lessonType = "所有课程";
-				// 	this.cur = false;
-				// }else {
-				// 	this.lessonType = "当前周课程";
-				// 	this.cur = true;
-				// }
 			},
       getSelect: function() {
         this.show = true;

@@ -8,16 +8,30 @@
   />
 
   <van-row v-show="!ifLoading">
-    <van-col span="12">
-      <van-cell-group inset title="GPA">
-        <van-cell title="必修课绩点" :value="required" />
-        <van-cell title="总绩点" :value="all"/>
+    <van-col span="24">
+      <van-cell-group inset title="GPA" style="text-align: center">
+        <van-circle
+            v-model:current-rate="currentRate"
+            :rate="required*20"
+            :speed="20"
+            :text="bixiuText"
+            style="margin-right: 15%"
+            stroke-width="70"
+        >
+        </van-circle>
+        <van-circle
+            v-model:current-rate="currentRate"
+            :rate="all*20"
+            :speed="20"
+            :text="allText"
+            stroke-width="70"
+        />
       </van-cell-group>
     </van-col>
   </van-row>
 
 
-  <van-row>
+  <van-row style="margin-bottom: 2%">
     <van-col span="24">
 
       <ul v-for="(termScore,key,i) in tableData" :key="i" >
@@ -78,8 +92,9 @@ export default {
           var parse1 = JSON.parse(parse.body.result);
           console.log(parse1)
           this.required=parse1.gpa.required;
+          this.bixiuText += this.required.toString();
           this.all=parse1.gpa.all;
-
+          this.allText += this.all.toString();
 
         }
 
@@ -116,6 +131,9 @@ export default {
       ifLoading:true,
       required:0,
       all:0,
+      currentRate: 0,
+      bixiuText: "必修课绩点\n",
+      allText: "总绩点\n",
 
       //th
       option: {

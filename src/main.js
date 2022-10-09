@@ -22,6 +22,7 @@ import { Dialog } from 'vant';
 import axios from "axios";
 import { PullRefresh } from 'vant';
 import { Pagination } from 'vant';
+import { Circle } from 'vant';
 
 
 
@@ -31,16 +32,32 @@ axios.interceptors.response.use(response => {
     // console.log(response.data)
     if (response.data) {
         // 数据正常，进行的逻辑功能
-        return response
+        return response;
     } else {
         // 如果返回的 success 是 false，表明业务出错，直接触发 reject
         // 抛出的错误，被 catch 捕获
-        return Promise.reject(new Error(response.data.message))
+        return Promise.reject(new Error(response.data.message));
     }
 }, error => {
+    // 只重传5次，超过后抛异常
+    var cfg = error.config;
+    if(cfg.retryCount == undefined) {
+        cfg.retryCount = 0;
+    }
+    if(cfg.retryCount >= 10) {
+        return Promise.reject(error);
+    }
+    cfg.retryCount++;
     // 对响应错误做点什么
-    location.reload();
-    return Promise.reject(error)
+    // location.reload();
+    // 延时1000ms
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 1000)
+    }).then(() => {
+        return axios(error.config);
+    })
 })
 
 app.use(NoticeBar);
@@ -70,4 +87,5 @@ app.use(Collapse);
 app.use(CollapseItem);
 app.use(Pagination);
 app.use(Cell);
+app.use(Circle);
 app.mount('#app')
