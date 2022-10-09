@@ -7,6 +7,16 @@
       @click-left="onClickLeft"
   />
 
+  <van-row v-show="!ifLoading">
+    <van-col span="12">
+      <van-cell-group inset title="GPA">
+        <van-cell title="必修课绩点" :value="required" />
+        <van-cell title="总绩点" :value="all"/>
+      </van-cell-group>
+    </van-col>
+  </van-row>
+
+
   <van-row>
     <van-col span="24">
 
@@ -47,10 +57,35 @@ export default {
   },
   mounted () {
     this.getScore();
+    this.getGPA();
   },
   components:{TableVant},
   name: "score",
   methods:{
+    getGPA(){
+      axios.defaults.withCredentials = true;
+      return axios({
+        url: BASE_URL+"/api/gpa",
+        method: "get",
+        withCredentials: true,
+      }).then((resp)=>{
+        if(resp.data=="3401 LOGOUT")
+        {
+          Toast.fail("未登录");
+          this.$router.push("/login");
+        }else{
+          var parse = JSON.parse(resp.data);
+          var parse1 = JSON.parse(parse.body.result);
+          console.log(parse1)
+          this.required=parse1.gpa.required;
+          this.all=parse1.gpa.all;
+
+
+        }
+
+      });
+
+    },
 
     getScore() {
       axios.defaults.withCredentials = true;
@@ -64,6 +99,7 @@ export default {
           Toast.fail("未登录");
           this.$router.push("/login");
         }else{
+          console.log(resp.data)
           this.ifLoading=false;
           this.tableData = resp.data;
 
@@ -78,6 +114,8 @@ export default {
       tableData:{},
       terms:[],
       ifLoading:true,
+      required:0,
+      all:0,
 
       //th
       option: {

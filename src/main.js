@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { Grid, GridItem } from 'vant';
+import {Grid, GridItem, NoticeBar} from 'vant';
 import { Icon } from 'vant';
 import { Loading } from 'vant';
 import { Image as VanImage } from 'vant';
@@ -11,7 +11,7 @@ import { Divider } from 'vant';
 import { Col, Row } from 'vant';
 import { NavBar } from 'vant';
 import { Progress } from 'vant';
-import { Form, Field, CellGroup } from 'vant';
+import { Form, Field, CellGroup,Cell } from 'vant';
 import { Button } from 'vant';
 import { Toast } from 'vant';
 import { Popup } from 'vant';
@@ -43,7 +43,7 @@ axios.interceptors.response.use(response => {
     return Promise.reject(error)
 })
 
-
+app.use(NoticeBar);
 app.use(PullRefresh);
 app.use(Checkbox);
 app.use(Dialog);
@@ -69,4 +69,5 @@ app.use(Popup);
 app.use(Collapse);
 app.use(CollapseItem);
 app.use(Pagination);
+app.use(Cell);
 app.mount('#app')

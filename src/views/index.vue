@@ -64,6 +64,13 @@
         </van-grid-item>
       </van-grid>
     </van-row>
+    <van-notice-bar scrollable speed="100"
+        left-icon="volume-o"
+        text="如果遇到BUG，请在右上角“关于”页面联系作者，十分感谢！"
+    />
+    <van-row align="bottom">
+      <van-col><p></p></van-col>
+    </van-row>
   </div>
 </template>
 
