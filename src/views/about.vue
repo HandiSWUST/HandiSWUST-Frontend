@@ -3,7 +3,7 @@
 		<van-collapse v-model="activeNames">
 			<van-nav-bar title="关于" id="bar"	left-text="返回" left-arrow @click-left="goBack"/>
 			  <van-collapse-item title="作者" name="1">
-				  <p>前端 & 代理端 (出BUG可通过下面方式联系): </p>
+				  <p>全栈 (排名不分先后，出BUG可通过下面方式联系): </p>
 				  <p>卓计2101 Alice-in-oven: QQ 1071142396</p>
 				  <p>计科2101 ShirakawaTyu: QQ 2541028866</p>
 			  </van-collapse-item>

@@ -67,7 +67,7 @@
     <van-notice-bar scrollable speed="100"
         left-icon="volume-o"
         text="这几天大量更新，更新日志请查看“关于”，如果遇到BUG，也请在右上角“关于”页面联系作者，十分感谢！"
-        closeable
+        mode="closeable"
     />
     <van-row align="bottom">
       <van-col><p></p></van-col>
