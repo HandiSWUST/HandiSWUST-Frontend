@@ -11,7 +11,7 @@ import { Divider } from 'vant';
 import { Col, Row } from 'vant';
 import { NavBar } from 'vant';
 import { Progress } from 'vant';
-import { Form, Field, CellGroup,Cell } from 'vant';
+import { Form, Field, CellGroup,Cell ,SwipeCell} from 'vant';
 import { Button } from 'vant';
 import { Toast } from 'vant';
 import { Popup } from 'vant';
@@ -77,6 +77,7 @@ app.use(Grid);
 app.use(GridItem);
 app.use(router)
 app.use(VanImage);
+app.use(SwipeCell);
 app.use(Divider);
 app.use(Col);
 app.use(Row);

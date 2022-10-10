@@ -69,9 +69,7 @@
         text="串数据问题已修复，详细更新日志见“关于”，如果遇到BUG，也请在右上角“关于”页面联系作者，十分感谢！"
         mode="closeable"
     />
-    <van-row align="bottom">
-      <van-col><p></p></van-col>
-    </van-row>
+
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="library" >
+  <div id="library" class="text-wrapper">
     <van-nav-bar
         title="图书借阅信息"
         left-text="返回"
@@ -11,9 +11,12 @@
       <van-col span="24">
 
         <ul v-show="!ifLoading" >
-          <van-cell-group inset title="记得按时还书哦！">
-            <Table-vant :option="option" :tableData="tableData"></Table-vant>
-          </van-cell-group>
+
+            <van-cell-group inset title="记得按时还书哦！">
+              <Table-vant :option="option" :tableData="tableData"></Table-vant>
+            </van-cell-group>
+
+
         </ul>
 
 
@@ -113,5 +116,27 @@ export default {
 </script>
 
 <style scoped>
+.text-wrapper {
+  word-break: break-all;
+  word-wrap: break-word
+}
+#library{
 
+
+
+
+  background-color: #f2f2f2;
+  height: 100%;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#loading{
+  vertical-align: top;
+  align-items: center;
+
+  /* top:50% */
+
+}
 </style>
