@@ -8,7 +8,7 @@
 				  <p>计科2101 ShirakawaTyu: QQ 2541028866</p>
 			  </van-collapse-item>
 			  <van-collapse-item title="隐私协议" name="2">
-				  <textarea id="privacy" rows="20">
+				  <textarea id="privacy" rows="20" readonly>
 # 隐私协议
 ## 隐私协议：一般说明
 本隐私策略的目的是说明当您访问和使用本网站时我们可能会搜集的资料, 我们会怎样使用这些资料, 是否会透露给第三方, 以及您对这些资料的使用及修改方面的选择权利. 本隐私策略适用于本网站,您需要仔细阅读本隐私策略.
@@ -44,7 +44,9 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 				  </textarea>
 			  </van-collapse-item>
       <van-collapse-item title="更新日志" name="3">
-        <textarea id="privacy" rows="20">
+        <textarea id="privacy" rows="20" readonly>
+# 2022.10.10
+- 尝试修复了串数据的问题
 # 2022.10.9
 - 加入绩点查询功能
 - 后端增加每日登录人次统计(不记录具体的学号等信息，只记录次数)

@@ -66,7 +66,7 @@
     </van-row>
     <van-notice-bar scrollable speed="100"
         left-icon="volume-o"
-        text="这几天大量更新，更新日志请查看“关于”，如果遇到BUG，也请在右上角“关于”页面联系作者，十分感谢！"
+        text="串数据问题已修复，详细更新日志见“关于”，如果遇到BUG，也请在右上角“关于”页面联系作者，十分感谢！"
         mode="closeable"
     />
     <van-row align="bottom">
