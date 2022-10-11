@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import {Grid, GridItem, NoticeBar} from 'vant';
+import {Grid, GridItem, List, NoticeBar, Search} from 'vant';
 import { Icon } from 'vant';
 import { Loading } from 'vant';
 import { Image as VanImage } from 'vant';
@@ -23,6 +23,7 @@ import axios from "axios";
 import { PullRefresh } from 'vant';
 import { Pagination } from 'vant';
 import { Circle } from 'vant';
+
 
 
 
@@ -61,6 +62,8 @@ axios.interceptors.response.use(response => {
 })
 
 app.use(NoticeBar);
+app.use(List);
+app.use(Search);
 app.use(PullRefresh);
 app.use(Checkbox);
 app.use(Dialog);
