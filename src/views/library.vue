@@ -51,7 +51,7 @@
             @load="onLoad(this.value,this.pageHelper++)"
         >
           <van-cell v-for="item in list" :key="item" :title="item.title" value="查看馆藏" :label="item.author" is-link @click="showPopup(item.marcRecNo)">查看馆藏</van-cell>
-          <van-popup  v-model:show="show" position="top" :style="{ height: '30%' }" v-html="showLocation"></van-popup>
+          <van-popup  v-model:show="show"  round position="bottom" :style="{ height: '50%' }" v-html="showLocation"></van-popup>
 <!--          <van-cell v-for="item in books" :key="item" :title="item.title" value="查看馆藏" :label="item.author"/>-->
         </van-list>
       </van-col>
