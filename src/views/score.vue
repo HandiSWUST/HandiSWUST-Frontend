@@ -83,11 +83,17 @@ export default {
         method: "get",
         withCredentials: true,
       }).then((resp)=>{
+
+
         if(resp.data=="3401 LOGOUT")
         {
           Toast.fail("未登录");
           this.$router.push("/login");
-        }else{
+        }else if(JSON.parse(resp.data).result==null){
+          Toast.fail("当前没有成绩和绩点呢,可能是一站式服务大厅崩掉了~");
+          this.$router.push("/");
+        }
+        else{
           var parse = JSON.parse(resp.data);
           var parse1 = JSON.parse(parse.body.result);
           console.log(parse1)
