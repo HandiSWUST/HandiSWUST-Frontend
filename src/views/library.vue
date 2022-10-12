@@ -9,12 +9,12 @@
 
 
 
-    <van-row v-show="!ifLoading">
+    <van-row >
 
       <van-col span="24">
 
 
-        <van-collapse v-model="activeNames" >
+        <van-collapse v-model="activeNames" v-show="!ifLoading">
           <van-collapse-item  title="查看已借阅图书" name="1">
             <ul  >
 
@@ -61,7 +61,7 @@
       <van-loading  v-show="ifLoading2" size="50px"  vertical a>加载中...</van-loading>
     </div>
     <div id="loading">
-      <van-loading  v-show="ifLoading" size="50px"  vertical a>加载中...</van-loading>
+      <van-loading  v-show="ifLoading" size="50px"  vertical a>加载借阅信息中...</van-loading>
     </div>
   </div>
 </template>
@@ -86,9 +86,11 @@ export default {
     const list = ref([]);
     const loading = ref(false);
     const finished = ref(false);
+    const loadFlag = ref(true);
 
 
     const onLoad = (a,b) => {
+      if(loadFlag.value)finished.value = true;
       setTimeout(() => {
         queryBooks(a,b).then((resp)=>{
           for(let item in resp.data.content){
@@ -114,7 +116,7 @@ export default {
       show,
       list,
       value,
-
+     loadFlag,
       onLoad,
       loading,
       finished,
@@ -185,6 +187,8 @@ export default {
     // },
 
     onClickButton(){
+      this.loadFlag = false;
+      this.finished = false;
       this.ifLoading2=true;
       queryBooks(this.value,1).then((resp)=>{
         this.list=resp.data.content;
