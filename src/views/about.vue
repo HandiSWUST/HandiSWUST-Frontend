@@ -45,6 +45,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志" name="3">
         <textarea id="privacy" rows="20" readonly>
+# 2022.10.15
+- 修复了IOS周数显示不正确的问题
 # 2022.10.12
 - 增加了图书查询功能
 # 2022.10.10
