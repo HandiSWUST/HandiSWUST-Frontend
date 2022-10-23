@@ -1,5 +1,5 @@
 <template>
-<div id="score" >
+<div id="score">
   <van-nav-bar
       title="成绩"
       left-text="返回"
@@ -167,7 +167,6 @@ export default {
 </script>
 <style scoped>
 #score{
-
   background-color: #f2f2f2;
   height: 100%;
   width: 100%;

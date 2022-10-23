@@ -3,10 +3,14 @@
     <van-nav-bar
         title="首页"
         id="bar"
-        left-text="下载APP"
-        @click-left="downApp"
         right-text="关于"
-        @click-right="about"/>
+        @click-right="about">
+      <template #left>
+        <van-badge :dot="update">
+          <p @click="downApp" style="color: #1989fa;">下载APP</p>
+        </van-badge>
+      </template>
+    </van-nav-bar>
 
     <div id="row2">
       <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#2c2c2c"/>
@@ -64,18 +68,21 @@
         </van-grid-item>
       </van-grid>
     </van-row>
-    <van-notice-bar scrollable speed="100"
+    <van-notice-bar
+        color="#1989fa"
+        background="#ecf9ff"
         left-icon="volume-o"
-        text="串数据问题已修复，详细更新日志见“关于”，如果遇到BUG，也请在右上角“关于”页面联系作者，十分感谢！"
+        speed="100"
+        text="安卓课程表小部件已更新！点左上角下载新版本吧，如遇BUG，请在“关于”页面联系作者，十分感谢！"
         mode="closeable"
     />
-
   </div>
 </template>
 
 <script>
 import {START_TIME} from "/src/common/final.js"
 import {TOTAL_WEEK} from "/src/common/final.js"
+import {VERSION} from "/src/common/final.js"
 import {getExam} from "/src/api/getExam"
 import {captcha} from "/src/api/getCaptcha"
 import {Dialog, Notify, Toast} from "vant"
@@ -87,6 +94,7 @@ import {logOut} from "../api/logout";
 export default {
   name: "indexPanel",
   mounted() {
+    this.updateCheck();
     this.loginCheck();
     if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
       Notify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
@@ -94,6 +102,7 @@ export default {
   },
   data() {
     return {
+      update: true,
       captcha: 0,
       imgUrl: "",
       curWeek: 0,
@@ -111,10 +120,22 @@ export default {
     }
   },
   methods: {
+    updateCheck: function () {
+      var ver = window.localStorage.getItem("version");
+      if(ver != null && ver == VERSION.toString()) {
+        this.update = false;
+      }
+    },
     loginCheck: function () {
       checkLogin().then((resp) => {
-        if (resp.data == "3401 LOGOUT") this.isLogin = false;
-        else this.isLogin = true;
+        if (resp.data == "3401 LOGOUT") {
+          this.isLogin = false;
+          window.localStorage.setItem("isLogin", "false");
+        }
+        else{
+          this.isLogin = true;
+          window.localStorage.setItem("isLogin", "true");
+        }
       })
 
     },
@@ -150,7 +171,10 @@ export default {
     },
     downApp: function () {
       Dialog.alert({
-        message: '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
+        message:
+            '更新了安卓课程表小部件，欢迎下载体验！\n' +
+            '由于改动较大，强烈建议卸载再安装新版本\n' +
+            '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
             '提取码: 2333',
       })
     },

@@ -32,19 +32,19 @@
         <br/>
         <div style="display: flex;">
           <img v-bind:src="imgUrl" style="margin-left: 3%;"/>
-          <van-button plain type="primary" color="#2c2c2c" size="small" v-on:click="getCaptcha"
+          <van-button plain type="primary" color="#1989fa" size="small" v-on:click="getCaptcha"
                       style="margin-left: 3%;">获取验证码
           </van-button>
 
         </div>
-        <van-checkbox v-model="remember" checked-color="#2c2c2c" style="margin-top: 5%; margin-left: 3%;">记住密码
+        <van-checkbox v-model="remember" checked-color="#1989fa" style="margin-top: 5%; margin-left: 3%;">记住密码
         </van-checkbox>
-        <p style="margin-top: 3%; margin-left: 3%; color: #2c2c2c;">登录即代表您同意我们的<a
+        <p style="margin-top: 3%; margin-left: 3%; color: #2c2c2c;">登录即代表您同意我们的<a style="color: #1989fa"
             href="https://note.shirakawatyu.top/#/article/53">隐私政策</a></p>
       </van-cell-group>
 
       <div style="margin: 16px;">
-        <van-button round block color="#2c2c2c" type="primary" native-type="submit">
+        <van-button block color="#1989fa" type="primary" native-type="submit" style="border-radius: 6px">
           提交
         </van-button>
       </div>

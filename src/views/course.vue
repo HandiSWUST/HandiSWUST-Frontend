@@ -214,6 +214,7 @@
 	}
 	#noTable {
 		box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+    /*background: white;*/
 		height: 100%;
 		width: 100%;
 		max-height: 100%;

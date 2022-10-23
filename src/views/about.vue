@@ -1,7 +1,7 @@
 <template>
-	<div id="about" >
+	<div id="about">
 		<van-collapse v-model="activeNames">
-			<van-nav-bar title="关于" id="bar"	left-text="返回" left-arrow @click-left="goBack"/>
+			<van-nav-bar title="关于" left-text="返回" left-arrow @click-left="goBack"/>
 			  <van-collapse-item title="作者" name="1">
 				  <p>全栈 (排名不分先后，出BUG可通过下面方式联系): </p>
 				  <p>卓计2101 Alice-in-oven: QQ 1071142396</p>
@@ -45,6 +45,13 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志" name="3">
         <textarea id="privacy" rows="20" readonly>
+# 2022.10.23
+- 增加了课程表安卓小部件
+- 调整了部分页面的样式
+# 2022.10.22
+- 调整了登录过期的时间
+# 2022.10.19
+- 修复了部分课程null的问题
 # 2022.10.15
 - 修复了IOS周数显示不正确的问题
 # 2022.10.12
@@ -104,7 +111,7 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 <style>
 	#about {
 		position: relative;
-		background-color: white;
+		background-color: #f2f2f2;
 		width: 100%;
 		height: 100%;
     overflow-y: auto;

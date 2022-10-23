@@ -23,6 +23,10 @@ import axios from "axios";
 import { PullRefresh } from 'vant';
 import { Pagination } from 'vant';
 import { Circle } from 'vant';
+import { Badge } from 'vant';
+
+
+
 
 
 
@@ -61,6 +65,7 @@ axios.interceptors.response.use(response => {
     })
 })
 
+app.use(Badge);
 app.use(NoticeBar);
 app.use(List);
 app.use(Search);
