@@ -4,7 +4,7 @@ import {Grid, GridItem, List, NoticeBar, Search} from 'vant';
 import { Icon } from 'vant';
 import { Loading } from 'vant';
 import { Image as VanImage } from 'vant';
-import VueCookies from 'vue-cookies';
+import VueCookies from 'vue-cookie';
 import router from './router.js'
 import './assets/main.css'
 import 'vant/lib/index.css';
@@ -27,8 +27,8 @@ import { Circle } from 'vant';
 import { Badge } from 'vant';
 
 
-
-
+// 千万不要从idea的提示里安装缺少的依赖，否则后果会很严重！！！
+// WTM今天已经重装了3次nodejs了
 
 
 
