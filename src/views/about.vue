@@ -1,7 +1,7 @@
 <template>
 	<div id="about">
 		<van-collapse v-model="activeNames">
-			<van-nav-bar title="关于" left-text="返回" left-arrow @click-left="goBack"/>
+			<van-nav-bar id="bar" title="关于" left-text="返回" left-arrow @click-left="goBack"/>
 			  <van-collapse-item title="作者" name="1">
 				  <p>全栈 (排名不分先后，出BUG可通过下面方式联系): </p>
 				  <p>卓计2101 Alice-in-oven: QQ 1071142396</p>
@@ -45,6 +45,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志" name="3">
         <textarea id="privacy" rows="20" readonly>
+# 2022.10.25
+- 修改了首页样式，这大概是我作为后端的极限了罢，如果还丑那下次请个专门搞设计的来弄弄看看
 # 2022.10.24
 - 修复了鸿蒙以及低版本安卓闪退的问题
 # 2022.10.23
@@ -90,6 +92,13 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 - 首次提交，实现了登录和基本的首页
         </textarea>
       </van-collapse-item>
+      <van-collapse-item title="借物表" name="5">
+        <textarea id="privacy" rows="20" readonly>
+# 图标
+- Bitsies! https://iconstore.co/icons/bitsies
+# 开源库待补充
+        </textarea>
+      </van-collapse-item>
 		</van-collapse>
 	</div>
 </template>
@@ -99,7 +108,7 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 		name: "aboutUs",
 		data() {
 			return {
-				activeNames: ["1", "2", "3"]
+				activeNames: ["1", "2", "3", "5"]
 			}
 		},
 		methods: {

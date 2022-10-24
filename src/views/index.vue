@@ -1,81 +1,125 @@
 <template>
   <div id="grid1">
-    <van-nav-bar
-        title="首页"
-        id="bar"
-        right-text="关于"
-        @click-right="about">
-      <template #left>
-        <van-badge :dot="update">
-          <p @click="downApp" style="color: #1989fa;">下载APP</p>
-        </van-badge>
-      </template>
-    </van-nav-bar>
+<!--  导航栏及公告栏  -->
+    <van-row style="margin-bottom: 6%">
+      <van-col span="24" style="height: 86px;">
+        <van-nav-bar
+            title="首页"
+            id="bar"
+            right-text="关于"
+            @click-right="about">
+          <template #left>
+            <van-badge :dot="update">
+              <p @click="downApp" style="color: #1989fa;">下载APP</p>
+            </van-badge>
+          </template>
+        </van-nav-bar>
 
-    <div id="row2">
-      <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#2c2c2c"/>
-    </div>
-    <van-row align="bottom" id="row">
-      <van-grid :column-num="2" id="g" :border="false" :clickable="true">
-        <van-grid-item v-on:click="login" v-if="!isLogin">
-          <van-image
-              src="/login.png"
-              class="img"
-          />
-          <p class="text">登录</p>
-        </van-grid-item>
-        <van-grid-item v-on:click="getLibrary" v-if="isLogin">
-          <van-image
-              src="/lib.png"
-              class="img"
-          />
-          <p class="text">图书借阅信息</p>
-        </van-grid-item>
-        <van-grid-item v-on:click="logout" v-if="isLogin">
-          <van-image
-              src="/logout.png"
-              class="img"
-          />
-          <p class="text">退出登录</p>
-        </van-grid-item>
-        <van-grid-item v-on:click="getCourses">
-          <van-image
-              src="/table.png"
-              class="img"
-          />
-          <p class="text">课程表</p>
-        </van-grid-item>
-        <van-grid-item v-on:click="getExam">
-          <van-image
-              src="/exam.png"
-              class="img"
-          />
-          <p class="text">考试</p>
-        </van-grid-item>
-        <van-grid-item v-on:click="getScore">
-          <van-image
-              src="/score.png"
-              class="img"
-          />
-          <p class="text">成绩</p>
-        </van-grid-item>
-        <van-grid-item v-on:click="calendar">
-          <van-image
-              src="/date.png"
-              class="img"
-          />
-          <p class="text">校历</p>
-        </van-grid-item>
-      </van-grid>
+        <van-notice-bar
+            color="#1989fa"
+            background="#ecf9ff"
+            left-icon="volume-o"
+            speed="100"
+            text="安卓课程表小部件已更新！点左上角下载新版本吧，如遇BUG，请在“关于”页面联系作者，十分感谢！"
+            mode="closeable"
+        />
+      </van-col>
     </van-row>
-    <van-notice-bar
-        color="#1989fa"
-        background="#ecf9ff"
-        left-icon="volume-o"
-        speed="100"
-        text="安卓课程表小部件已更新！点左上角下载新版本吧，如遇BUG，请在“关于”页面联系作者，十分感谢！"
-        mode="closeable"
-    />
+
+<!--  时间、周数、一言  -->
+    <van-row style="width: 100%">
+      <van-col span="12">
+        <div id="clock-container">
+          <p id="clock1">北京时间</p>
+          <p id="clock2">{{time}}</p>
+          <p id="clock3">{{day}}</p>
+        </div>
+        <div>
+          <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#00bcd4"/>
+        </div>
+      </van-col>
+
+      <van-col span="12">
+        <div id="hitokoto">
+          <div style="padding-left: 10%; padding-top: 10%; margin-bottom: 5%">
+            <van-image
+                src="/hitokoto.svg"
+                style="width: 15%; float: left"
+            />
+            <p style="margin-left: 5%; float: left;">一言</p>
+          </div>
+          <br/>
+          <p id="sentence">{{sentence}}</p>
+        </div>
+      </van-col>
+    </van-row>
+
+<!--  按钮面板  -->
+    <van-col span="24">
+      <div id="row">
+        <van-grid :column-num="2" id="g" :border="false" :clickable="true">
+          <van-grid-item v-on:click="login" v-if="!isLogin">
+            <van-image
+                src="/login.svg"
+                class="img"
+            />
+            <p class="text">登录</p>
+          </van-grid-item>
+          <van-grid-item v-on:click="getLibrary" v-if="isLogin">
+            <van-image
+                src="/lib.svg"
+                class="img"
+            />
+            <p class="text">图书借阅信息</p>
+          </van-grid-item>
+          <van-grid-item v-on:click="logout" v-if="isLogin">
+            <van-image
+                src="/logout.svg"
+                class="img"
+            />
+            <p class="text">退出登录</p>
+          </van-grid-item>
+        </van-grid>
+      </div>
+      <div id="row">
+        <van-grid :column-num="2" id="g" :border="false" :clickable="true">
+          <van-grid-item v-on:click="getCourses">
+            <van-image
+                src="/table.svg"
+                class="img"
+            />
+            <p class="text">课程表</p>
+          </van-grid-item>
+          <van-grid-item v-on:click="getExam">
+            <van-image
+                src="/exam.svg"
+                class="img"
+            />
+            <p class="text">考试</p>
+          </van-grid-item>
+        </van-grid>
+      </div>
+      <div id="row">
+        <van-grid :column-num="2" id="g" :border="false" :clickable="true">
+          <van-grid-item v-on:click="getScore">
+            <van-image
+                src="/score.svg"
+                class="img"
+            />
+            <p class="text">成绩</p>
+          </van-grid-item>
+          <van-grid-item v-on:click="calendar">
+            <van-image
+                src="/date.svg"
+                class="img"
+            />
+            <p class="text">校历</p>
+          </van-grid-item>
+        </van-grid>
+      </div>
+    </van-col>
+
+
   </div>
 </template>
 
@@ -87,13 +131,15 @@ import {getExam} from "/src/api/getExam"
 import {captcha} from "/src/api/getCaptcha"
 import {Dialog, Notify, Toast} from "vant"
 import {checkLogin} from "../api/loginCheck";
-import axios from "axios";
-import {BASE_URL} from "../common/final.js"
 import {logOut} from "../api/logout";
+import {hitokoto} from "../api/hitokotoApi";
 
 export default {
   name: "indexPanel",
   mounted() {
+    this.getSentence();
+    this.date();
+    setInterval(this.date, 10000);
     this.updateCheck();
     this.loginCheck();
     if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
@@ -102,11 +148,14 @@ export default {
   },
   data() {
     return {
+      time: "0:00",
+      day: "24TH 10月",
       update: true,
       captcha: 0,
       imgUrl: "",
       curWeek: 0,
-      isLogin: false
+      isLogin: false,
+      sentence: "世上本没有路，走的人多了也便成了路",
     }
   },
   computed: {
@@ -120,6 +169,33 @@ export default {
     }
   },
   methods: {
+    getSentence: function () {
+      hitokoto("a", "json").then((resp) => {
+        console.log(resp.data);
+        var fromWho = resp.data.from_who;
+        if(fromWho == null) {
+          fromWho = "";
+        }
+        this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
+      });
+    },
+    date: function () {
+      var date = new Date();
+      var hour = date.getHours();
+      var minutes = date.getMinutes();
+      if(hour < 10) {
+        hour = "0" + hour.toString();
+      }else {
+        hour = hour.toString();
+      }
+      if(minutes < 10) {
+        minutes = "0" + hour.toString();
+      }else {
+        minutes = hour.toString();
+      }
+      this.time = hour + ":" + minutes;
+      this.day = date.getDate().toString() + "TH " +  (date.getMonth() + 1).toString() + "月";
+    },
     updateCheck: function () {
       var ver = window.localStorage.getItem("version");
       if(ver != null && ver == VERSION.toString()) {
@@ -190,53 +266,89 @@ export default {
 
 <style scoped>
 #progr {
-  border-radius: 10px;
+  margin-left: 10%;
+  height: 0;
+  padding-bottom: 20%;
+  width: 85%;
+  border-radius: 15px;
+  background-color: white;
 }
 
 .img {
-  max-width: 50%;
+  max-width: 35%;
   max-height: 100%;
+  margin-bottom: 5%;
 }
 
 #bar {
-  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 20px 0 rgba(0, 0, 0, 0.1)
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 }
 
 #row {
   left: 5%;
-  padding: 5%;
+  padding: 1%;
   max-width: 90%;
-  position: absolute;
-  bottom: 10%;
+  margin-bottom: 5%;
   border-radius: 15px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background-color: white;
 }
 
-#row2 {
-  left: 5%;
-  padding: 0px;
-  width: 90%;
-  height: 20%;
-  max-width: 90%;
-  top: 10%;
-  position: absolute;
+#hitokoto {
+  margin-bottom: 10%;
+  height: 0;
+  padding-bottom: 90%;
+  width: 85%;
   border-radius: 15px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-right: 10%;
+  margin-left: 5%;
+  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
   background-color: white;
 }
 
-#bg {
-  height: 100%;
+#clock-container {
+  margin-bottom: 10%;
+  margin-left: 10%;
+  height: 0;
+  padding-bottom: 60%;
+  width: 85%;
+  border-radius: 15px;
+  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+  background-color: white;
 }
 
+#clock1 {
+  margin-left: 10%;
+  padding-top: 10%;
+  color: #03a9f4;
+  font-size: 2.5vw;
+}
+#clock2 {
+  margin-left: 10%;
+  color: black;
+  font-size: 7vw;
+}
+
+#clock3 {
+  margin-left: 10%;
+  color: gray;
+  font-size: 3vw;
+}
+#sentence {
+  margin-left: 10%;
+  margin-right: 10%;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
 .text {
   color: black;
 }
 
 #grid1 {
   position: relative;
-  background-color: white;
+  background-color: #f2f2f2;
   width: 100%;
   height: 100%;
 }

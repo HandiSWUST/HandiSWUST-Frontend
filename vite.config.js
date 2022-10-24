@@ -43,6 +43,12 @@ export default defineConfig({
 			changeOrigin: true,
 			// rewrite:(path) => path.replace(/^\/api/, '')
 		},
+		'/gethitokoto': {
+			target: 'https://v1.hitokoto.cn',
+			ws: true,
+			changeOrigin: true,
+			rewrite:(path) => path.replace(/^\/gethitokoto/, '')
+		 },
 		'/teachn': {
 			target: 'http://202.115.175.175/',
 			ws: true,

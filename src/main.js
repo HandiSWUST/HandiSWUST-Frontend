@@ -4,7 +4,6 @@ import {Grid, GridItem, List, NoticeBar, Search} from 'vant';
 import { Icon } from 'vant';
 import { Loading } from 'vant';
 import { Image as VanImage } from 'vant';
-import VueCookies from 'vue-cookie';
 import router from './router.js'
 import './assets/main.css'
 import 'vant/lib/index.css';
@@ -83,7 +82,6 @@ app.use(CheckboxGroup);
 app.use(Overlay);
 app.use(Loading);
 app.use(Toast);
-app.use(VueCookies);
 app.use(Form);
 app.use(Field);
 app.use(CellGroup);

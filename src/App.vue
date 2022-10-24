@@ -14,7 +14,7 @@
 	max-width: 100%;
 	position: fixed;
   background-color: #f2f2f2;
-    height: 100%;
+  height: 100%;
 	width: 100%;
 	margin: 0px;
 }

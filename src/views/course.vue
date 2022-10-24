@@ -11,7 +11,8 @@
 		:border="false"
 		left-text="返回"
 		left-arrow
-		@click-left="goBack">
+		@click-left="goBack"
+    style="height: 5%">
       <template #right>
         <van-pagination v-model="week" :page-count="totalWeek" mode="simple" @change="getSelect">
           <template #prev-text>

@@ -1,6 +1,7 @@
 <template>
 <div id="score">
   <van-nav-bar
+      id="bar"
       title="成绩"
       left-text="返回"
       left-arrow
