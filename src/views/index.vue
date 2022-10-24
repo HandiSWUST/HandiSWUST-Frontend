@@ -189,9 +189,9 @@ export default {
         hour = hour.toString();
       }
       if(minutes < 10) {
-        minutes = "0" + hour.toString();
+        minutes = "0" + minutes.toString();
       }else {
-        minutes = hour.toString();
+        minutes = minutes.toString();
       }
       this.time = hour + ":" + minutes;
       this.day = date.getDate().toString() + "TH " +  (date.getMonth() + 1).toString() + "月";
