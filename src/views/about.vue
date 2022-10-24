@@ -45,6 +45,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志" name="3">
         <textarea id="privacy" rows="20" readonly>
+# 2022.10.24
+- 修复了鸿蒙以及低版本安卓闪退的问题
 # 2022.10.23
 - 增加了课程表安卓小部件
 - 调整了部分页面的样式
