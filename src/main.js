@@ -4,6 +4,7 @@ import {Grid, GridItem, List, NoticeBar, Search} from 'vant';
 import { Icon } from 'vant';
 import { Loading } from 'vant';
 import { Image as VanImage } from 'vant';
+import VueCookies from 'vue-cookies';
 import router from './router.js'
 import './assets/main.css'
 import 'vant/lib/index.css';
@@ -34,11 +35,17 @@ import { Badge } from 'vant';
 axios.defaults.withCredentials = true;
 const app = createApp(App);
 axios.interceptors.response.use(response => {
+
+
     // console.log(response.data)
     if (response.data) {
         // 数据正常，进行的逻辑功能
         return response;
     } else {
+        if(response.data.getStats()==500){
+        Toast.fail("登录状态过期");
+        this.$router.push("/login");
+       }
         // 如果返回的 success 是 false，表明业务出错，直接触发 reject
         // 抛出的错误，被 catch 捕获
         return Promise.reject(new Error(response.data.message));
@@ -76,6 +83,7 @@ app.use(CheckboxGroup);
 app.use(Overlay);
 app.use(Loading);
 app.use(Toast);
+app.use(VueCookies);
 app.use(Form);
 app.use(Field);
 app.use(CellGroup);

@@ -87,7 +87,7 @@ export default {
         {
           Toast.fail("未登录");
           this.$router.push("/login");
-        }else if(resp.data==null){
+        }else if(resp.data==null||resp.data.status==500){
           Toast.fail("当前没有成绩和绩点呢,可能是一站式服务大厅崩掉了~");
           this.$router.push("/");
         }
