@@ -96,6 +96,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
         <textarea id="privacy" rows="20" readonly>
 # 图标
 - Bitsies! https://iconstore.co/icons/bitsies
+# 一言Api
+- Hitokoto https://hitokoto.cn/
 # 开源库待补充
         </textarea>
       </van-collapse-item>

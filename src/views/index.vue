@@ -170,7 +170,7 @@ export default {
   },
   methods: {
     getSentence: function () {
-      hitokoto("a", "json").then((resp) => {
+      hitokoto("", "json").then((resp) => {
         console.log(resp.data);
         var fromWho = resp.data.from_who;
         if(fromWho == null) {
@@ -334,6 +334,7 @@ export default {
   font-size: 3vw;
 }
 #sentence {
+  font-size: small;
   margin-left: 10%;
   margin-right: 10%;
   white-space: pre-wrap;
