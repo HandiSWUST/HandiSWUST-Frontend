@@ -195,7 +195,7 @@
 		padding: 1%;
 		top: 0%;
 		background-color: white;
-		box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 	}
 	.time {
 		text-align: center;
@@ -214,9 +214,11 @@
 		text-align: center;
 	}
 	#noTable {
-		box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+		/*box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 20px 0 rgba(0, 0, 0, 0.1);*/
     /*background: white;*/
-		height: 100%;
+    border-right: solid #ebedf0;
+    border-width: 1px;
+    height: 100%;
 		width: 100%;
 		max-height: 100%;
 	}

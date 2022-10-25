@@ -182,4 +182,7 @@ export default {
   /* top:50% */
 
 }
+#bar {
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
+}
 </style>

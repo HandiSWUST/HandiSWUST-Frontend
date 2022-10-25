@@ -170,14 +170,14 @@ export default {
   },
   methods: {
     getSentence: function () {
-      // hitokoto("a", "json").then((resp) => {
-      //   console.log(resp.data);
-      //   var fromWho = resp.data.from_who;
-      //   if(fromWho == null) {
-      //     fromWho = "";
-      //   }
-      //   this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
-      // });
+      hitokoto("a", "json").then((resp) => {
+        console.log(resp.data);
+        var fromWho = resp.data.from_who;
+        if(fromWho == null) {
+          fromWho = "";
+        }
+        this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
+      });
     },
     date: function () {
       var date = new Date();

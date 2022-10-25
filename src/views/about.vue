@@ -119,17 +119,16 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 	}
 </script>
 
-<style>
+<style scoped>
+  #bar {
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
+  }
 	#about {
 		position: relative;
 		background-color: #f2f2f2;
 		width: 100%;
 		height: 100%;
     overflow-y: auto;
-	}
-	#txt {
-		color: black;
-		margin: 5%;
 	}
 	#privacy {
 		width: 100%;
