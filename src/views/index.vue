@@ -170,14 +170,14 @@ export default {
   },
   methods: {
     getSentence: function () {
-      hitokoto("a", "json").then((resp) => {
-        console.log(resp.data);
-        var fromWho = resp.data.from_who;
-        if(fromWho == null) {
-          fromWho = "";
-        }
-        this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
-      });
+      // hitokoto("a", "json").then((resp) => {
+      //   console.log(resp.data);
+      //   var fromWho = resp.data.from_who;
+      //   if(fromWho == null) {
+      //     fromWho = "";
+      //   }
+      //   this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
+      // });
     },
     date: function () {
       var date = new Date();
@@ -351,5 +351,8 @@ export default {
   background-color: #f2f2f2;
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 </style>
