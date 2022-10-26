@@ -20,7 +20,7 @@
             background="#ecf9ff"
             left-icon="volume-o"
             speed="100"
-            text="安卓课程表小部件已更新！点左上角下载新版本吧，如遇BUG，请在“关于”页面联系作者，十分感谢！"
+            text="华为设备安卓课程表小部件BUG已修复！点左上角下载新版本吧，如遇BUG，请在“关于”页面联系作者，十分感谢！"
             mode="closeable"
         />
       </van-col>
@@ -248,8 +248,9 @@ export default {
     downApp: function () {
       Dialog.alert({
         message:
+            '已修复华为设备小部件BUG\n' +
             '更新了安卓课程表小部件，欢迎下载体验！\n' +
-            '由于改动较大，强烈建议卸载再安装新版本\n' +
+            '从无小部件版本更新建议先卸载\n' +
             '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
             '提取码: 2333',
       })
