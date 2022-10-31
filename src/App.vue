@@ -4,7 +4,11 @@
 
 <template>
 	<div id="app">
-		<router-view ></router-view>
+		<router-view v-slot="{ Component }">
+      <transition name="slide" mode="out-in">
+        <component :is="Component" :key="$route.path"/>
+      </transition>
+    </router-view>
 	</div>
 </template>
 
@@ -17,5 +21,18 @@
   height: 100%;
 	width: 100%;
 	margin: 0px;
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.slide-enter-from{
+  opacity: 0;
+  transform: translateX(30%);
+}
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-30%);
 }
 </style>

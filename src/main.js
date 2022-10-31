@@ -7,6 +7,7 @@ import { Image as VanImage } from 'vant';
 import router from './router.js'
 import './assets/main.css'
 import 'vant/lib/index.css';
+import 'animate.css';
 import { Divider } from 'vant';
 import { Col, Row } from 'vant';
 import { NavBar } from 'vant';
