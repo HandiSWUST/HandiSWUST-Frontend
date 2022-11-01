@@ -224,7 +224,7 @@ export default {
         else{
           this.isLogin = true;
           window.localStorage.setItem("isLogin", "true");
-          getCourse(this.cur).then((response) => {
+          getCourse(true).then((response) => {
             window.localStorage.setItem("lessons", JSON.stringify(response.data));
           })
         }
