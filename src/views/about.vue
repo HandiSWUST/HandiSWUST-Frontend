@@ -2,12 +2,12 @@
 	<div id="about">
 		<van-collapse v-model="activeNames">
 			<van-nav-bar id="bar" title="关于" left-text="返回" left-arrow @click-left="goBack"/>
-			  <van-collapse-item title="作者" name="1">
+			  <van-collapse-item title="作者">
 				  <p>全栈 (排名不分先后，出BUG可通过下面方式联系): </p>
 				  <p>卓计2101 Alice-in-oven: QQ 1071142396</p>
 				  <p>计科2101 ShirakawaTyu: QQ 2541028866</p>
 			  </van-collapse-item>
-			  <van-collapse-item title="隐私协议" name="2">
+			  <van-collapse-item title="隐私协议">
 				  <textarea id="privacy" rows="20" readonly>
 # 隐私协议
 ## 隐私协议：一般说明
@@ -43,8 +43,13 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 
 				  </textarea>
 			  </van-collapse-item>
-      <van-collapse-item title="更新日志" name="3">
+      <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2022.11.1
+- 修改了课程表颜色
+- 细微调整了课程表加载逻辑
+# 2022.10.30
+- 添加了过渡动画
 # 2022.10.25
 - 修改了首页样式，这大概是我作为后端的极限了罢，如果还丑那下次请个专门搞设计的来弄弄看看
 # 2022.10.24
@@ -92,7 +97,7 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 - 首次提交，实现了登录和基本的首页
         </textarea>
       </van-collapse-item>
-      <van-collapse-item title="借物表" name="5">
+      <van-collapse-item title="借物表">
         <textarea id="privacy" rows="20" readonly>
 # 图标
 - Bitsies! https://iconstore.co/icons/bitsies
@@ -100,6 +105,9 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 - Hitokoto https://hitokoto.cn/
 # 开源库待补充
         </textarea>
+      </van-collapse-item>
+      <van-collapse-item title="Github">
+开源还在准备...
       </van-collapse-item>
 		</van-collapse>
 	</div>
@@ -110,7 +118,7 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 		name: "aboutUs",
 		data() {
 			return {
-				activeNames: ["1", "2", "3", "5"]
+				activeNames: ["1", "2", "3", "5", "6"]
 			}
 		},
 		methods: {

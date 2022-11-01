@@ -119,7 +119,6 @@
       </div>
     </van-col>
 
-
   </div>
 </template>
 
@@ -128,7 +127,7 @@ import {START_TIME} from "/src/common/final.js"
 import {TOTAL_WEEK} from "/src/common/final.js"
 import {VERSION} from "/src/common/final.js"
 import {getExam} from "/src/api/getExam"
-import {captcha} from "/src/api/getCaptcha"
+import {getCourse} from "/src/api/getCourse";
 import {Dialog, Notify, Toast} from "vant"
 import {checkLogin} from "../api/loginCheck";
 import {logOut} from "../api/logout";
@@ -137,38 +136,49 @@ import {hitokoto} from "../api/hitokotoApi";
 export default {
   name: "indexPanel",
   mounted() {
+    // 获取一言
     this.getSentence();
+    // 更新一次时间，之后每10s更新一次时钟组件的数据
     this.date();
     setInterval(this.date, 10000);
+    // 更新检查
     this.updateCheck();
+    // 登录检查
     this.loginCheck();
+    // 0点后提示
     if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
       Notify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
     }
   },
   data() {
     return {
+      // 时间、日期
       time: "0:00",
       day: "24TH 10月",
+      // 是否需要更新, 为true表示需要
       update: true,
-      captcha: 0,
-      imgUrl: "",
+      // 当前周数
       curWeek: 0,
+      // 登录状态
       isLogin: false,
+      // 一言
       sentence: "世上本没有路，走的人多了也便成了路",
     }
   },
   computed: {
+    // 计算当前周数
     week: function () {
       var cur = Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
       this.curWeek = cur;
       return "第" + cur.toString() + "/" + TOTAL_WEEK + "周";
     },
+    // 计算进度条百分比
     percent: function () {
       return (this.curWeek / TOTAL_WEEK) * 100;
     }
   },
   methods: {
+    // 获取一言
     getSentence: function () {
       hitokoto("", "json").then((resp) => {
         console.log(resp.data);
@@ -179,6 +189,7 @@ export default {
         this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
       });
     },
+    // 获取日期
     date: function () {
       var date = new Date();
       var hour = date.getHours();
@@ -196,12 +207,14 @@ export default {
       this.time = hour + ":" + minutes;
       this.day = date.getDate().toString() + "TH " +  (date.getMonth() + 1).toString() + "月";
     },
+    // 检查更新
     updateCheck: function () {
       var ver = window.localStorage.getItem("version");
       if(ver != null && ver == VERSION.toString()) {
         this.update = false;
       }
     },
+    // 检查登录
     loginCheck: function () {
       checkLogin().then((resp) => {
         if (resp.data == "3401 LOGOUT") {
@@ -211,13 +224,17 @@ export default {
         else{
           this.isLogin = true;
           window.localStorage.setItem("isLogin", "true");
+          getCourse(this.cur).then((response) => {
+            window.localStorage.setItem("lessons", JSON.stringify(response.data));
+          })
         }
       })
-
     },
+    // 登录按钮跳转
     login: function () {
       this.$router.push("/login")
     },
+    // 登出
     logout: function () {
       if (this.isLogin)
         logOut().then(() => {
@@ -226,25 +243,30 @@ export default {
         })
       else Toast("未登录");
     },
+    // 图书馆按钮跳转
     getLibrary: function () {
       this.$router.push("/library")
     },
+    // 课程表按钮跳转
     getCourses: function () {
       this.$router.push("/course")
-
     },
+    // 成绩按钮跳转
     getScore: function () {
       this.$router.push("/score")
 
     },
+    // 考试按钮跳转(还没做)
     getExam: function () {
       getExam();
     },
-    getCaptcha: function () {
-      captcha().then((res) => {
-        this.imgUrl = "data:image/png;base64," + res.data;
-      })
-    },
+    // getCaptcha: function () {
+    //   captcha().then((res) => {
+    //     this.imgUrl = "data:image/png;base64," + res.data;
+    //   })
+    // },
+
+    // 下载App按钮跳转
     downApp: function () {
       Dialog.alert({
         message:
@@ -255,9 +277,11 @@ export default {
             '提取码: 2333',
       })
     },
+    // 关于按钮跳转
     about: function () {
       this.$router.push("/about");
     },
+    // 校历按钮跳转
     calendar: function () {
       this.$router.push("/calender")
     }

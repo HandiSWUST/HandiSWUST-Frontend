@@ -1,11 +1,12 @@
 <template>
 	<div id="grid1">
+<!--  加载效果  -->
 		<van-overlay :show="show" :z-index="999">
 			  <div id="loading">
 			    <van-loading color="#1989fa" size="20%"/>
 			  </div>
-
 		</van-overlay>
+<!--  导航栏  -->
 		<van-nav-bar
 		title="课程表"
 		:border="false"
@@ -24,6 +25,7 @@
         </van-pagination>
       </template>
     </van-nav-bar>
+<!--  导航栏底下的星期条  -->
 		<van-row id="table">
 		  <van-col span="3"><p class="time">{{ curWeek }}周</p></van-col>
 		  <van-col span="3"><p class="time">周一</p></van-col>
@@ -34,7 +36,9 @@
 		  <van-col span="3"><p class="time">周六</p></van-col>
 		  <van-col span="3"><p class="time">周日</p></van-col>
 		</van-row>
+
 		<van-row id="row-table">
+<!--  课表左侧的课程序号  -->
 			<van-col span="3" style="max-height: 100%;">
 				<div id="noTable">
 					<p class="num">1</p>
@@ -51,6 +55,7 @@
 					<p class="num">12</p>
 				</div>
 			</van-col>
+<!--  渲染课表   -->
 			<van-col span="21" style="max-height: 100%;">
 				<van-row>
 					<lesson
@@ -67,6 +72,7 @@
 				</van-row>
 			</van-col>
 		</van-row>
+
 	</div>
 </template>
 
@@ -85,7 +91,6 @@
 		data() {
 			return {
 				lessons: [],
-				// lessonType: "当前周课程",
 				cur: true,
         week: 0,
 				show: false,
@@ -100,23 +105,14 @@
       },
 		},
 		methods: {
-      onRefresh: function() {
-        getCourse(this.cur).then((response) => {
-          if(response.data == "3401 LOGOUT") {
-            Toast.fail("未登录");
-            this.$router.push("/login");
-          }else {
-            this.lessons = response.data;
-          }
-      })
-      },
+      // 返回按钮跳转
 			goBack: function() {
 				this.$router.push("/");
 			},
+      // 获取课表的默认方法
 			get: function() {
 				this.show = true;
         var temp = window.localStorage.getItem("lessons");
-        // console.log(temp);
         if(temp != null && window.localStorage.getItem("cur") == this.curWeek.toString()) {
           this.lessons = JSON.parse(temp);
           this.show = false;
@@ -126,7 +122,6 @@
               Toast.fail("未登录");
               this.$router.push("/login");
             }else {
-              // console.log(response.data);
               this.lessons = response.data;
               window.localStorage.setItem("cur", this.curWeek.toString())
               window.localStorage.setItem("lessons", JSON.stringify(response.data));
@@ -135,6 +130,7 @@
           })
         }
 			},
+      // 获取所选周课表
       getSelect: function() {
         this.show = true;
         selectedCourse(this.week).then((response) => {
@@ -150,20 +146,17 @@
           this.show = false;
         })
       },
+      // 计算课程方块的位置
 			computeTop: function(num) {
 				return (num * 7.5 + 2.5).toString() + "%";
 			},
 			computeLeft: function(num) {
 				return (num * 12.5).toString() + "%";
 			},
-			computeHeight: function(num, num1) {
-				return ((num - num1 + 1) * 7.5).toString() + "%";
-			},
+      // 随机课程方块的颜色
 			randomColor: function() {
-				var a = Math.ceil(Math.random() * 200);
-				var b = Math.ceil(Math.random() * 200);
-				var c = Math.ceil(Math.random() * 200);
-				return "#" + a.toString(16) + b.toString(16) + c.toString(16);
+        var colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#795548", "#607d8b"];
+        return colors[Math.ceil(Math.random() * colors.length)];
 			}
 		},
 		mounted() {
@@ -201,12 +194,6 @@
 		text-align: center;
 		color: black;
 	}
-	.no {
-		padding-top: 25%;
-		margin-left: 45%;
-		height: 7.65%;
-		text-align: center;
-	}
 	.num {
 		padding-top: 25%;
 		height: 7.65%;
@@ -214,8 +201,6 @@
 		text-align: center;
 	}
 	#noTable {
-		/*box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 20px 0 rgba(0, 0, 0, 0.1);*/
-    /*background: white;*/
     border-right: solid #ebedf0;
     border-width: 1px;
     height: 100%;
