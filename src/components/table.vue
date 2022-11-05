@@ -52,6 +52,6 @@ export default {
 }
 td {
   text-align: center;
-  padding: 5px;
+  padding: 4px;
 }
 </style>

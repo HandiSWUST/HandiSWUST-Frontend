@@ -10,9 +10,17 @@
 
     <van-row style="margin-top: 2%" v-show="!ifLoading">
       <van-col span="24">
-            <van-cell-group  inset  style="margin-top: 2%">
-              <Table-vant :option="option" :tableData="tableData"></Table-vant>
+<!--            <van-cell-group  inset  style="margin-top: 2%">-->
+<!--              <Table-vant :option="option" :tableData="tableData"></Table-vant>-->
+<!--            </van-cell-group>-->
+        <ul v-for="(termScore,key,i) in tableData" :key="i" >
+          <li>
+            <van-cell-group inset :title="key" >
+              <Table-vant :option="option" :tableData="termScore"></Table-vant>
             </van-cell-group>
+          </li>
+        </ul>
+
       </van-col>
     </van-row>
     <div id="loading">

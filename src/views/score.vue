@@ -7,7 +7,14 @@
       left-arrow
       @click-left="onClickLeft"
   />
-
+  <van-notice-bar
+      color="#1989fa"
+      background="#ecf9ff"
+      left-icon="volume-o"
+      speed="100"
+      text=" 补考的成绩同样会显示在页面中哦，大伙只要记得自己补考的是哪几科就行！"
+      mode="closeable"
+  />
   <van-row v-show="!ifLoading">
     <van-col span="24">
       <van-cell-group inset title="GPA" style="text-align: center">
@@ -154,7 +161,7 @@ export default {
             tableDataprop: 'catalog'
           },
           {
-            label: '正考',
+            label: '正（补）考',
             tableDataprop: 'scroll'
           }
         ]

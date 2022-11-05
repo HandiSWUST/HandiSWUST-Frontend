@@ -20,7 +20,7 @@
             background="#ecf9ff"
             left-icon="volume-o"
             speed="100"
-            text="华为设备安卓课程表小部件BUG已修复！点左上角下载新版本吧，如遇BUG，请在“关于”页面联系作者，十分感谢！"
+            text="考试查询功能上线！遇到bug请在右上角“关于页面”联系作者，感激不尽！"
             mode="closeable"
         />
       </van-col>

@@ -45,6 +45,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2022.11.5
+- 更新考试查询功能
 # 2022.11.1
 - 修改了课程表颜色
 - 细微调整了课程表加载逻辑
@@ -108,6 +110,11 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
       </van-collapse-item>
       <van-collapse-item title="Github">
 开源还在准备...
+      </van-collapse-item>
+      <van-collapse-item title="投喂作者们">
+        投喂的收入将用于服务器维护<br>
+        （以及作者们的日常开销）
+        <van-image src="/payCode.JPG"></van-image>
       </van-collapse-item>
 		</van-collapse>
 	</div>
