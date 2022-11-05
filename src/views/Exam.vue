@@ -56,8 +56,9 @@ export default {
         {
           Toast.fail("未登录");
           this.$router.push("/login");
-        }else if(resp.data=="null"){
+        }else if(resp.data==="no data"){
           Toast.fail("教务系统当前没有考试安排哦");
+
         }
         else{
           console.log(resp.data);
