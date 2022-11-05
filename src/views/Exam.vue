@@ -1,0 +1,141 @@
+<template>
+  <div id="exam">
+    <van-nav-bar
+        id="bar"
+        title="考试安排"
+        left-text="返回"
+        left-arrow
+        @click-left="onClickLeft"
+    />
+
+    <van-row style="margin-top: 2%" v-show="!ifLoading">
+      <van-col span="24">
+            <van-cell-group inset  style="margin-top: 2%">
+              <Table-vant :option="option" :tableData="tableData"></Table-vant>
+            </van-cell-group>
+      </van-col>
+    </van-row>
+    <div id="loading">
+      <van-loading  v-show="ifLoading" size="50px"  vertical a>加载中...</van-loading>
+    </div>
+  </div>
+</template>
+
+<script>
+import TableVant from "../components/table.vue"
+import axios from "axios"
+import {Toast} from "vant";
+import { BASE_URL } from "../common/final.js"
+
+
+
+
+export default {
+  inject:['reload'],
+  setup() {
+    const onClickLeft = () => history.back();
+    return {
+      onClickLeft,
+    };
+  },
+  mounted () {
+    this.getExam();
+
+  },
+  components:{TableVant},
+  name: "exam",
+  methods:{
+    getExam() {
+      axios.defaults.withCredentials = true;
+      return axios({
+        url: BASE_URL+"/api/getExam",
+        method: "get",
+        withCredentials: true
+      }).then((resp)=>{
+        if(resp.data=="3401 LOGOUT")
+        {
+          Toast.fail("未登录");
+          this.$router.push("/login");
+        }else{
+          console.log(resp.data);
+          this.ifLoading=false;
+          this.tableData = resp.data;
+
+        }
+
+      });
+    }
+  },
+
+  data() {
+    return {
+      tableData:{},
+      ifLoading:true,
+      //th
+      option: {
+        column: [
+          {
+            label: '序号',
+            tableDataprop: 'id',
+          },
+          {
+            label: '课程名称',
+            tableDataprop: 'name'
+          },
+          {
+            label: '周次',
+            tableDataprop: 'week'
+          },
+          {
+            label: '场次',
+            tableDataprop: 'dateOrder'
+          },
+          {
+            label: '日期',
+            tableDataprop: 'date'
+          },
+          {
+            label: '时间',
+            tableDataprop: 'timeSpan'
+          },
+          {
+            label: '考场',
+            tableDataprop: 'location'
+          },
+          {
+            label: '座次',
+            tableDataprop: 'seat'
+          },
+          {
+            label: '考场所在地点',
+            tableDataprop: 'certainLocation'
+          },
+        ]
+      },
+    }
+
+  },
+
+
+}
+</script>
+<style scoped>
+#exam{
+  background-color: #f2f2f2;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#loading{
+  vertical-align: top;
+  align-items: center;
+
+  /* top:50% */
+
+}
+#bar {
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
+}
+</style>

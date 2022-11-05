@@ -258,7 +258,7 @@ export default {
     },
     // 考试按钮跳转(还没做)
     getExam: function () {
-      getExam();
+      this.$router.push("/exam");
     },
     // getCaptcha: function () {
     //   captcha().then((res) => {
@@ -352,7 +352,14 @@ export default {
   color: black;
   font-size: 7vw;
 }
-
+#score{
+  background-color: #f2f2f2;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 #clock3 {
   margin-left: 10%;
   color: gray;
