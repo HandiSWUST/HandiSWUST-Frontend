@@ -256,15 +256,10 @@ export default {
       this.$router.push("/score")
 
     },
-    // 考试按钮跳转(还没做)
+    // 考试按钮跳转
     getExam: function () {
       this.$router.push("/exam");
     },
-    // getCaptcha: function () {
-    //   captcha().then((res) => {
-    //     this.imgUrl = "data:image/png;base64," + res.data;
-    //   })
-    // },
 
     // 下载App按钮跳转
     downApp: function () {

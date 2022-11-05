@@ -51,13 +51,14 @@ axios.interceptors.response.use(response => {
         return Promise.reject(new Error(response.data.message));
     }
 }, error => {
-    // 只重传5次，超过后抛异常
+    // 只重传2次，超过后抛异常
     var cfg = error.config;
     if(cfg.retryCount == undefined) {
         cfg.retryCount = 0;
     }
-    if(cfg.retryCount >= 10) {
-        return Promise.reject(error);
+    if(cfg.retryCount >= 2) {
+        // 不要使用reject，否则没法捕捉
+        return Promise.resolve(error);
     }
     cfg.retryCount++;
     // 对响应错误做点什么
