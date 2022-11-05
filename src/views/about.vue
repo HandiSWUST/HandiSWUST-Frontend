@@ -115,6 +115,7 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
         投喂的收入将用于服务器维护<br>
         （以及作者们的日常开销）
         <van-image src="/payCode.JPG"></van-image>
+        <van-image src="/payZ.JPG"></van-image>
       </van-collapse-item>
 		</van-collapse>
 	</div>
