@@ -20,7 +20,7 @@
             background="#ecf9ff"
             left-icon="volume-o"
             speed="100"
-            text="华为设备安卓课程表小部件BUG已修复！点左上角下载新版本吧，如遇BUG，请在“关于”页面联系作者，十分感谢！"
+            text="考试信息查询来了，如遇BUG，请在“关于”页面联系作者，十分感谢！"
             mode="closeable"
         />
       </van-col>
@@ -256,15 +256,10 @@ export default {
       this.$router.push("/score")
 
     },
-    // 考试按钮跳转(还没做)
+    // 考试按钮跳转
     getExam: function () {
       this.$router.push("/exam");
     },
-    // getCaptcha: function () {
-    //   captcha().then((res) => {
-    //     this.imgUrl = "data:image/png;base64," + res.data;
-    //   })
-    // },
 
     // 下载App按钮跳转
     downApp: function () {

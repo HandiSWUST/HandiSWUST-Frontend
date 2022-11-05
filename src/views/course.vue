@@ -118,13 +118,18 @@
           this.show = false;
         }else {
           getCourse(this.cur).then((response) => {
-            if(response.data == "3401 LOGOUT") {
-              Toast.fail("未登录");
-              this.$router.push("/login");
-            }else {
-              this.lessons = response.data;
-              window.localStorage.setItem("cur", this.curWeek.toString())
-              window.localStorage.setItem("lessons", JSON.stringify(response.data));
+            if(response.status == 200) {
+              if(response.data == "3401 LOGOUT") {
+                Toast.fail("未登录");
+                this.$router.push("/login");
+              }else {
+                this.lessons = response.data;
+                window.localStorage.setItem("cur", this.curWeek.toString())
+                window.localStorage.setItem("lessons", JSON.stringify(response.data));
+              }
+            } else {
+              this.week = this.curWeek;
+              Toast.fail("获取课表失败");
             }
             this.show = false;
           })
@@ -134,14 +139,19 @@
       getSelect: function() {
         this.show = true;
         selectedCourse(this.week).then((response) => {
-          if(response.data == "3401 LOGOUT") {
-            Toast.fail("未登录");
-            this.$router.push("/login");
-          }else {
-            this.lessons = response.data;
-            if(this.week == this.curWeek) {
-              window.localStorage.setItem("lessons", JSON.stringify(response.data))
+          if(response.status == 200) {
+            if(response.data == "3401 LOGOUT") {
+              Toast.fail("未登录");
+              this.$router.push("/login");
+            }else {
+              this.lessons = response.data;
+              if(this.week == this.curWeek) {
+                window.localStorage.setItem("lessons", JSON.stringify(response.data))
+              }
             }
+          } else {
+            this.week = this.curWeek;
+            Toast.fail("获取课表失败");
           }
           this.show = false;
         })
