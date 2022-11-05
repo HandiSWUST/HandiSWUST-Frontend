@@ -1,5 +1,5 @@
 <template>
-  <div id="exam">
+  <div id="exam" class="text-wrapper" >
     <van-nav-bar
         id="bar"
         title="考试安排"
@@ -10,7 +10,7 @@
 
     <van-row style="margin-top: 2%" v-show="!ifLoading">
       <van-col span="24">
-            <van-cell-group inset  style="margin-top: 2%">
+            <van-cell-group  inset  style="margin-top: 2%">
               <Table-vant :option="option" :tableData="tableData"></Table-vant>
             </van-cell-group>
       </van-col>
@@ -78,21 +78,10 @@ export default {
       //th
       option: {
         column: [
+
           {
-            label: '序号',
-            tableDataprop: 'id',
-          },
-          {
-            label: '课程名称',
+            label: '课程',
             tableDataprop: 'name'
-          },
-          {
-            label: '周次',
-            tableDataprop: 'week'
-          },
-          {
-            label: '场次',
-            tableDataprop: 'dateOrder'
           },
           {
             label: '日期',
@@ -111,7 +100,7 @@ export default {
             tableDataprop: 'seat'
           },
           {
-            label: '考场所在地点',
+            label: '地点',
             tableDataprop: 'certainLocation'
           },
         ]
@@ -125,10 +114,9 @@ export default {
 </script>
 <style scoped>
 #exam{
-  background-color: #f2f2f2;
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }

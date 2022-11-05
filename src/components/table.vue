@@ -39,7 +39,7 @@ export default {
 }
 .th {
   height: 1.074074rem;
-  line-height: 1.074074rem;
+  line-height: 0.94074rem;
   background-color: #ffffff;
   text-align: center;
 }
@@ -52,6 +52,6 @@ export default {
 }
 td {
   text-align: center;
-  padding: 8px;
+  padding: 5px;
 }
 </style>
