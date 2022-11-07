@@ -45,6 +45,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2022.11.7
+- 修复了课程表返回空数据的BUG
 # 2022.11.5
 - 更新考试查询功能
 # 2022.11.1

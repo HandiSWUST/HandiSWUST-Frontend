@@ -20,7 +20,7 @@
             background="#ecf9ff"
             left-icon="volume-o"
             speed="100"
-            text="考试查询功能上线！遇到bug请在右上角“关于页面”联系作者，感激不尽！"
+            text="新版本上线请务必更新，修复了可能导致闪退的恶性BUG，考试查询功能上线！遇到bug请在右上角“关于页面”联系作者，感激不尽！"
             mode="closeable"
         />
       </van-col>
@@ -225,7 +225,9 @@ export default {
           this.isLogin = true;
           window.localStorage.setItem("isLogin", "true");
           getCourse(true).then((response) => {
-            window.localStorage.setItem("lessons", JSON.stringify(response.data));
+            if(response.status == 200) {
+              window.localStorage.setItem("lessons", JSON.stringify(response.data));
+            }
           })
         }
       })

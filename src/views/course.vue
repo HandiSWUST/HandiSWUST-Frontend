@@ -128,7 +128,7 @@
                 window.localStorage.setItem("lessons", JSON.stringify(response.data));
               }
             } else {
-              this.week = this.curWeek;
+              this.week = Number(window.localStorage.getItem("cur"))
               Toast.fail("获取课表失败");
             }
             this.show = false;
