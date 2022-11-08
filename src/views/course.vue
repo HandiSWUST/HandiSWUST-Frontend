@@ -28,13 +28,13 @@
 <!--  导航栏底下的星期条  -->
 		<van-row id="table">
 		  <van-col span="3"><p class="time">{{ curWeek }}周</p></van-col>
-		  <van-col span="3"><p class="time">周一</p></van-col>
-		  <van-col span="3"><p class="time">周二</p></van-col>
-		  <van-col span="3"><p class="time">周三</p></van-col>
-		  <van-col span="3"><p class="time">周四</p></van-col>
-		  <van-col span="3"><p class="time">周五</p></van-col>
-		  <van-col span="3"><p class="time">周六</p></van-col>
-		  <van-col span="3"><p class="time">周日</p></van-col>
+		  <van-col span="3"><p class="time" :class="{ active: activeDay[1] }">周一</p></van-col>
+		  <van-col span="3"><p class="time" :class="{ active: activeDay[2] }">周二</p></van-col>
+		  <van-col span="3"><p class="time" :class="{ active: activeDay[3] }">周三</p></van-col>
+		  <van-col span="3"><p class="time" :class="{ active: activeDay[4] }">周四</p></van-col>
+		  <van-col span="3"><p class="time" :class="{ active: activeDay[5] }">周五</p></van-col>
+		  <van-col span="3"><p class="time" :class="{ active: activeDay[6] }">周六</p></van-col>
+		  <van-col span="3"><p class="time" :class="{ active: activeDay[0] }">周日</p></van-col>
 		</van-row>
 
 		<van-row id="row-table">
@@ -94,6 +94,7 @@
 				cur: true,
         week: 0,
 				show: false,
+        activeDay: [false, false, false, false, false, false, false],
 			}
 		},
 		computed: {
@@ -156,6 +157,11 @@
           this.show = false;
         })
       },
+      setActiveDay: function () {
+        var weekday = new Date().getDay();
+        this.activeDay = [false, false, false, false, false, false, false];
+        this.activeDay[weekday] = true;
+      },
       // 计算课程方块的位置
 			computeTop: function(num) {
 				return (num * 7.5 + 2.5).toString() + "%";
@@ -170,6 +176,7 @@
 			}
 		},
 		mounted() {
+      this.setActiveDay();
 			this.get();
       this.week = Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
 		}
@@ -204,6 +211,11 @@
 		text-align: center;
 		color: black;
 	}
+
+  .active {
+    color: #1989fa;
+  }
+
 	.num {
 		padding-top: 25%;
 		height: 7.65%;

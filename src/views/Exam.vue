@@ -32,7 +32,7 @@
 <script>
 import TableVant from "../components/table.vue"
 import axios from "axios"
-import {Toast} from "vant";
+import {Notify, Toast} from "vant";
 import { BASE_URL } from "../common/final.js"
 
 
@@ -48,7 +48,6 @@ export default {
   },
   mounted () {
     this.getExam();
-
   },
   components:{TableVant},
   name: "exam",
@@ -66,7 +65,8 @@ export default {
           this.$router.push("/login");
         }else if(resp.data==="no data"){
           Toast.fail("教务系统当前没有考试安排哦");
-
+        }else if(resp.data == "s") {
+          Toast.fail("教务系统寄了或者需要重新登录");
         }
         else{
           console.log(resp.data);
@@ -107,10 +107,10 @@ export default {
             label: '座次',
             tableDataprop: 'seat'
           },
-          {
-            label: '地点',
-            tableDataprop: 'certainLocation'
-          },
+          // {
+          //   label: '地点',
+          //   tableDataprop: 'certainLocation'
+          // },
         ]
       },
     }
