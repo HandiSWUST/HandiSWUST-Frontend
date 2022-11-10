@@ -25,3 +25,15 @@ export function selectedCourse(week) {
 		withCredentials: true,
 	})
 }
+
+export function useLocalCourse(week, courseData) {
+	var url = BASE_URL+"/api/course/local/"+week;
+	axios.defaults.withCredentials = true;
+	return axios({
+		headers:{'Content-Type': 'application/json'},
+		url: url,
+		method: "post",
+		withCredentials: true,
+		data: courseData
+	})
+}

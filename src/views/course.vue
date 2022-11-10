@@ -79,10 +79,9 @@
 <script>
 	import { START_TIME } from "/src/common/final.js"
   import { TOTAL_WEEK } from "/src/common/final.js"
-	import { Toast } from "vant";
+  import {Dialog, Toast} from "vant";
 	import lesson from "../components/class.vue"
-	import { getCourse } from "/src/api/getCourse"
-  import {selectedCourse} from "@/api/getCourse";
+  import {selectedCourse, useLocalCourse, getCourse} from "/src/api/getCourse";
 	export default {
 		name: "courseTable",
 		components: {
@@ -94,6 +93,7 @@
 				cur: true,
         week: 0,
 				show: false,
+        local: false,
         activeDay: [false, false, false, false, false, false, false],
 			}
 		},
@@ -110,6 +110,7 @@
 			goBack: function() {
 				this.$router.push("/");
 			},
+
       // 获取课表的默认方法
 			get: function() {
 				this.show = true;
@@ -121,8 +122,9 @@
           getCourse(this.cur).then((response) => {
             if(response.status == 200) {
               if(response.data == "3401 LOGOUT") {
-                Toast.fail("未登录");
-                this.$router.push("/login");
+                // Toast.fail("未登录");
+                // this.$router.push("/login");
+                this.useLocal(false);
               }else {
                 this.lessons = response.data;
                 window.localStorage.setItem("cur", this.curWeek.toString())
@@ -130,20 +132,23 @@
               }
             } else {
               this.week = Number(window.localStorage.getItem("cur"))
-              Toast.fail("获取课表失败");
+              this.useLocal(true);
+              // Toast.fail("获取课表失败");
             }
             this.show = false;
           })
         }
 			},
+
       // 获取所选周课表
       getSelect: function() {
         this.show = true;
         selectedCourse(this.week).then((response) => {
           if(response.status == 200) {
             if(response.data == "3401 LOGOUT") {
-              Toast.fail("未登录");
-              this.$router.push("/login");
+              // Toast.fail("未登录");
+              // 询问是否使用本地缓存
+              this.useLocal(false);
             }else {
               this.lessons = response.data;
               if(this.week == this.curWeek) {
@@ -151,17 +156,70 @@
               }
             }
           } else {
-            this.week = this.curWeek;
-            Toast.fail("获取课表失败");
+            this.useLocal(true);
           }
           this.show = false;
         })
       },
+
+      // 使用本地缓存查询，未登录使用本地缓存请传入false，否则传入true
+      useLocal: function (isLogin) {
+        var courseData = window.localStorage.getItem("raw");
+        if (isLogin) {
+          if (courseData != null) {
+            useLocalCourse(this.week, courseData).then((response) => {
+              if(response.status == 200 && response.data != null) {
+                this.lessons = response.data;
+                Toast.fail("一站式无连接，尝试使用本地数据");
+              } else {
+                this.week = this.curWeek;
+                Toast.fail("获取课表失败");
+              }
+            })
+          } else {
+            Toast.fail("本地没有缓存哦");
+          }
+        } else {
+          var beforeClose = (action) => {
+            if(action == "confirm") {
+              this.local = true;
+              this.show = true;
+              Dialog.close();
+              if(courseData != null) {
+                useLocalCourse(this.week, courseData).then((response) => {
+                  if(response.status == 200 && response.data != null) {
+                    this.lessons = response.data;
+                    this.show = false;
+                  }
+                })
+              } else {
+                Toast.fail("本地没有缓存哦");
+                this.$router.push("/login");
+              }
+            } else {
+              Dialog.close();
+              this.$router.push("/login");
+            }
+          }
+          if (this.local) {
+            beforeClose("confirm");
+          } else {
+            Dialog.confirm({
+              message: "未登录，是否尝试使用本地缓存？",
+              confirmButtonColor: "#1989fa",
+              beforeClose,
+            });
+          }
+        }
+      },
+
+      // 高亮当前星期数
       setActiveDay: function () {
         var weekday = new Date().getDay();
         this.activeDay = [false, false, false, false, false, false, false];
         this.activeDay[weekday] = true;
       },
+
       // 计算课程方块的位置
 			computeTop: function(num) {
 				return (num * 7.5 + 2.5).toString() + "%";
@@ -169,6 +227,7 @@
 			computeLeft: function(num) {
 				return (num * 12.5).toString() + "%";
 			},
+
       // 随机课程方块的颜色
 			randomColor: function() {
         var colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#795548", "#607d8b"];

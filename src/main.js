@@ -62,12 +62,11 @@ axios.interceptors.response.use(response => {
     }
     cfg.retryCount++;
     // 对响应错误做点什么
-    // location.reload();
-    // 延时1000ms
+    // 延时500ms
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 1000)
+        }, 500)
     }).then(() => {
         return axios(error.config);
     })

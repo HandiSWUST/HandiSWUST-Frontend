@@ -32,7 +32,7 @@
 <script>
 import TableVant from "../components/table.vue"
 import axios from "axios"
-import {Notify, Toast} from "vant";
+import {Dialog, Notify, Toast} from "vant";
 import { BASE_URL } from "../common/final.js"
 
 
@@ -59,22 +59,64 @@ export default {
         method: "get",
         withCredentials: true
       }).then((resp)=>{
-        if(resp.data=="3401 LOGOUT")
-        {
-          Toast.fail("未登录");
-          this.$router.push("/login");
-        }else if(resp.data==="no data"){
-          Toast.fail("教务系统当前没有考试安排哦");
-        }else if(resp.data == "s") {
-          Toast.fail("教务系统寄了或者需要重新登录");
-        }
-        else{
-          console.log(resp.data);
-          this.ifLoading=false;
-          this.tableData = resp.data;
+        if(resp.status == 200) {
+          if(resp.data=="3401 LOGOUT")
+          {
+            // Toast.fail("未登录");
+            // this.$router.push("/login");
+            var beforeClose = (action) => {
+              new Promise((resolve) => {
+                if(action == "confirm") {
+                  Dialog.close();
+                  let examData = JSON.parse(window.localStorage.getItem("exam"));
+                  if(examData != null) {
+                    this.tableData =examData;
+                    this.ifLoading = false;
+                  } else {
+                    Toast.fail("本地没有缓存哦");
+                    this.$router.push("/login");
+                  }
+                } else {
+                  Dialog.close();
+                  this.$router.push("/login");
+                }
+              })
+            }
+            Dialog.confirm({
+              message: "未登录，是否尝试使用本地缓存？",
+              confirmButtonColor: "#1989fa",
+              beforeClose,
+            });
+          } else if(resp.data == "no data"){
+            Toast.fail("教务系统当前没有考试安排哦");
+          } else if(resp.data == "s") {
+            let examData = JSON.parse(window.localStorage.getItem("exam"));
+            if (examData != null) {
+              Toast.fail("教务系统寄了或者需要重新登录，使用本地缓存");
+              this.tableData = examData;
+              this.ifLoading=false;
+            } else {
+              Toast.fail("远程服务异常且本地没有缓存");
+            }
+          }
+          else{
+            // console.log(resp.data);
+            this.ifLoading=false;
+            this.tableData = resp.data;
+            window.localStorage.setItem("exam", JSON.stringify(resp.data));
+          }
 
-        }
 
+        } else {
+          let examData = JSON.parse(window.localStorage.getItem("exam"));
+          if (examData != null) {
+            Toast.fail("教务系统寄了或者需要重新登录，使用本地缓存");
+            this.tableData = examData;
+            this.ifLoading=false;
+          } else {
+            Toast.fail("远程服务异常且本地没有缓存");
+          }
+        }
       });
     }
   },
