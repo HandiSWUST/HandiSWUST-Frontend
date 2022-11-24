@@ -96,7 +96,7 @@ export default {
               this.tableData = examData;
               this.ifLoading=false;
             } else {
-              Toast.fail("远程服务异常且本地没有缓存");
+              this.$router.push("/login");
             }
           }
           else{
@@ -114,7 +114,7 @@ export default {
             this.tableData = examData;
             this.ifLoading=false;
           } else {
-            Toast.fail("远程服务异常且本地没有缓存");
+            this.$router.push("/login");
           }
         }
       });
