@@ -45,6 +45,10 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2022.11.26
+- 悄咪咪加了个测试中的课程推送服务
+# 2022.11.24
+- 优化了异常跳转
 # 2022.11.10
 - 课表和考试加入了本地缓存，要是一站式寄了也不用慌了
 # 2022.11.9
@@ -115,7 +119,21 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
         </textarea>
       </van-collapse-item>
       <van-collapse-item title="Github">
-开源还在准备...
+        <p>开源还在准备，但你可以来试试这个课程推送服务</p>
+        <br/>
+        <p>使用此功能代表您同意我们将您的课程及学号、QQ信息存储在我们的数据库中，请放心，这些数据仅用于课程推送</p>
+        <p>使用说明：</p>
+        <p> 1. 添加 1400070301 这个QQ号</p>
+        <p> 2. 添加成功后在下方提交你的QQ号，注意千万不要输错了，这个功能目前还处于非常早期的阶段，输错只能找ShirakawaTyu修改</p>
+        <p> 3. 提示提交成功后可点击下方的测试按钮测试推送</p>
+        <br/>
+        <van-field v-model="qq" label="QQ" placeholder="请输入你的QQ号" />
+        <van-button block color="#1989fa" type="primary" style="border-radius: 6px;" @click="submitCourseData">
+          提交
+        </van-button>
+        <van-button plain color="#1989fa" type="primary" style="border-radius: 6px;width: 100%;margin-top: 2%" @click="testPushService" v-if="submit">
+          测试
+        </van-button>
       </van-collapse-item>
       <van-collapse-item title="投喂作者们">
         投喂的收入将用于服务器维护<br>
@@ -128,17 +146,46 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 </template>
 
 <script>
-	export default {
+import {save, test} from "@/api/pushApi";
+  import {Toast} from "vant";
+
+  export default {
 		name: "aboutUs",
 		data() {
 			return {
-				activeNames: ["1", "2", "3", "5", "6"]
+				activeNames: ["1", "2", "3", "5", "6"],
+        qq: null,
+        submit: false
 			}
 		},
 		methods: {
 			goBack: function() {
 				this.$router.push("/");
-			}
+			},
+      submitCourseData: function () {
+        let item = localStorage.getItem("lessons");
+        if (item != null) {
+          save(item, this.qq).then((resp) => {
+            if (resp.status == 200 && resp.data == "5200 SUCCESS") {
+              Toast.success("提交成功！");
+              this.submit = true;
+            } else {
+              Toast.fail("提交失败...");
+            }
+          })
+        } else {
+          Toast.fail("本地没有缓存，提交失败...")
+        }
+      },
+      testPushService: function () {
+        test().then((resp) => {
+          if (resp.status == 200 && resp.data == "5200 SUCCESS") {
+            Toast.success("测试请求发送成功！");
+          } else {
+            Toast.fail("测试请求发送失败，可能我们的服务器炸了");
+          }
+        })
+      }
 		}
 	}
 </script>
