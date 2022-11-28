@@ -7,6 +7,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import library from "./views/library.vue";
 import calender from "./views/calender.vue";
 import exam from "./views/Exam.vue"
+import MiraiPush from "./views/MiraiPush.vue";
 
 const routers = [
 	{path: "/", component: indexPanel},
@@ -16,8 +17,8 @@ const routers = [
 	{path: "/score",component: score},
 	{path: "/library",component: library},
 	{path: "/calender",component: calender},
-	{path: "/exam",component: exam}
-
+	{path: "/exam",component: exam},
+	{path: "/push", component: MiraiPush}
 ];
 
 const router = createRouter({

@@ -118,7 +118,7 @@
         </van-grid>
       </div>
     </van-col>
-
+    <van-divider class="van-haptics-feedback" @click="push" id="div">(测试) QQ课程推送</van-divider>
   </div>
 </template>
 
@@ -132,6 +132,8 @@ import {Dialog, Notify, Toast} from "vant"
 import {checkLogin} from "../api/loginCheck";
 import {logOut} from "../api/logout";
 import {hitokoto} from "../api/hitokotoApi";
+import {save} from "@/api/pushApi";
+import MD5 from "blueimp-md5"
 
 export default {
   name: "indexPanel",
@@ -145,6 +147,8 @@ export default {
     this.updateCheck();
     // 登录检查
     this.loginCheck();
+    // 更新推送课表
+    this.submitCourseData();
     // 0点后提示
     if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
       Notify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
@@ -221,6 +225,7 @@ export default {
           this.isLogin = false;
           window.localStorage.setItem("isLogin", "false");
         }
+        // 已经登录的话就顺便更新下课表
         else{
           this.isLogin = true;
           window.localStorage.setItem("isLogin", "true");
@@ -236,6 +241,22 @@ export default {
           })
         }
       })
+    },
+    // 更新推送服务的课表
+    submitCourseData: function () {
+      let lessons = localStorage.getItem("lessons");
+      if (lessons != null && this.isLogin) {
+        let lmd5 = md5(lessons);
+        let olmd5 = localStorage.getItem("lmd5");
+        if (olmd5 != null && olmd5 != lmd5) {
+          save(item, this.qq).then((resp) => {
+            if (resp.status == 200 && resp.data == "5200 SUCCESS") {
+              window.localStorage.setItem("submit", "true");
+              localStorage.setItem("lmd5", lmd5);
+            }
+          })
+        }
+      }
     },
     // 登录按钮跳转
     login: function () {
@@ -287,12 +308,22 @@ export default {
     // 校历按钮跳转
     calendar: function () {
       this.$router.push("/calender")
+    },
+    // 推送按钮跳转
+    push: function () {
+      this.$router.push("/push")
     }
   },
 }
 </script>
 
 <style scoped>
+#div {
+  border-color: #646566;
+  font-size: x-small;
+  margin-left: 5%;
+  margin-right: 5%;
+}
 #progr {
   margin-left: 10%;
   height: 0;

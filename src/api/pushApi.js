@@ -19,3 +19,12 @@ export function test() {
         withCredentials: true
     })
 }
+
+export function del() {
+    axios.defaults.withCredentials = true;
+    return axios({
+        method: "delete",
+        url: BASE_URL+"/api/course/push/delete/",
+        withCredentials: true
+    })
+}
