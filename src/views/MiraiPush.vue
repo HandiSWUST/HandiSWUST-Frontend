@@ -51,7 +51,7 @@ export default {
     },
     // 用于提交课程数据
     submitCourseData: function () {
-      let item = localStorage.getItem("lessons");
+      let item = localStorage.getItem("raw");
       if (item != null) {
         let lmd5 = md5(item);
         save(item, this.qq).then((resp) => {

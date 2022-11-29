@@ -133,7 +133,7 @@ import {checkLogin} from "../api/loginCheck";
 import {logOut} from "../api/logout";
 import {hitokoto} from "../api/hitokotoApi";
 import {save} from "@/api/pushApi";
-import MD5 from "blueimp-md5"
+import md5 from "blueimp-md5"
 
 export default {
   name: "indexPanel",
@@ -147,8 +147,6 @@ export default {
     this.updateCheck();
     // 登录检查
     this.loginCheck();
-    // 更新推送课表
-    this.submitCourseData();
     // 0点后提示
     if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
       Notify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
@@ -228,6 +226,8 @@ export default {
         // 已经登录的话就顺便更新下课表
         else{
           this.isLogin = true;
+          // 更新推送课表
+          this.submitCourseData();
           window.localStorage.setItem("isLogin", "true");
           getCourse(true).then((response) => {
             if(response.status == 200 && response.data != null) {
@@ -244,12 +244,13 @@ export default {
     },
     // 更新推送服务的课表
     submitCourseData: function () {
-      let lessons = localStorage.getItem("lessons");
-      if (lessons != null && this.isLogin) {
+      let lessons = localStorage.getItem("raw");
+      if (lessons != null) {
+        console.log("更新推送课表")
         let lmd5 = md5(lessons);
         let olmd5 = localStorage.getItem("lmd5");
-        if (olmd5 != null && olmd5 != lmd5) {
-          save(item, this.qq).then((resp) => {
+        if (olmd5 != null && this.isLogin) {
+          save(lessons, 0).then((resp) => {
             if (resp.status == 200 && resp.data == "5200 SUCCESS") {
               window.localStorage.setItem("submit", "true");
               localStorage.setItem("lmd5", lmd5);
