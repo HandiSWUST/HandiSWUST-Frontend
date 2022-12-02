@@ -109,17 +109,35 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 - 首次提交，实现了登录和基本的首页
         </textarea>
       </van-collapse-item>
-      <van-collapse-item title="借物表">
+      <van-collapse-item title="主要借物表">
         <textarea id="privacy" rows="20" readonly>
 # 图标
 - Bitsies! https://iconstore.co/icons/bitsies
 # 一言Api
 - Hitokoto https://hitokoto.cn/
-# 开源库待补充
+# 组件库
+- Vant3 https://vant-contrib.gitee.io/vant/v3/#/zh-CN
+# Web服务器
+- Caddy2 https://github.com/caddyserver/caddy
+# 后端开发框架
+- SpringBoot https://spring.io/projects/spring-boot
+# QQ机器人
+- Mirai https://github.com/mamoe/mirai
+# JSON
+- FastJSON2 https://github.com/alibaba/fastjson2
+# ORM框架
+- Mybatis-Plus https://github.com/baomidou/mybatis-plus
+# 好用的工具库
+- Hutool https://github.com/dromara/hutool
+- Jsoup https://github.com/jhy/jsoup/
+# 数据库
+- MySQL https://www.mysql.com
+- Redis https://github.com/redis/redis
         </textarea>
       </van-collapse-item>
       <van-collapse-item title="Github">
-开源还在准备，但你可以来试试我们的课程推送服务
+        <p>Web前端代码: https://github.com/flben233/HandiSWUST</p>
+        <p>Android端代码: https://github.com/flben233/HandiSWUST-Android-Rebuild</p>
       </van-collapse-item>
       <van-collapse-item title="投喂作者们">
         投喂的收入将用于服务器维护<br>

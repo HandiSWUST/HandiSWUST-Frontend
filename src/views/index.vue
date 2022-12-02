@@ -170,7 +170,10 @@ export default {
   computed: {
     // 计算当前周数
     week: function () {
-      var cur = Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
+      let cur = Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
+      if (cur > TOTAL_WEEK) {
+        cur = TOTAL_WEEK;
+      }
       this.curWeek = cur;
       return "第" + cur.toString() + "/" + TOTAL_WEEK + "周";
     },
@@ -184,7 +187,7 @@ export default {
     getSentence: function () {
       hitokoto("", "json").then((resp) => {
         console.log(resp.data);
-        var fromWho = resp.data.from_who;
+        let fromWho = resp.data.from_who;
         if(fromWho == null) {
           fromWho = "";
         }
@@ -249,7 +252,7 @@ export default {
         console.log("更新推送课表")
         let lmd5 = md5(lessons);
         let olmd5 = localStorage.getItem("lmd5");
-        if (olmd5 != null && this.isLogin) {
+        if (olmd5 != null && this.isLogin && olmd5 != lmd5) {
           save(lessons, 0).then((resp) => {
             if (resp.status == 200 && resp.data == "5200 SUCCESS") {
               window.localStorage.setItem("submit", "true");
