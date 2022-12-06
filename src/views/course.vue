@@ -143,23 +143,26 @@
       // 获取所选周课表
       getSelect: function() {
         this.show = true;
-        selectedCourse(this.week).then((response) => {
-          if(response.status == 200) {
-            if(response.data == "3401 LOGOUT") {
-              // Toast.fail("未登录");
-              // 询问是否使用本地缓存
-              this.useLocal(false);
-            }else {
-              this.lessons = response.data;
-              if(this.week == this.curWeek) {
-                window.localStorage.setItem("lessons", JSON.stringify(response.data))
+        if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
+          this.useLocal(true);
+        } else {
+          selectedCourse(this.week).then((response) => {
+            if(response.status == 200) {
+              if(response.data == "3401 LOGOUT") {
+                // 询问是否使用本地缓存
+                this.useLocal(false);
+              }else {
+                this.lessons = response.data;
+                if(this.week == this.curWeek) {
+                  window.localStorage.setItem("lessons", JSON.stringify(response.data))
+                }
               }
+            } else {
+              this.useLocal(true);
             }
-          } else {
-            this.useLocal(true);
-          }
-          this.show = false;
-        })
+          })
+        }
+        this.show = false;
       },
 
       // 使用本地缓存查询，未登录使用本地缓存请传入false，否则传入true

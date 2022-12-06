@@ -47,11 +47,24 @@ export default {
     };
   },
   mounted () {
-    this.getExam();
+    // 0点之后自动使用缓存
+    if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
+      this.useCache();
+    } else {
+      this.getExam();
+    }
   },
   components:{TableVant},
   name: "exam",
   methods:{
+    useCache() {
+      let examData = JSON.parse(window.localStorage.getItem("exam"));
+      if (examData != null) {
+        Notify({type: 'primary', message: '0点了，自动使用本地缓存'});
+        this.tableData = examData;
+        this.ifLoading = false;
+      }
+    },
     getExam() {
       axios.defaults.withCredentials = true;
       return axios({
@@ -112,7 +125,7 @@ export default {
           if (examData != null) {
             Toast.fail("教务系统寄了或者需要重新登录，使用本地缓存");
             this.tableData = examData;
-            this.ifLoading=false;
+            this.ifLoading = false;
           } else {
             this.$router.push("/login");
           }

@@ -126,7 +126,6 @@
 import {START_TIME} from "/src/common/final.js"
 import {TOTAL_WEEK} from "/src/common/final.js"
 import {VERSION} from "/src/common/final.js"
-import {getExam} from "/src/api/getExam"
 import {getCourse} from "/src/api/getCourse";
 import {Dialog, Notify, Toast} from "vant"
 import {checkLogin} from "../api/loginCheck";
@@ -148,7 +147,7 @@ export default {
     // 登录检查
     this.loginCheck();
     // 0点后提示
-    if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
+    if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
       Notify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
     }
   },

@@ -95,7 +95,11 @@ export default {
             window.localStorage.removeItem("password");
           }
           this.$router.push("/");
-        } else {
+        } else if (response.data == "1502 REMOTE SERVICE ERROR") {
+          Toast.fail("登录失败，一站式登录接口崩溃");
+          this.getCaptcha();
+        }
+        else {
           Toast.fail("登录失败，请检查账号密码及验证码是否正确");
           this.getCaptcha();
         }
