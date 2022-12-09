@@ -79,7 +79,7 @@ export default {
   },
   mounted () {
     this.getScore();
-    // this.getGPA();
+    this.getGPA();
   },
   components:{TableVant},
   name: "score",
@@ -127,7 +127,6 @@ export default {
           this.$router.push("/login");
         }else{
           // console.log(resp.data)
-          this.getGPA();
           this.ifLoading=false;
           this.tableData = resp.data;
 

@@ -94,8 +94,8 @@ export default {
             window.localStorage.removeItem("user");
             window.localStorage.removeItem("password");
           }
-          // this.$router.go(-1);
-          this.$router.push("/");
+          this.$router.go(-1);
+          // this.$router.push("/");
         } else if (response.data == "1502 REMOTE SERVICE ERROR") {
           // console.log(response.data)
           Toast.fail("登录失败，一站式登录接口崩溃");
