@@ -79,7 +79,7 @@ export default {
   },
   mounted () {
     this.getScore();
-    this.getGPA();
+    // this.getGPA();
   },
   components:{TableVant},
   name: "score",
@@ -93,16 +93,18 @@ export default {
       }).then((resp)=>{
         if(resp.data=="3401 LOGOUT")
         {
-          Toast.fail("未登录");
+          Toast.fail("登录过期或未登录");
           this.$router.push("/login");
         }else if(resp.data==null||resp.data.status==500){
           Toast.fail("当前没有成绩和绩点呢,可能是一站式服务大厅崩掉了~");
           this.$router.push("/");
         }
         else{
-          var parse = JSON.parse(resp.data);
-          var parse1 = JSON.parse(parse.body.result);
-          console.log(parse1)
+          // var parse = JSON.parse(resp.data);
+          // var parse = resp.data;
+          // console.log(parse)
+          // var parse1 = JSON.parse(parse.body.result);
+          var parse1 = resp.data;
           this.required=parse1.gpa.required;
           this.bixiuText += this.required.toString();
           this.all=parse1.gpa.all;
@@ -121,10 +123,11 @@ export default {
       }).then((resp)=>{
         if(resp.data=="3401 LOGOUT")
         {
-          Toast.fail("未登录");
+          Toast.fail("登录过期或未登录");
           this.$router.push("/login");
         }else{
-          console.log(resp.data)
+          // console.log(resp.data)
+          this.getGPA();
           this.ifLoading=false;
           this.tableData = resp.data;
 

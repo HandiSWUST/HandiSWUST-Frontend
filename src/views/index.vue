@@ -185,7 +185,7 @@ export default {
     // 获取一言
     getSentence: function () {
       hitokoto("", "json").then((resp) => {
-        console.log(resp.data);
+        // console.log(resp.data);
         let fromWho = resp.data.from_who;
         if(fromWho == null) {
           fromWho = "";
@@ -230,6 +230,7 @@ export default {
           this.isLogin = true;
           // 更新推送课表
           this.submitCourseData();
+
           window.localStorage.setItem("isLogin", "true");
           getCourse(true).then((response) => {
             if(response.status == 200 && response.data != null) {

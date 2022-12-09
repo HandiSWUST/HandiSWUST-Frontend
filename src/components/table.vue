@@ -35,7 +35,7 @@ export default {
 
 .table {
   border-radius: .185185rem;
-
+  padding: 1%;
 }
 .th {
   height: 1.074074rem;
@@ -52,6 +52,6 @@ export default {
 }
 td {
   text-align: center;
-  padding: 4px;
+  padding-top: 3%;
 }
 </style>
