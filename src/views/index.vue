@@ -133,10 +133,13 @@ import {logOut} from "../api/logout";
 import {hitokoto} from "../api/hitokotoApi";
 import {save} from "@/api/pushApi";
 import md5 from "blueimp-md5"
+import {isMobile} from "@/js/ua";
 
 export default {
   name: "indexPanel",
   mounted() {
+    // 为了避免罚款，非手机访问直接跳转
+    if (!isMobile()) location.href = "http://www.aliceblog.co/";
     // 获取一言
     this.getSentence();
     // 更新一次时间，之后每10s更新一次时钟组件的数据
