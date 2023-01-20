@@ -113,6 +113,11 @@
 
       // 获取课表的默认方法
 			get: function() {
+        if (Number(this.curWeek) > Number(this.totalWeek)) {
+          window.localStorage.setItem("cur", this.totalWeek.toString())
+          window.localStorage.setItem("lessons", "[]");
+          return;
+        }
 				this.show = true;
         var temp = window.localStorage.getItem("lessons");
         if(temp != null && window.localStorage.getItem("cur") == this.curWeek.toString()) {
