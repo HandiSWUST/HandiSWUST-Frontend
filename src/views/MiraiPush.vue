@@ -4,6 +4,7 @@
     <div style="margin: 5%">
       <p>使用此功能代表您同意我们将您的课程及学号、QQ信息存储在我们的数据库中，请放心，这些数据仅用于课程推送</p>
       <p>此功能目前还处于非常早期的阶段，请勿过度依赖此功能，遇到任何问题请及时反馈</p>
+      <p>出现测试按钮意味着您曾经提交过数据，若需要修改QQ号再次提交即可</p>
       <br/>
       <p>使用说明：</p>
       <p> 1. 添加 1400070301 这个QQ号</p>
@@ -27,7 +28,7 @@
 </template>
 
 <script>
-import {save, test, del} from "@/api/pushApi";
+import {save, test, del, check} from "@/api/pushApi";
 import {Dialog, Toast} from "vant";
 import md5 from "blueimp-md5"
 
@@ -44,6 +45,7 @@ export default {
     if (sub != null && sub == "true") {
       this.submit = true;
     }
+    this.check();
   },
   methods: {
     goBack: function() {
@@ -103,6 +105,18 @@ export default {
         confirmButtonColor: "#1989fa",
         beforeClose,
       });
+    },
+    check() {
+      check().then((resp) => {
+        if (resp.status == 200) {
+          if (resp.data == "5200 SUCCESS") {
+            this.submit = true;
+          } else if (resp.data == "3401 LOGOUT"){
+            Toast.fail("请先登录");
+            this.$router.push("/login");
+          }
+        }
+      })
     }
   }
 }

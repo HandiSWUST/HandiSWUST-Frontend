@@ -18,7 +18,7 @@ export default defineConfig({
       // 配置代理
       proxy: {
 		'/api': {
-			target: 'http://localhost:8080/',
+			target: 'https://swust.aliceblog.co/',
 			ws: true,
 			changeOrigin: true,
 			// rewrite:(path) => path.replace(/^\/api/, '')

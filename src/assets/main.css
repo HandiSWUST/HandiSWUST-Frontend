@@ -8,6 +8,13 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/deep/ .van-nav-bar__content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
 a,
 .green {
   text-decoration: none;

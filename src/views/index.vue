@@ -1,21 +1,24 @@
 <template>
   <div id="grid1">
 <!--  导航栏及公告栏  -->
-    <van-row style="margin-bottom: 6%">
-      <van-col span="24" style="height: 86px;">
+    <div style="height: 11%">
+      <van-config-provider :theme-vars="themeVars">
         <van-nav-bar
             title="首页"
             id="bar"
+            style="height: 50%"
             right-text="关于"
-            @click-right="about">
+            @click-right="$router.push('/about')">
           <template #left>
             <van-badge :dot="update">
               <p @click="downApp" style="color: #1989fa;">下载APP</p>
             </van-badge>
           </template>
         </van-nav-bar>
+      </van-config-provider>
 
         <van-notice-bar
+            style="height: 50%"
             color="#1989fa"
             background="#ecf9ff"
             left-icon="volume-o"
@@ -23,102 +26,115 @@
             text="考试查询功能上线、课表现在不登录也可以使用本地缓存查询任意周了！遇到bug请在右上角“关于页面”联系作者，感激不尽！"
             mode="closeable"
         />
-      </van-col>
-    </van-row>
-
-<!--  时间、周数、一言  -->
-    <van-row style="width: 100%">
-      <van-col span="12">
-        <div id="clock-container">
-          <p id="clock1">北京时间</p>
-          <p id="clock2">{{time}}</p>
-          <p id="clock3">{{day}}</p>
-        </div>
-        <div>
-          <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#00bcd4"/>
-        </div>
-      </van-col>
-
-      <van-col span="12">
-        <div id="hitokoto">
-          <div style="padding-left: 10%; padding-top: 10%; margin-bottom: 5%">
-            <van-image
-                src="/hitokoto.svg"
-                style="width: 15%; float: left"
-            />
-            <p style="margin-left: 5%; float: left;">一言</p>
+    </div>
+<!--  主页  -->
+    <div id="page" v-if="active == 0">
+      <!--  时间、周数、一言  -->
+      <van-row style="width: 100%">
+        <van-col span="12">
+          <div id="clock-container">
+            <p id="clock1">北京时间</p>
+            <p id="clock2">{{time}}</p>
+            <p id="clock3">{{day}}</p>
           </div>
-          <br/>
-          <p id="sentence">{{sentence}}</p>
+          <div>
+            <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#00bcd4"/>
+          </div>
+        </van-col>
+
+        <van-col span="12">
+          <div id="hitokoto">
+            <div style="padding-left: 10%; padding-top: 10%; margin-bottom: 5%">
+              <van-image
+                  src="/hitokoto.svg"
+                  style="width: 15%; float: left"
+              />
+              <p style="margin-left: 5%; float: left;">一言</p>
+            </div>
+            <br/>
+            <p id="sentence">{{sentence}}</p>
+          </div>
+        </van-col>
+      </van-row>
+
+      <!--  按钮面板  -->
+      <van-col span="24">
+        <div id="row">
+          <van-grid :column-num="2" id="g" :border="false" :clickable="true">
+            <van-grid-item v-on:click="$router.push('/login')" v-if="!isLogin">
+              <van-image
+                  src="/login.svg"
+                  class="img"
+              />
+              <p class="text">登录</p>
+            </van-grid-item>
+            <van-grid-item v-on:click="$router.push('/library')" v-if="isLogin">
+              <van-image
+                  src="/lib.svg"
+                  class="img"
+              />
+              <p class="text">图书借阅信息</p>
+            </van-grid-item>
+            <van-grid-item v-on:click="logout" v-if="isLogin">
+              <van-image
+                  src="/logout.svg"
+                  class="img"
+              />
+              <p class="text">退出登录</p>
+            </van-grid-item>
+          </van-grid>
+        </div>
+        <div id="row">
+          <van-grid :column-num="2" id="g" :border="false" :clickable="true">
+            <van-grid-item v-on:click="$router.push('/course')">
+              <van-image
+                  src="/table.svg"
+                  class="img"
+              />
+              <p class="text">课程表</p>
+            </van-grid-item>
+            <van-grid-item v-on:click="$router.push('/exam')">
+              <van-image
+                  src="/exam.svg"
+                  class="img"
+              />
+              <p class="text">考试</p>
+            </van-grid-item>
+          </van-grid>
+        </div>
+        <div id="row">
+          <van-grid :column-num="2" id="g" :border="false" :clickable="true">
+            <van-grid-item v-on:click="$router.push('/score')">
+              <van-image
+                  src="/score.svg"
+                  class="img"
+              />
+              <p class="text">成绩</p>
+            </van-grid-item>
+            <van-grid-item v-on:click="$router.push('/calender')">
+              <van-image
+                  src="/date.svg"
+                  class="img"
+              />
+              <p class="text">校历</p>
+            </van-grid-item>
+          </van-grid>
         </div>
       </van-col>
-    </van-row>
-
-<!--  按钮面板  -->
-    <van-col span="24">
-      <div id="row">
-        <van-grid :column-num="2" id="g" :border="false" :clickable="true">
-          <van-grid-item v-on:click="login" v-if="!isLogin">
-            <van-image
-                src="/login.svg"
-                class="img"
-            />
-            <p class="text">登录</p>
-          </van-grid-item>
-          <van-grid-item v-on:click="getLibrary" v-if="isLogin">
-            <van-image
-                src="/lib.svg"
-                class="img"
-            />
-            <p class="text">图书借阅信息</p>
-          </van-grid-item>
-          <van-grid-item v-on:click="logout" v-if="isLogin">
-            <van-image
-                src="/logout.svg"
-                class="img"
-            />
-            <p class="text">退出登录</p>
-          </van-grid-item>
+    </div>
+<!--  应用页  -->
+    <div id="page" v-if="active == 1">
+      <div style="border-radius: 15px; background-color: white; padding: 1%; margin: 3%">
+        <van-grid square :clickable="true" :border="false">
+          <van-grid-item icon="todo-list-o" text="QQ课程推送" @click="$router.push('/push')"/>
+          <van-grid-item icon="chat-o" text="聊天机器人"/>
         </van-grid>
       </div>
-      <div id="row">
-        <van-grid :column-num="2" id="g" :border="false" :clickable="true">
-          <van-grid-item v-on:click="getCourses">
-            <van-image
-                src="/table.svg"
-                class="img"
-            />
-            <p class="text">课程表</p>
-          </van-grid-item>
-          <van-grid-item v-on:click="getExam">
-            <van-image
-                src="/exam.svg"
-                class="img"
-            />
-            <p class="text">考试</p>
-          </van-grid-item>
-        </van-grid>
-      </div>
-      <div id="row">
-        <van-grid :column-num="2" id="g" :border="false" :clickable="true">
-          <van-grid-item v-on:click="getScore">
-            <van-image
-                src="/score.svg"
-                class="img"
-            />
-            <p class="text">成绩</p>
-          </van-grid-item>
-          <van-grid-item v-on:click="calendar">
-            <van-image
-                src="/date.svg"
-                class="img"
-            />
-            <p class="text">校历</p>
-          </van-grid-item>
-        </van-grid>
-      </div>
-    </van-col>
-    <van-divider class="van-haptics-feedback" @click="push" id="div">(测试) QQ课程推送</van-divider>
+    </div>
+    <van-tabbar v-model="active" style="height: 7%">
+      <van-tabbar-item icon="home-o">主页</van-tabbar-item>
+      <van-tabbar-item icon="apps-o">更多</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
@@ -128,9 +144,9 @@ import {TOTAL_WEEK} from "/src/common/final.js"
 import {VERSION} from "/src/common/final.js"
 import {getCourse} from "/src/api/getCourse";
 import {Dialog, Notify, Toast} from "vant"
-import {checkLogin} from "../api/loginCheck";
-import {logOut} from "../api/logout";
-import {hitokoto} from "../api/hitokotoApi";
+import {checkLogin} from "@/api/loginCheck";
+import {logOut} from "@/api/logout";
+import {hitokoto} from "@/api/hitokotoApi";
 import {save} from "@/api/pushApi";
 import md5 from "blueimp-md5"
 import {isMobile} from "@/js/ua";
@@ -167,6 +183,10 @@ export default {
       isLogin: false,
       // 一言
       sentence: "世上本没有路，走的人多了也便成了路",
+      // tabber
+      active: 0,
+
+      themeVars: {vanNavBarHeight: "100%"}
     }
   },
   computed: {
@@ -265,10 +285,6 @@ export default {
         }
       }
     },
-    // 登录按钮跳转
-    login: function () {
-      this.$router.push("/login")
-    },
     // 登出
     logout: function () {
       if (this.isLogin)
@@ -278,24 +294,6 @@ export default {
         })
       else Toast("未登录");
     },
-    // 图书馆按钮跳转
-    getLibrary: function () {
-      this.$router.push("/library")
-    },
-    // 课程表按钮跳转
-    getCourses: function () {
-      this.$router.push("/course")
-    },
-    // 成绩按钮跳转
-    getScore: function () {
-      this.$router.push("/score")
-
-    },
-    // 考试按钮跳转
-    getExam: function () {
-      this.$router.push("/exam");
-    },
-
     // 下载App按钮跳转
     downApp: function () {
       Dialog.alert({
@@ -307,30 +305,12 @@ export default {
             '提取码: 2333',
         confirmButtonColor: "#1989fa",
       })
-    },
-    // 关于按钮跳转
-    about: function () {
-      this.$router.push("/about");
-    },
-    // 校历按钮跳转
-    calendar: function () {
-      this.$router.push("/calender")
-    },
-    // 推送按钮跳转
-    push: function () {
-      this.$router.push("/push")
     }
   },
 }
 </script>
 
 <style scoped>
-#div {
-  border-color: #646566;
-  font-size: x-small;
-  margin-left: 5%;
-  margin-right: 5%;
-}
 #progr {
   margin-left: 10%;
   height: 0;
@@ -367,7 +347,6 @@ export default {
   border-radius: 15px;
   margin-right: 10%;
   margin-left: 5%;
-  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
   background-color: white;
 }
 
@@ -378,7 +357,6 @@ export default {
   padding-bottom: 60%;
   width: 85%;
   border-radius: 15px;
-  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
   background-color: white;
 }
 
@@ -393,14 +371,7 @@ export default {
   color: black;
   font-size: 7vw;
 }
-#score{
-  background-color: #f2f2f2;
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
+
 #clock3 {
   margin-left: 10%;
   color: gray;
@@ -421,6 +392,8 @@ export default {
 }
 
 #grid1 {
+  display: flex;
+  flex-flow: column;
   position: relative;
   background-color: #f2f2f2;
   width: 100%;
@@ -428,5 +401,12 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+#page {
+  padding-top: 6%;
+  padding-bottom: 6%;
+  max-height: 82%;
+  overflow: auto;
 }
 </style>

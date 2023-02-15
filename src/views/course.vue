@@ -2,9 +2,9 @@
 	<div id="grid1">
 <!--  加载效果  -->
 		<van-overlay :show="show" :z-index="999">
-			  <div id="loading">
-			    <van-loading color="#1989fa" size="20%"/>
-			  </div>
+      <div id="loading">
+        <van-loading color="#1989fa" size="20%"/>
+      </div>
 		</van-overlay>
 <!--  导航栏  -->
 		<van-nav-bar
@@ -27,14 +27,14 @@
     </van-nav-bar>
 <!--  导航栏底下的星期条  -->
 		<van-row id="table">
-		  <van-col span="3"><p class="time">{{ curWeek }}周</p></van-col>
-		  <van-col span="3"><p class="time" :class="{ active: activeDay[1] }">周一</p></van-col>
-		  <van-col span="3"><p class="time" :class="{ active: activeDay[2] }">周二</p></van-col>
-		  <van-col span="3"><p class="time" :class="{ active: activeDay[3] }">周三</p></van-col>
-		  <van-col span="3"><p class="time" :class="{ active: activeDay[4] }">周四</p></van-col>
-		  <van-col span="3"><p class="time" :class="{ active: activeDay[5] }">周五</p></van-col>
-		  <van-col span="3"><p class="time" :class="{ active: activeDay[6] }">周六</p></van-col>
-		  <van-col span="3"><p class="time" :class="{ active: activeDay[0] }">周日</p></van-col>
+      <van-col span="3"><p class="time">{{ curWeek }}周</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[1] }">周一</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[2] }">周二</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[3] }">周三</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[4] }">周四</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[5] }">周五</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[6] }">周六</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[0] }">周日</p></van-col>
 		</van-row>
 
 		<van-row id="row-table">
@@ -58,16 +58,16 @@
 <!--  渲染课表   -->
 			<van-col span="21" style="max-height: 100%;">
 				<van-row>
-					<lesson
-					v-for="l in lessons"
-					:course_name="l.jw_course_name"
-					:base_room_name="l.base_room_name"
-					:week="l.week"
-					:teacher="l.base_teacher_name"
-					:week_day="l.week_day"
-					:start="l.section_start"
-					:end="l.section_end"
-					:style='{ "top": computeTop(l.section_start), "left": computeLeft(l.week_day), "background-color": randomColor()}'>
+          <lesson
+            v-for="l in lessons"
+            :course_name="l.jw_course_name"
+            :base_room_name="l.base_room_name"
+            :week="l.week"
+            :teacher="l.base_teacher_name"
+            :week_day="l.week_day"
+            :start="l.section_start"
+            :end="l.section_end"
+            :style='{ "top": computeTop(l.section_start), "left": computeLeft(l.week_day), "background-color": randomColor()}'>
 					</lesson>
 				</van-row>
 			</van-col>
@@ -271,7 +271,7 @@
 	#table {
 		height: 5%;
 		padding: 1%;
-		top: 0%;
+		top: 0;
 		background-color: white;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 	}

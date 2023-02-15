@@ -25,6 +25,8 @@ import { PullRefresh } from 'vant';
 import { Pagination } from 'vant';
 import { Circle } from 'vant';
 import { Badge } from 'vant';
+import { Tabbar, TabbarItem } from 'vant';
+import { ConfigProvider } from 'vant';
 
 
 // 千万不要从idea的提示里安装缺少的依赖，否则后果会很严重！！！
@@ -72,6 +74,9 @@ axios.interceptors.response.use(response => {
     })
 })
 
+app.use(ConfigProvider);
+app.use(Tabbar);
+app.use(TabbarItem);
 app.use(Badge);
 app.use(NoticeBar);
 app.use(List);
