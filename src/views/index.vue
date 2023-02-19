@@ -23,7 +23,7 @@
             background="#ecf9ff"
             left-icon="volume-o"
             speed="100"
-            text="考试查询功能上线、课表现在不登录也可以使用本地缓存查询任意周了！遇到bug请在右上角“关于页面”联系作者，感激不尽！"
+            text="如遇到小部件不正常的情况请更新至最新版本客户端~如遇到小部件不正常的情况请更新至最新版本客户端~如遇到小部件不正常的情况请更新至最新版本客户端~ 遇到bug请在右上角“关于页面”联系作者，感激不尽！"
             mode="closeable"
         />
     </div>
@@ -127,7 +127,7 @@
       <div style="border-radius: 15px; background-color: white; padding: 1%; margin: 3%">
         <van-grid square :clickable="true" :border="false">
           <van-grid-item icon="todo-list-o" text="QQ课程推送" @click="$router.push('/push')"/>
-          <van-grid-item icon="chat-o" text="聊天机器人"/>
+          <van-grid-item icon="chat-o" text="聊天机器人" @click="chat"/>
         </van-grid>
       </div>
     </div>
@@ -305,6 +305,10 @@ export default {
             '提取码: 2333',
         confirmButtonColor: "#1989fa",
       })
+    },
+    // 应用页聊天机器人跳转
+    chat: function () {
+      Toast('暂未开放');
     }
   },
 }

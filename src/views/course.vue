@@ -119,7 +119,7 @@
           return;
         }
 				this.show = true;
-        var temp = window.localStorage.getItem("lessons");
+        let temp = window.localStorage.getItem("lessons");
         if(temp != null && window.localStorage.getItem("cur") == this.curWeek.toString()) {
           this.lessons = JSON.parse(temp);
           this.show = false;

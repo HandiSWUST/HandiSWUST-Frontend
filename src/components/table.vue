@@ -27,7 +27,9 @@ export default {
       default: {}
     }
   },
-  created() {}
+  created() {
+    console.log(this.tableData)
+  }
 };
 </script>
 
