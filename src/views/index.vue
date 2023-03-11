@@ -24,7 +24,6 @@
             left-icon="volume-o"
             speed="30"
             text="         掌上西科反馈QQ群：550324793，如遇到小部件不正常的情况请更新~"
-            mode="closeable"
         />
     </div>
 <!--  主页  -->
@@ -142,13 +141,12 @@
 import {START_TIME} from "/src/common/final.js"
 import {TOTAL_WEEK} from "/src/common/final.js"
 import {VERSION} from "/src/common/final.js"
+import {WEB_VERSION} from "/src/common/final.js"
 import {getCourse} from "/src/api/getCourse";
 import {Dialog, Notify, Toast} from "vant"
 import {checkLogin} from "@/api/loginCheck";
 import {logOut} from "@/api/logout";
 import {hitokoto} from "@/api/hitokotoApi";
-import {save} from "@/api/pushApi";
-import md5 from "blueimp-md5"
 import {isMobile} from "@/js/ua";
 
 export default {
@@ -165,6 +163,8 @@ export default {
     this.updateCheck();
     // 登录检查
     this.loginCheck();
+    // 检查Web版本
+    this.checkWebUpdate();
     // 0点后提示
     if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
       Notify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
@@ -236,7 +236,7 @@ export default {
     },
     // 检查更新
     updateCheck: function () {
-      let ver = window.localStorage.getItem("version");
+      let ver = localStorage.getItem("version");
       if(ver != null && ver == VERSION.toString()) {
         this.update = false;
       }
@@ -252,8 +252,6 @@ export default {
         else{
           this.isLogin = true;
           // 更新推送课表
-          // this.submitCourseData();
-
           localStorage.setItem("isLogin", "true");
           getCourse(true).then((response) => {
             if(response.status === 200 && response.data != null) {
@@ -267,23 +265,6 @@ export default {
           })
         }
       })
-    },
-    // 更新推送服务的课表
-    submitCourseData: function () {
-      let lessons = localStorage.getItem("raw");
-      if (lessons != null) {
-        console.log("更新推送课表")
-        let lmd5 = md5(lessons);
-        let olmd5 = localStorage.getItem("lmd5");
-        if (olmd5 != null && this.isLogin && olmd5 != lmd5) {
-          save(lessons, 0).then((resp) => {
-            if (resp.status == 200 && resp.data == "5200 SUCCESS") {
-              window.localStorage.setItem("submit", "true");
-              localStorage.setItem("lmd5", lmd5);
-            }
-          })
-        }
-      }
     },
     // 登出
     logout: function () {
@@ -309,6 +290,14 @@ export default {
     // 应用页聊天机器人跳转
     chat: function () {
       Toast('暂未开放');
+    },
+    // 检查web是否需要更新
+    checkWebUpdate() {
+      let webVersion = localStorage.getItem("webVersion");
+      if (Number(webVersion) < WEB_VERSION || webVersion == null) {
+        localStorage.setItem("webVersion", WEB_VERSION.toString());
+        location.reload();
+      }
     }
   },
 }

@@ -45,6 +45,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2023.3.11
+- 经过了长时间准备，迁移至更加规范的V2版Api
 # 2022.1.1 - 2022.2.20
 - 修复了放假时课表请求异常的问题
 - 增加了应用页，未来计划上线chatgpt聊天功能并允许同学们提交网页应用

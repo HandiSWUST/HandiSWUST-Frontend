@@ -114,12 +114,12 @@
       // 获取课表的默认方法
 			get: function() {
         if (Number(this.curWeek) > Number(this.totalWeek)) {
-          window.localStorage.setItem("cur", this.totalWeek.toString())
-          window.localStorage.setItem("lessons", "[]");
+          localStorage.setItem("cur", this.totalWeek.toString())
+          localStorage.setItem("lessons", "[]");
           return;
         }
 				this.show = true;
-        let temp = window.localStorage.getItem("lessons");
+        let temp = localStorage.getItem("lessons");
         if(temp != null && localStorage.getItem("cur") == this.curWeek.toString()) {
           this.lessons = JSON.parse(temp);
           this.show = false;
@@ -146,7 +146,7 @@
       // 获取所选周课表
       getSelect: function() {
         this.show = true;
-        if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
+        if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
           this.useLocal(true);
         } else {
           selectedCourse(this.week).then((response) => {
