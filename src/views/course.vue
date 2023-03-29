@@ -166,7 +166,6 @@
             this.show = false;
           })
         }
-        this.show = false;
       },
 
       // 使用本地缓存查询，未登录使用本地缓存请传入false，否则传入true
