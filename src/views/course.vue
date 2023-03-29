@@ -166,7 +166,7 @@
             this.show = false;
           })
         }
-
+        this.show = false;
       },
 
       // 使用本地缓存查询，未登录使用本地缓存请传入false，否则传入true
@@ -182,6 +182,7 @@
                 this.week = this.curWeek;
                 Toast.fail("获取课表失败");
               }
+              this.show = false;
             })
           } else {
             Toast.fail("本地没有缓存哦");

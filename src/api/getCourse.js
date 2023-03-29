@@ -17,7 +17,7 @@ export function getCourse(isCur) {
 }
 
 export function selectedCourse(week) {
-	let url = BASE_URL + "/api/v2/select/" + week;
+	let url = BASE_URL + "/api/v2/course/select/" + week;
 	axios.defaults.withCredentials = true;
 	return axios({
 		url: url,
@@ -27,7 +27,7 @@ export function selectedCourse(week) {
 }
 
 export function useLocalCourse(week, courseData) {
-	let url = BASE_URL + "/api/v2/local/" + week;
+	let url = BASE_URL + "/api/v2/course/local/" + week;
 	axios.defaults.withCredentials = true;
 	return axios({
 		headers:{'Content-Type': 'application/json'},

@@ -175,12 +175,11 @@ export default {
       this.finished = false;
       this.ifLoading2=true;
       queryBooks(this.value,1).then((resp)=>{
-        this.list=resp.data.data.content;
+        this.list=JSON.parse(resp.data.data).content;
         this.ifLoading2=false;
       })
     },
     showPopup(id){
-
         queryBookLocation(id).then((resp)=>{
           this.showLocation = resp.data.data;
         })

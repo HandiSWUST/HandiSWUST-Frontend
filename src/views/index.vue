@@ -218,9 +218,9 @@ export default {
     },
     // 获取日期
     date: function () {
-      var date = new Date();
-      var hour = date.getHours();
-      var minutes = date.getMinutes();
+      let date = new Date();
+      let hour = date.getHours();
+      let minutes = date.getMinutes();
       if(hour < 10) {
         hour = "0" + hour.toString();
       }else {
