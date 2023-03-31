@@ -143,7 +143,6 @@ export default {
 
       ifLoading2:false,
 
-
       //th
       option: {
         column: [
@@ -190,8 +189,6 @@ export default {
       queryBooks(this.value,1).then((resp)=>{
         this.books=resp.data.data.content;
       })
-
-
     },
 
     getLibrary() {
@@ -201,17 +198,15 @@ export default {
           Toast.fail("未登录");
           this.$router.push("/login");
         }
-
         else{
           if(resp.data.data.length === 0){
             Toast.fail("你还没有未还的书呢");
           }else{
-            this.tableData = resp.data;
+             this.tableData = resp.data.data;
+
           }
           this.ifLoading=false;
-
         }
-
       });
     }
   },
