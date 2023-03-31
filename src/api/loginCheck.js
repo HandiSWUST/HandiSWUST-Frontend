@@ -5,7 +5,7 @@ export function checkLogin() {
     axios.defaults.withCredentials = true;
     return axios({
         method: "get",
-        url: BASE_URL+"/api/loginCheck",
+        url: BASE_URL+"/api/v2/login/loginCheck",
         withCredentials: true
     })
 }

@@ -3,4 +3,5 @@ export const START_TIME = new Date("2023/2/20").getTime();
 export const END_TIME = new Date("2023/7/3").getTime();
 export const TOTAL_WEEK = 19;
 export const BASE_URL = "";
-export const VERSION = 0.36;
+export const VERSION = 0.37;
+export const WEB_VERSION = 0.3;

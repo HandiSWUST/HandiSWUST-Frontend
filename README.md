@@ -1,8 +1,5 @@
 # 掌上西科-前端部分
 ## 前言
-
-注意，新的代码在`apiv2`分支
-
 为了项目的可持续性发展，我们决定开放部分源代码，但由于目前的两位开发者主攻方向均为后端，前端代码可能稍显混乱，如对您造成困扰我们深感抱歉。本仓库为掌上西科的前端源码部分，除仓库内`/js/security.js`，其余部分遵循MIT协议开源，这意味着您可以随意使用本代码。同时我们也欢迎您为本项目做出贡献，贡献方式包括但不限于提交Issue、Pull Request。
 
 ## TODO
@@ -47,3 +44,7 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## 截图
+![1669956983950.jpg](https://res.shirakawatyu.top/96d31b6dc16f487fb6e3db6cd6b4cda6.jpg)
+![1669956983968.jpg](https://res.shirakawatyu.top/70d2163c92274a7f915dd4ab1a2ea6b0.jpg)

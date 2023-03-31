@@ -1,12 +1,12 @@
 import axios from "axios"
-import { BASE_URL } from "../common/final.js"
+import { BASE_URL } from "@/common/final"
 
 export function getCourse(isCur) {
-	var url;
+	let url;
 	if(isCur) {
-		url = BASE_URL+"/api/course/cur";
+		url = BASE_URL+"/api/v2/course/cur";
 	}else {
-		url = BASE_URL+"/api/course/all";
+		url = BASE_URL+"/api/v2/course/all";
 	}
 	axios.defaults.withCredentials = true;
 	return axios({
@@ -17,7 +17,7 @@ export function getCourse(isCur) {
 }
 
 export function selectedCourse(week) {
-	var url = BASE_URL+"/api/course/select/"+week;
+	let url = BASE_URL + "/api/v2/course/select/" + week;
 	axios.defaults.withCredentials = true;
 	return axios({
 		url: url,
@@ -27,7 +27,7 @@ export function selectedCourse(week) {
 }
 
 export function useLocalCourse(week, courseData) {
-	var url = BASE_URL+"/api/course/local/"+week;
+	let url = BASE_URL + "/api/v2/course/local/" + week;
 	axios.defaults.withCredentials = true;
 	return axios({
 		headers:{'Content-Type': 'application/json'},
