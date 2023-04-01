@@ -23,7 +23,8 @@
             background="#ecf9ff"
             left-icon="volume-o"
             speed="30"
-            text="         掌上西科反馈QQ群：550324793，如遇到小部件不正常的情况请更新~"
+            text="点击本公告栏可以加入掌上西科反馈群哦，掌上西科反馈QQ群：550324793，如遇到小部件不正常的情况请更新~"
+            @click="qq()"
         />
     </div>
 <!--  主页  -->
@@ -153,7 +154,7 @@ export default {
   name: "indexPanel",
   mounted() {
     // 为了避免罚款，非手机访问直接跳转
-    if (!isMobile()) location.href = "http://www.aliceblog.co/";
+     if (!isMobile()) location.href = "http://www.aliceblog.co/";
     // 获取一言
     this.getSentence();
     // 更新一次时间，之后每10s更新一次时钟组件的数据
@@ -215,6 +216,10 @@ export default {
         }
         this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
       });
+    },
+    //加群跳转
+    qq:function(){
+      window.location.href="https://qm.qq.com/cgi-bin/qm/qr?k=y4fpgAjhFmu3nXVDs67uL06ylEGly_ve&authKey=TIpP2nJoZPW+dJ7U0roXhFbD1ki8YJoFxZ7yQyG4JnX2HntHtqcbcAuHpX9DCDSw&noverify=0"
     },
     // 获取日期
     date: function () {
