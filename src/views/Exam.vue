@@ -68,22 +68,20 @@ export default {
     getExam() {
       axios.defaults.withCredentials = true;
       return axios({
-        url: BASE_URL+"/api/getExam",
+        url: BASE_URL+"/api/v2/extension/getExam",
         method: "get",
         withCredentials: true
       }).then((resp)=>{
-        if(resp.status == 200) {
-          if(resp.data=="3401 LOGOUT")
+        if(resp.status === 200) {
+          if(resp.data.code === 3401)
           {
-            // Toast.fail("未登录");
-            // this.$router.push("/login");
-            var beforeClose = (action) => {
+            let beforeClose = (action) => {
               new Promise((resolve) => {
-                if(action == "confirm") {
+                if (action == "confirm") {
                   Dialog.close();
                   let examData = JSON.parse(window.localStorage.getItem("exam"));
-                  if(examData != null) {
-                    this.tableData =examData;
+                  if (examData != null) {
+                    this.tableData = examData;
                     this.ifLoading = false;
                   } else {
                     Toast.fail("本地没有缓存哦");
@@ -94,15 +92,15 @@ export default {
                   this.$router.push("/login");
                 }
               })
-            }
+            };
             Dialog.confirm({
               message: "未登录，是否尝试使用本地缓存？",
               confirmButtonColor: "#1989fa",
               beforeClose,
             });
-          } else if(resp.data == "no data"){
+          } else if(resp.data.msg === "no data"){
             Toast.fail("教务系统当前没有考试安排哦");
-          } else if(resp.data == "s") {
+          } else if(resp.data.msg === "s") {
             let examData = JSON.parse(window.localStorage.getItem("exam"));
             if (examData != null) {
               Toast.fail("教务系统寄了或者需要重新登录，使用本地缓存");
@@ -113,7 +111,6 @@ export default {
             }
           }
           else{
-            // console.log(resp.data);
             this.ifLoading=false;
             this.tableData = resp.data;
             window.localStorage.setItem("exam", JSON.stringify(resp.data));

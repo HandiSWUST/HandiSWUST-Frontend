@@ -87,11 +87,11 @@ export default {
     getGPA(){
       axios.defaults.withCredentials = true;
       return axios({
-        url: BASE_URL+"/api/gpa",
+        url: BASE_URL+"/api/v2/extension/gpa",
         method: "get",
         withCredentials: true,
       }).then((resp)=>{
-        if(resp.data=="3401 LOGOUT")
+        if(resp.data.code === 3401)
         {
           Toast.fail("登录过期或未登录");
           this.$router.push("/login");
@@ -104,7 +104,7 @@ export default {
           // var parse = resp.data;
           // console.log(parse)
           // var parse1 = JSON.parse(parse.body.result);
-          var parse1 = resp.data;
+          let parse1 = JSON.parse(resp.data.data);
           this.required=parse1.gpa.required;
           this.bixiuText += this.required.toString();
           this.all=parse1.gpa.all;
@@ -117,19 +117,18 @@ export default {
     getScore() {
       axios.defaults.withCredentials = true;
       return axios({
-        url: BASE_URL+"/api/scores",
+        url: BASE_URL+"/api/v2/extension/scores",
         method: "get",
         withCredentials: true,
       }).then((resp)=>{
-        if(resp.data=="3401 LOGOUT")
+        if(resp.data === 3401)
         {
           Toast.fail("登录过期或未登录");
           this.$router.push("/login");
         }else{
           // console.log(resp.data)
           this.ifLoading=false;
-          this.tableData = resp.data;
-
+          this.tableData = JSON.parse(resp.data.data);
         }
 
       });

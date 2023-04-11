@@ -69,12 +69,11 @@
 
 <script>
 import TableVant from "../components/table.vue"
-import axios from "axios";
 import {Toast} from "vant";
-import {BASE_URL} from "../common/final";
 import { ref } from 'vue';
-import {queryBooks} from "../api/queryBooks";
-import {queryBookLocation} from "../api/queryBookLocation"
+import {queryBooks} from "@/api/queryBooks";
+import {queryBookLocation} from "@/api/queryBookLocation"
+import {library} from "@/api/getLibrary";
 export default {
   components:{TableVant},
   setup() {
@@ -94,9 +93,9 @@ export default {
       if(loadFlag.value)finished.value = true;
       setTimeout(() => {
         queryBooks(a,b).then((resp)=>{
-          for(let item in resp.data.content){
+          for(let item in resp.data.data.content){
 
-            list.value.push(resp.data.content[item]);
+            list.value.push(resp.data.data.content[item]);
 
           }
         });
@@ -144,7 +143,6 @@ export default {
 
       ifLoading2:false,
 
-
       //th
       option: {
         column: [
@@ -171,71 +169,44 @@ export default {
 
   },
   methods:{
-    // onLoad () {
-    //   queryBooks(this.value,this.pageHelper).then((resp)=>{
-    //     this.list = resp.data.content;
-    //
-    //     for(let item in resp.data.content){
-    //
-    //       this.list.push(resp.data.content[item]);
-    //
-    //     }
-    //
-    //   })
-    //   this.pageHelper++;
-    //   this.loading= false;
-    //
-    // },
-
     onClickButton(){
       this.loadFlag = false;
       this.finished = false;
       this.ifLoading2=true;
       queryBooks(this.value,1).then((resp)=>{
-        this.list=resp.data.content;
+        this.list=JSON.parse(resp.data.data).content;
         this.ifLoading2=false;
       })
     },
     showPopup(id){
-
         queryBookLocation(id).then((resp)=>{
-          console.log(resp.data);
-          this.showLocation = resp.data;
+          this.showLocation = resp.data.data;
         })
         this.show = true;
 
     },
     onSearch(){
       queryBooks(this.value,1).then((resp)=>{
-        this.books=resp.data.content;
+        this.books=resp.data.data.content;
       })
-
-
     },
 
     getLibrary() {
-      axios.defaults.withCredentials = true;
-      return axios({
-        url: BASE_URL+"/api/library",
-        method: "get",
-        withCredentials: true,
-      }).then((resp)=>{
-        if(resp.data=="3401 LOGOUT")
+      library().then((resp)=>{
+        if(resp.data.code === 3401)
         {
           Toast.fail("未登录");
           this.$router.push("/login");
         }
-
         else{
-          if(resp.data.length==0){
+          if(resp.data.data.length === 0){
             Toast.fail("你还没有未还的书呢");
           }else{
-            this.tableData = resp.data;
+             this.tableData = resp.data.data;
+
           }
           this.ifLoading=false;
-
         }
-
       });
     }
   },

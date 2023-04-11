@@ -82,22 +82,19 @@ export default {
     },
     login: function () {
       this.show = true;
-      login(this.username, this.password, this.captcha, this.remember).then((response) => {
-        // console.log(response.data);
-        if (response.data == "1200 LOGIN SUCCESS") {
+      login(this.username, this.password, this.captcha).then((response) => {
+        if (response.data.success) {
           if (this.remember) {
-            var pwd = Base64.encode(this.password);
-            var user = Base64.encode(this.username);
-            window.localStorage.setItem("user", user);
-            window.localStorage.setItem("pwd", pwd);
+            let pwd = Base64.encode(this.password);
+            let user = Base64.encode(this.username);
+            localStorage.setItem("user", user);
+            localStorage.setItem("pwd", pwd);
           } else {
-            window.localStorage.removeItem("user");
-            window.localStorage.removeItem("password");
+            localStorage.removeItem("user");
+            localStorage.removeItem("password");
           }
           this.$router.go(-1);
-          // this.$router.push("/");
-        } else if (response.data == "1502 REMOTE SERVICE ERROR") {
-          // console.log(response.data)
+        } else if (response.data.code === 1502) {
           Toast.fail("登录失败，一站式登录接口崩溃");
           this.getCaptcha();
         }
@@ -111,12 +108,12 @@ export default {
     },
     getCaptcha: function () {
       captcha().then((res) => {
-        this.imgUrl = "data:image/png;base64," + res.data;
+        this.imgUrl = "data:image/png;base64," + res.data.data;
       })
     },
     getPwd() {
-      var pwd = window.localStorage.getItem("pwd");
-      var user = window.localStorage.getItem("user");
+      let pwd = localStorage.getItem("pwd");
+      let user = localStorage.getItem("user");
       if (user != null && pwd != null) {
         this.username = Base64.decode(user);
         this.password = Base64.decode(pwd);

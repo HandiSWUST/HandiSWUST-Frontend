@@ -114,31 +114,29 @@
       // 获取课表的默认方法
 			get: function() {
         if (Number(this.curWeek) > Number(this.totalWeek)) {
-          window.localStorage.setItem("cur", this.totalWeek.toString())
-          window.localStorage.setItem("lessons", "[]");
+          localStorage.setItem("cur", this.totalWeek.toString())
+          localStorage.setItem("lessons", "[]");
           return;
         }
 				this.show = true;
-        let temp = window.localStorage.getItem("lessons");
-        if(temp != null && window.localStorage.getItem("cur") == this.curWeek.toString()) {
+        let temp = localStorage.getItem("lessons");
+        if(temp != null && localStorage.getItem("cur") == this.curWeek.toString()) {
           this.lessons = JSON.parse(temp);
           this.show = false;
         }else {
           getCourse(this.cur).then((response) => {
-            if(response.status == 200) {
-              if(response.data == "3401 LOGOUT") {
-                // Toast.fail("未登录");
-                // this.$router.push("/login");
+            if(response.status === 200) {
+              if(response.data.code === 3401) {
                 this.useLocal(false);
               }else {
-                this.lessons = response.data;
-                window.localStorage.setItem("cur", this.curWeek.toString())
-                window.localStorage.setItem("lessons", JSON.stringify(response.data));
+                this.lessons = JSON.parse(response.data.data);
+                console.log(this.lessons)
+                localStorage.setItem("cur", this.curWeek.toString())
+                localStorage.setItem("lessons", response.data.data);
               }
             } else {
-              this.week = Number(window.localStorage.getItem("cur"))
+              this.week = Number(localStorage.getItem("cur"))
               this.useLocal(true);
-              // Toast.fail("获取课表失败");
             }
             this.show = false;
           })
@@ -148,18 +146,18 @@
       // 获取所选周课表
       getSelect: function() {
         this.show = true;
-        if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
+        if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
           this.useLocal(true);
         } else {
           selectedCourse(this.week).then((response) => {
-            if(response.status == 200) {
-              if(response.data == "3401 LOGOUT") {
+            if(response.status === 200) {
+              if(response.data.code === 3401) {
                 // 询问是否使用本地缓存
                 this.useLocal(false);
               }else {
-                this.lessons = response.data;
+                this.lessons = JSON.parse(response.data.data);
                 if(this.week == this.curWeek) {
-                  window.localStorage.setItem("lessons", JSON.stringify(response.data))
+                  localStorage.setItem("lessons", response.data.data)
                 }
               }
             } else {
@@ -168,36 +166,36 @@
             this.show = false;
           })
         }
-
       },
 
       // 使用本地缓存查询，未登录使用本地缓存请传入false，否则传入true
       useLocal: function (isLogin) {
-        var courseData = window.localStorage.getItem("raw");
+        let courseData = localStorage.getItem("raw");
         if (isLogin) {
           if (courseData != null) {
             useLocalCourse(this.week, courseData).then((response) => {
-              if(response.status == 200 && response.data != null) {
-                this.lessons = response.data;
+              if(response.status === 200 && response.data != null) {
+                this.lessons = JSON.parse(response.data.data);
                 Toast.fail("一站式无连接，尝试使用本地数据");
               } else {
                 this.week = this.curWeek;
                 Toast.fail("获取课表失败");
               }
+              this.show = false;
             })
           } else {
             Toast.fail("本地没有缓存哦");
           }
         } else {
-          var beforeClose = (action) => {
-            if(action == "confirm") {
+          let beforeClose = (action) => {
+            if (action === "confirm") {
               this.local = true;
               this.show = true;
               Dialog.close();
-              if(courseData != null) {
+              if (courseData != null) {
                 useLocalCourse(this.week, courseData).then((response) => {
-                  if(response.status == 200 && response.data != null) {
-                    this.lessons = response.data;
+                  if (response.status === 200 && response.data != null) {
+                    this.lessons = JSON.parse(response.data.data);
                     this.show = false;
                   }
                 })
@@ -209,7 +207,7 @@
               Dialog.close();
               this.$router.push("/login");
             }
-          }
+          };
           if (this.local) {
             beforeClose("confirm");
           } else {
@@ -224,7 +222,7 @@
 
       // 高亮当前星期数
       setActiveDay: function () {
-        var weekday = new Date().getDay();
+        let weekday = new Date().getDay();
         this.activeDay = [false, false, false, false, false, false, false];
         this.activeDay[weekday] = true;
       },
