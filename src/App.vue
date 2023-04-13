@@ -24,12 +24,19 @@
 	margin: 0;
 }
 
-.van-nav-bar__content {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: var(--van-nav-bar-height);
-    min-height: 46px;
+@media (max-height: 600px) {
+    .van-nav-bar__content {
+        position: absolute;
+        top: -999px;
+    }
+    .van-nav-bar {
+        position: absolute;
+        top: -999px;
+    }
+    #bar {
+        position: absolute;
+        top: -999px;
+    }
 }
 
 .slide-enter-active,
