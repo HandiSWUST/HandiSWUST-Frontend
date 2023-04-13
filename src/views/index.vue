@@ -2,7 +2,6 @@
   <div id="grid1">
 <!--  导航栏及公告栏  -->
     <div style="height: 11vh">
-
         <van-nav-bar
             title="首页"
             id="bar"
@@ -16,7 +15,7 @@
         </van-nav-bar>
 
         <van-notice-bar
-            style="height: 50%"
+            style="height: 50%; min-height: 40px"
             color="#1989fa"
             background="#ecf9ff"
             left-icon="volume-o"
@@ -281,9 +280,9 @@ export default {
     downApp: function () {
       Dialog.alert({
         message:
-            '已修复华为设备小部件BUG\n' +
-            '更新了安卓课程表小部件，欢迎下载体验！\n' +
-            '从无小部件版本更新建议先卸载\n' +
+            '2023.4.13\n' +
+            '移除小部件更新课表的提示\n' +
+            '允许底部上移以适应插件\n' +
             '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
             '提取码: 2333',
         confirmButtonColor: "#1989fa",
@@ -319,10 +318,6 @@ export default {
   max-width: 35%;
   max-height: 100%;
   margin-bottom: 5%;
-}
-
-#bar {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 }
 
 #row {

@@ -10,9 +10,6 @@
 
     <van-row style="margin-top: 2%" v-show="!ifLoading">
       <van-col span="24">
-<!--            <van-cell-group  inset  style="margin-top: 2%">-->
-<!--              <Table-vant :option="option" :tableData="tableData"></Table-vant>-->
-<!--            </van-cell-group>-->
         <ul v-for="(termScore,key,i) in tableData" :key="i" >
           <li>
             <van-cell-group inset :title="key" >
@@ -183,11 +180,5 @@ export default {
 #loading{
   vertical-align: top;
   align-items: center;
-
-  /* top:50% */
-
-}
-#bar {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 }
 </style>

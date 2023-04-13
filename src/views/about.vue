@@ -187,9 +187,6 @@ import {save, test} from "@/api/pushApi";
 </script>
 
 <style scoped>
-  #bar {
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
-  }
 	#about {
 		position: relative;
 		background-color: #f2f2f2;

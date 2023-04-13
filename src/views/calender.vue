@@ -1,9 +1,10 @@
 <template>
   <div id="calender">
-      <van-nav-bar title="校历"
-                   style="box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);"
-                   left-text="首页"
-                   left-arrow @click-left="this.$router.push('/');"/>
+    <van-nav-bar title="校历"
+                 id="bar"
+                 left-text="首页"
+                 left-arrow @click-left="this.$router.push('/');"
+    />
     <van-image
         src="/calender1.jpg"
         class="img"

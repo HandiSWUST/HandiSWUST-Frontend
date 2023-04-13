@@ -8,8 +8,7 @@
 		:border="false"
 		left-text="返回"
 		left-arrow
-		@click-left="goBack"
-    style="height: 5%">
+		@click-left="goBack">
       <template #right>
         <van-pagination v-model="week" :page-count="totalWeek" mode="simple" @change="getSelect">
           <template #prev-text>
@@ -256,7 +255,7 @@
 		max-height: 100%;
 	}
 	#table {
-		height: 5%;
+		height: 4.5%;
 		padding: 1%;
 		top: 0;
 		background-color: white;

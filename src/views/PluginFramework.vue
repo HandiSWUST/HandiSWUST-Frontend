@@ -8,7 +8,7 @@
       <LoadingView :show="loading"/>
       <van-nav-bar
               :title="title"
-              style="box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);"
+              id="bar"
               left-text="首页"
               left-arrow @click-left="this.$router.push('/')"
               right-text="插件信息"

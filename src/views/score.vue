@@ -126,7 +126,6 @@ export default {
           Toast.fail("登录过期或未登录");
           this.$router.push("/login");
         }else{
-          // console.log(resp.data)
           this.ifLoading=false;
           this.tableData = JSON.parse(resp.data.data);
         }
@@ -186,11 +185,5 @@ export default {
 #loading{
   vertical-align: top;
   align-items: center;
-
-  /* top:50% */
-
-}
-#bar {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 }
 </style>

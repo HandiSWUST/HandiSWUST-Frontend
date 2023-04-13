@@ -23,6 +23,15 @@
 	width: 100%;
 	margin: 0;
 }
+
+.van-nav-bar__content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--van-nav-bar-height);
+    min-height: 46px;
+}
+
 .slide-enter-active,
 .slide-leave-active {
   transition: opacity 0.35s, transform 0.35s;
