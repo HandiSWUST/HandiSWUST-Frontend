@@ -4,13 +4,14 @@
 
 <template>
 	<div id="app">
-		<router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component }">
       <transition name="slide" mode="out-in">
-        <component :is="Component" :key="$route.path"/>
+        <component :is="Component" :key="$route.path" style="--van-nav-bar-height: 5.5vh;"/>
       </transition>
     </router-view>
 	</div>
 </template>
+
 
 <style>
 #app {
@@ -34,9 +35,5 @@
 .slide-leave-to {
   opacity: 0;
   transform: translateX(-30%);
-}
-
-:root {
-  --van-nav-bar-height: 100%;
 }
 </style>

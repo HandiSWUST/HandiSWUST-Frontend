@@ -6,7 +6,10 @@
       </div>
 
     </van-overlay>
-    <van-nav-bar title="登录" id="bar" left-text="首页" left-arrow @click-left="goIndex"/>
+    <van-nav-bar title="登录"
+                 style="box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);"
+                 left-text="首页"
+                 left-arrow @click-left="this.$router.push('/');"/>
     <van-form @submit="login" id="form">
       <van-cell-group inset>
         <van-field
@@ -78,7 +81,7 @@ export default {
   },
   methods: {
     goIndex: function () {
-      this.$router.push("/");
+
     },
     login: function () {
       this.show = true;
@@ -123,7 +126,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #loading_login {
   height: 100%;
   width: 100%;
@@ -131,10 +134,6 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-}
-
-#bar {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 }
 
 #login {

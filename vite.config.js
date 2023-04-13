@@ -23,6 +23,12 @@ export default defineConfig({
 			changeOrigin: true,
 			// rewrite:(path) => path.replace(/^\/api/, '')
 		},
+        '/plugins/info': {
+            target: 'https://plugin.aliceblog.co',
+            ws: true,
+            changeOrigin: true,
+            rewrite:(path) => path.replace(/^\/plugins\/info/, '')
+        }
       },
     },
  })
