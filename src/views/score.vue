@@ -15,6 +15,13 @@
       text=" 补考的成绩同样会显示在页面中哦，大伙只要记得自己补考的是哪几科就行！"
       mode="closeable"
   />
+  <div id="loading">
+    <van-loading  v-show="ifLoading" size="50px"  vertical a>加载中...</van-loading>
+  </div>
+    <van-dropdown-menu v-show="!ifLoading">
+      <van-dropdown-item v-model="term" :options="option1" />
+    </van-dropdown-menu>
+
   <van-row v-show="!ifLoading">
     <van-col span="24">
       <van-cell-group inset title="GPA" style="text-align: center">
@@ -37,13 +44,11 @@
       </van-cell-group>
     </van-col>
   </van-row>
-  <van-dropdown-menu>
-    <van-dropdown-item v-model="term" :options="option1" />
-  </van-dropdown-menu>
 
-  <van-row style="margin-bottom: 2%">
+
+  <van-row v-show="!ifLoading" style="margin-bottom: 2%">
     <van-col span="24">
-          <van-cell-group inset :title="term" >
+          <van-cell-group   inset :title="term" >
             <van-cell v-show="term!=='外语等级考试'">
               <template #title>
                 <span class="custom-title">必修课绩点</span>
@@ -70,9 +75,7 @@
           </van-cell-group>
     </van-col>
   </van-row>
-  <div id="loading">
-    <van-loading  v-show="ifLoading" size="50px"  vertical a>加载中...</van-loading>
-  </div>
+
 </div>
 </template>
 
@@ -180,7 +183,12 @@ export default {
     return {
       gan:"2022-2023-1",
       tableData:{},
-      scores:{},
+      scores:{
+        "2022-2023-1": {
+          "scroll": null,
+          "credit": null
+        }
+      },
       terms:[],
       ifLoading:true,
       required:0,
