@@ -1,4 +1,23 @@
 <script>
+  export default {
+      mounted() {
+          window.addEventListener("resize", () => {
+              if (document.body.clientHeight < (window.screen.height / 5 * 4)) {
+                  this.navBarHeight = "0";
+                  this.navBarZIndex = "-1";
+              } else {
+                  this.navBarHeight = "5.5vh"
+                  this.navBarZIndex = "999";
+              }
+          })
+      },
+      data() {
+          return {
+              navBarHeight: "5.5vh",
+              navBarZIndex: "999"
+          }
+      }
+  }
 </script>
 
 
@@ -6,7 +25,8 @@
 	<div id="app">
     <router-view v-slot="{ Component }">
       <transition name="slide" mode="out-in">
-        <component :is="Component" :key="$route.path" style="--van-nav-bar-height: 5.5vh;"/>
+        <component :is="Component" :key="$route.path"
+                   :style="{ '--van-nav-bar-height': navBarHeight, '--van-nav-bar-z-index': navBarZIndex }"/>
       </transition>
     </router-view>
 	</div>
@@ -22,21 +42,6 @@
   height: 100%;
 	width: 100%;
 	margin: 0;
-}
-
-@media (max-height: 600px) {
-    .van-nav-bar__content {
-        position: absolute;
-        top: -999px;
-    }
-    .van-nav-bar {
-        position: absolute;
-        top: -999px;
-    }
-    #bar {
-        position: absolute;
-        top: -999px;
-    }
 }
 
 .slide-enter-active,

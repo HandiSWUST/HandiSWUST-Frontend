@@ -8,20 +8,18 @@
       @click-left="onClickLeft"
   />
   <van-notice-bar
-      color="#1989fa"
-      background="#ecf9ff"
-      left-icon="volume-o"
-      speed="100"
-      text=" 补考的成绩同样会显示在页面中哦，大伙只要记得自己补考的是哪几科就行！"
-      mode="closeable"
+          color="#1989fa"
+          background="#ecf9ff"
+          left-icon="volume-o"
+          speed="100"
+          text=" 补考的成绩同样会显示在页面中哦，大伙只要记得自己补考的是哪几科就行！"
   />
   <div id="loading">
     <van-loading  v-show="ifLoading" size="50px"  vertical a>加载中...</van-loading>
   </div>
-    <van-dropdown-menu v-show="!ifLoading">
-      <van-dropdown-item v-model="term" :options="option1" />
-    </van-dropdown-menu>
-
+  <van-dropdown-menu v-show="!ifLoading" active-color="#1989fa">
+    <van-dropdown-item v-model="term" :options="option1" />
+  </van-dropdown-menu>
   <van-row v-show="!ifLoading">
     <van-col span="24">
       <van-cell-group inset title="GPA" style="text-align: center">
@@ -160,10 +158,11 @@ export default {
         method: "get",
         withCredentials: true,
       }).then((resp)=>{
-        if(resp.data === 3401)
+        if(resp.data.code === 3401)
         {
           Toast.fail("登录过期或未登录");
           this.$router.push("/login");
+            this.$router.push("/login");
         }else{
           this.ifLoading=false;
           this.tableData = JSON.parse(resp.data.data);
