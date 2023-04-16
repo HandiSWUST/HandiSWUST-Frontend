@@ -45,6 +45,9 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2023.4.16
+- 修改了查成绩页面的样式
+- 修改了导航栏隐藏的策略
 # 2023.4.13
 - 增加了扩展组件的能力
 - 添加了ChatGPT和MikuTap作为测试
