@@ -109,8 +109,8 @@ export default {
           }
           else{
             this.ifLoading=false;
-            this.tableData = resp.data;
-            window.localStorage.setItem("exam", JSON.stringify(resp.data));
+            this.tableData = JSON.parse(resp.data.data);
+            window.localStorage.setItem("exam", JSON.stringify(resp.data.data));
           }
 
 
