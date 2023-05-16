@@ -123,6 +123,7 @@
         <AppCard category="实用工具">
             <van-grid-item icon="todo-list-o" text="课程推送"/>
             <AppButton text="ChatGPT" title="ChatGPT" src="chatgpt" icon="/plugins/chatgpt.png"/>
+            <AppButton text="GPT(gpt.bz)" title="chat.gpt.bz" src="ails" icon="/plugins/chatgpt.png"/>
         </AppCard>
         <AppCard category="小游戏">
             <AppButton text="MikuTap" title="MikuTap" src="mikutap" icon="/plugins/mikutap.png"/>
@@ -151,7 +152,7 @@ import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "indexPanel",
-    components: {AppButton, AppCard},
+  components: {AppButton, AppCard},
   mounted() {
     // 为了避免罚款，非手机访问直接跳转
      if (!isMobile()) location.href = "http://www.aliceblog.co/";

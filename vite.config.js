@@ -17,6 +17,11 @@ export default defineConfig({
       open: true,
       // 配置代理
       proxy: {
+        '/api/v2/extension/cr': {
+            target: 'http://124.220.158.71:8000',
+            ws: true,
+            changeOrigin: true,
+        },
 		'/api': {
 			target: 'http://localhost:8080',
 			ws: true,

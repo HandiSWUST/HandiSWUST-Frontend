@@ -31,6 +31,7 @@ import TableVant from "../components/table.vue"
 import axios from "axios"
 import {Dialog, Notify, Toast} from "vant";
 import { BASE_URL } from "../common/final.js"
+import {getExam} from "@/api/getExam";
 
 
 
@@ -48,7 +49,7 @@ export default {
     if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
       this.useCache();
     } else {
-      this.getExam();
+      this.loadExam();
     }
   },
   components:{TableVant},
@@ -62,13 +63,8 @@ export default {
         this.ifLoading = false;
       }
     },
-    getExam() {
-      axios.defaults.withCredentials = true;
-      return axios({
-        url: BASE_URL+"/api/v2/extension/getExam",
-        method: "get",
-        withCredentials: true
-      }).then((resp)=>{
+    loadExam() {
+      getExam().then((resp)=>{
         if(resp.status === 200) {
           if(resp.data.code === 3401)
           {

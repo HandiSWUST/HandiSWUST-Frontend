@@ -45,6 +45,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2023.5.16
+- 增加了验证码自动识别功能
 # 2023.4.16
 - 修改了查成绩页面的样式
 - 修改了导航栏隐藏的策略
@@ -171,10 +173,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 </template>
 
 <script>
-import {save, test} from "@/api/pushApi";
-  import {Toast} from "vant";
 
-  export default {
+export default {
 		name: "aboutUs",
 		data() {
 			return {

@@ -31,11 +31,10 @@
             label="验证码"
             placeholder="验证码"
         />
-
         <br/>
         <div style="display: flex;">
           <img v-bind:src="imgUrl" style="margin-left: 3%;"/>
-          <van-button plain type="primary" color="#1989fa" size="small" v-on:click="getCaptcha"
+          <van-button plain type="primary" color="#1989fa" size="small" v-on:click="loadCaptcha"
                       style="margin-left: 3%;">获取验证码
           </van-button>
 
@@ -62,7 +61,8 @@ import axios from "axios"
 import {Base64} from "js-base64"
 import {Toast} from "vant";
 import {BASE_URL} from "../common/final.js"
-import {captcha} from "../api/getCaptcha"
+import {getCaptcha} from "../api/login.js"
+import {cr} from "@/api/crApi";
 
 export default {
   name: "loginPanel",
@@ -73,7 +73,8 @@ export default {
       captcha: "",
       imgUrl: "",
       remember: true,
-      show: false
+      show: false,
+      captchaBase64: ""
     }
   },
   mounted() {
@@ -99,19 +100,22 @@ export default {
           this.$router.go(-1);
         } else if (response.data.code === 1502) {
           Toast.fail("登录失败，一站式登录接口崩溃");
-          this.getCaptcha();
+          this.loadCaptcha();
         }
         else {
           Toast.fail("登录失败，请检查账号密码及验证码是否正确");
-          this.getCaptcha();
+          this.loadCaptcha();
         }
       }).finally(() => {
         this.show = false;
       });
     },
-    getCaptcha: function () {
-      captcha().then((res) => {
+    loadCaptcha: function () {
+      getCaptcha().then((res) => {
         this.imgUrl = "data:image/png;base64," + res.data.data;
+        this.captchaBase64 = res.data.data;
+        this.showCR = true;
+        this.captchaRecognize();
       })
     },
     getPwd() {
@@ -122,6 +126,14 @@ export default {
         this.password = Base64.decode(pwd);
       }
     },
+    captchaRecognize() {
+      this.crLoading = true;
+      cr({data: this.captchaBase64}).then((resp) => {
+          this.captcha = resp.data;
+      }).finally(() => {
+          this.crLoading = false;
+      })
+    }
   }
 }
 </script>
