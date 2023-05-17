@@ -17,6 +17,7 @@
             name="学号"
             label="学号"
             placeholder="学号"
+            clearable
         />
         <van-field
             v-model="password"
@@ -24,12 +25,14 @@
             name="一站式密码"
             label="一站式密码"
             placeholder="一站式密码"
+            clearable
         />
         <van-field
             v-model="captcha"
             name="验证码"
             label="验证码"
             placeholder="验证码"
+            clearable
         />
         <br/>
         <div style="display: flex;">
@@ -127,11 +130,8 @@ export default {
       }
     },
     captchaRecognize() {
-      this.crLoading = true;
       cr({data: this.captchaBase64}).then((resp) => {
           this.captcha = resp.data;
-      }).finally(() => {
-          this.crLoading = false;
       })
     }
   }

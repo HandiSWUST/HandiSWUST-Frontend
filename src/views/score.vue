@@ -2,11 +2,20 @@
 <div id="score">
   <van-nav-bar
       id="bar"
+      style="box-shadow: 0 0 0 0, 0 0 0 0;"
       title="成绩"
       left-text="返回"
       left-arrow
       @click-left="onClickLeft"
+      :border="false"
   />
+  <van-dropdown-menu
+          v-show="!ifLoading"
+          active-color="#1989fa"
+          style="z-index: 2; border-width: 0"
+  >
+    <van-dropdown-item v-model="term" :options="option1" />
+  </van-dropdown-menu>
   <van-notice-bar
           color="#1989fa"
           background="#ecf9ff"
@@ -15,11 +24,8 @@
           text=" 补考的成绩同样会显示在页面中哦，大伙只要记得自己补考的是哪几科就行！"
   />
   <div id="loading">
-    <van-loading  v-show="ifLoading" size="50px"  vertical a>加载中...</van-loading>
+      <van-loading  v-show="ifLoading" size="50px"  vertical a>加载中...</van-loading>
   </div>
-  <van-dropdown-menu v-show="!ifLoading" active-color="#1989fa">
-    <van-dropdown-item v-model="term" :options="option1" />
-  </van-dropdown-menu>
   <van-row v-show="!ifLoading">
     <van-col span="24">
       <van-cell-group inset title="GPA" style="text-align: center">
