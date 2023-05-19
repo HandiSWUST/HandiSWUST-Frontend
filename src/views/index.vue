@@ -116,8 +116,8 @@
             </van-grid-item>
           </van-grid>
         </div>
+        <van-divider @click="jump" style="font-size: 12px; margin: 0;" v-if="!isMobile()">蜀ICP备2022019214号</van-divider>
       </van-col>
-        <van-divider @click="jump" style="font-size: 12px">蜀ICP备2022019214号</van-divider>
     </div>
 <!--  应用页  -->
     <div id="page" v-if="active == 1">
@@ -206,6 +206,7 @@ export default {
     }
   },
   methods: {
+      isMobile,
     // 获取一言
     getSentence: function () {
       hitokoto("", "json").then((resp) => {
@@ -290,7 +291,7 @@ export default {
     },
     // 备案跳转
     jump() {
-        location.href = "https://beian.miit.gov.cn/";
+        location.href="https://beian.miit.gov.cn/"
     },
     // 检查web是否需要更新
     checkWebUpdate() {
