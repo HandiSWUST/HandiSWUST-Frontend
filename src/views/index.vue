@@ -117,6 +117,7 @@
           </van-grid>
         </div>
       </van-col>
+        <van-divider @click="jump" style="font-size: 12px">蜀ICP备2022019214号</van-divider>
     </div>
 <!--  应用页  -->
     <div id="page" v-if="active == 1">
@@ -154,8 +155,6 @@ export default {
   name: "indexPanel",
   components: {AppButton, AppCard},
   mounted() {
-    // 为了避免罚款，非手机访问直接跳转
-     if (!isMobile()) location.href = "http://www.aliceblog.co/";
     // 获取一言
     this.getSentence();
     // 更新一次时间，之后每10s更新一次时钟组件的数据
@@ -289,9 +288,9 @@ export default {
         confirmButtonColor: "#1989fa",
       })
     },
-    // 应用页聊天机器人跳转
-    chat: function () {
-      Toast('暂未开放');
+    // 备案跳转
+    jump() {
+        location.href = "https://beian.miit.gov.cn/";
     },
     // 检查web是否需要更新
     checkWebUpdate() {
