@@ -125,6 +125,7 @@
             <van-grid-item icon="todo-list-o" text="课程推送"/>
             <AppButton text="ChatGPT" title="ChatGPT" src="chatgpt" icon="/plugins/chatgpt.png"/>
             <AppButton text="GPT(gpt.bz)" title="chat.gpt.bz" src="ails" icon="/plugins/chatgpt.png"/>
+            <AppButton text="未交作业查询" title="对分易未交作业查询" src="duifene" icon="/plugins/duifene.png"/>
         </AppCard>
         <AppCard category="小游戏">
             <AppButton text="MikuTap" title="MikuTap" src="mikutap" icon="/plugins/mikutap.png"/>

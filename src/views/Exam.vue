@@ -46,7 +46,7 @@ export default {
   },
   mounted () {
     // 0点之后自动使用缓存
-    if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
+    if (new Date().getHours() >= 0 && new Date().getHours() < 7) {
       this.useCache();
     } else {
       this.loadExam();
@@ -106,7 +106,7 @@ export default {
           else{
             this.ifLoading=false;
             this.tableData = JSON.parse(resp.data.data);
-            window.localStorage.setItem("exam", JSON.stringify(resp.data.data));
+            window.localStorage.setItem("exam", resp.data.data);
           }
 
 
