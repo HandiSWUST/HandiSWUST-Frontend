@@ -93,7 +93,7 @@ export default {
             });
           } else if(resp.data.msg === "no data"){
             Toast.fail("教务系统当前没有考试安排哦");
-          } else if(resp.data.msg === "s") {
+          } else if(resp.data.msg === "s"||resp.data.msg==="sys err") {
             let examData = JSON.parse(window.localStorage.getItem("exam"));
             if (examData != null) {
               Toast.fail("教务系统寄了或者需要重新登录，使用本地缓存");
@@ -108,13 +108,12 @@ export default {
             this.tableData = JSON.parse(resp.data.data);
             window.localStorage.setItem("exam", resp.data.data);
           }
-
-
         } else {
           let examData = JSON.parse(window.localStorage.getItem("exam"));
           if (examData != null) {
             Toast.fail("教务系统寄了或者需要重新登录，使用本地缓存");
             this.tableData = examData;
+            console.log(examData)
             this.ifLoading = false;
           } else {
             this.$router.push("/login");
