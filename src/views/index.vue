@@ -1,12 +1,10 @@
 <template>
   <div id="grid1">
 <!--  导航栏及公告栏  -->
-    <div style="height: 11%">
-      <van-config-provider :theme-vars="themeVars">
+    <div style="height: 11vh">
         <van-nav-bar
             title="首页"
             id="bar"
-            style="height: 50%"
             right-text="关于"
             @click-right="$router.push('/about')">
           <template #left>
@@ -15,16 +13,14 @@
             </van-badge>
           </template>
         </van-nav-bar>
-      </van-config-provider>
 
         <van-notice-bar
-            style="height: 50%"
+            style="height: 50%; min-height: 40px"
             color="#1989fa"
             background="#ecf9ff"
             left-icon="volume-o"
             speed="30"
-            text="点击本公告栏可以加入掌上西科反馈群哦，掌上西科反馈QQ群：550324793，如遇到小部件不正常的情况请更新~"
-            @click="qq()"
+            text="(真的可以加了) 掌上西科反馈QQ群：550324793，如遇到小部件不正常的情况请更新~"
         />
     </div>
 <!--  主页  -->
@@ -120,18 +116,22 @@
             </van-grid-item>
           </van-grid>
         </div>
+        <van-divider @click="jump" style="font-size: 12px; margin: 0;" v-if="!isMobile()">蜀ICP备2022019214号</van-divider>
       </van-col>
     </div>
 <!--  应用页  -->
     <div id="page" v-if="active == 1">
-      <div style="border-radius: 15px; background-color: white; padding: 1%; margin: 3%">
-        <van-grid square :clickable="true" :border="false">
-          <van-grid-item icon="todo-list-o" text="QQ课程推送" @click="$router.push('/push')"/>
-          <van-grid-item icon="chat-o" text="聊天机器人" @click="chat"/>
-        </van-grid>
-      </div>
+        <AppCard category="实用工具">
+            <van-grid-item icon="todo-list-o" text="课程推送"/>
+            <AppButton text="ChatGPT" title="ChatGPT" src="chatgpt" icon="/plugins/chatgpt.png"/>
+            <AppButton text="GPT(gpt.bz)" title="chat.gpt.bz" src="ails" icon="/plugins/chatgpt.png"/>
+            <AppButton text="未交作业查询" title="对分易未交作业查询" src="duifene" icon="/plugins/duifene.png"/>
+        </AppCard>
+        <AppCard category="小游戏">
+            <AppButton text="MikuTap" title="MikuTap" src="mikutap" icon="/plugins/mikutap.png"/>
+        </AppCard>
     </div>
-    <van-tabbar v-model="active" style="height: 7%">
+    <van-tabbar v-model="active" style="height: 7vh">
       <van-tabbar-item icon="home-o">主页</van-tabbar-item>
       <van-tabbar-item icon="apps-o">更多</van-tabbar-item>
     </van-tabbar>
@@ -149,12 +149,13 @@ import {checkLogin} from "@/api/loginCheck";
 import {logOut} from "@/api/logout";
 import {hitokoto} from "@/api/hitokotoApi";
 import {isMobile} from "@/js/ua";
+import AppCard from "@/components/AppCard.vue";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "indexPanel",
+  components: {AppButton, AppCard},
   mounted() {
-    // 为了避免罚款，非手机访问直接跳转
-     if (!isMobile()) location.href = "http://www.aliceblog.co/";
     // 获取一言
     this.getSentence();
     // 更新一次时间，之后每10s更新一次时钟组件的数据
@@ -187,7 +188,7 @@ export default {
       // tabber
       active: 0,
 
-      themeVars: {vanNavBarHeight: "100%"}
+      themeVars: {NavBarHeight: "5.5vh"}
     }
   },
   computed: {
@@ -206,6 +207,7 @@ export default {
     }
   },
   methods: {
+      isMobile,
     // 获取一言
     getSentence: function () {
       hitokoto("", "json").then((resp) => {
@@ -216,10 +218,6 @@ export default {
         }
         this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
       });
-    },
-    //加群跳转
-    qq:function(){
-      window.location.href="https://qm.qq.com/cgi-bin/qm/qr?k=y4fpgAjhFmu3nXVDs67uL06ylEGly_ve&authKey=TIpP2nJoZPW+dJ7U0roXhFbD1ki8YJoFxZ7yQyG4JnX2HntHtqcbcAuHpX9DCDSw&noverify=0"
     },
     // 获取日期
     date: function () {
@@ -259,12 +257,12 @@ export default {
           // 更新推送课表
           localStorage.setItem("isLogin", "true");
           getCourse(true).then((response) => {
-            if(response.status === 200 && response.data != null) {
+            if(response.status === 200 && response.data.data != null) {
               localStorage.setItem("lessons", response.data.data);
             }
           })
           getCourse(false).then((response) => {
-            if(response.status === 200 && response.data != null) {
+            if(response.status === 200 && response.data.data != null) {
               localStorage.setItem("raw", response.data.data);
             }
           })
@@ -284,17 +282,17 @@ export default {
     downApp: function () {
       Dialog.alert({
         message:
-            '已修复华为设备小部件BUG\n' +
-            '更新了安卓课程表小部件，欢迎下载体验！\n' +
-            '从无小部件版本更新建议先卸载\n' +
+            '2023.4.13\n' +
+            '移除小部件更新课表的提示\n' +
+            '允许底部上移以适应插件\n' +
             '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
             '提取码: 2333',
         confirmButtonColor: "#1989fa",
       })
     },
-    // 应用页聊天机器人跳转
-    chat: function () {
-      Toast('暂未开放');
+    // 备案跳转
+    jump() {
+        location.href="https://beian.miit.gov.cn/"
     },
     // 检查web是否需要更新
     checkWebUpdate() {
@@ -322,10 +320,6 @@ export default {
   max-width: 35%;
   max-height: 100%;
   margin-bottom: 5%;
-}
-
-#bar {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 }
 
 #row {
@@ -404,7 +398,7 @@ export default {
 #page {
   padding-top: 6%;
   padding-bottom: 6%;
-  max-height: 82%;
+  max-height: 82vh;
   overflow: auto;
 }
 </style>

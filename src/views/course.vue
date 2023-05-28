@@ -1,19 +1,14 @@
 <template>
 	<div id="grid1">
 <!--  加载效果  -->
-		<van-overlay :show="show" :z-index="999">
-      <div id="loading">
-        <van-loading color="#1989fa" size="20%"/>
-      </div>
-		</van-overlay>
+		<LoadingView :show="show"/>
 <!--  导航栏  -->
 		<van-nav-bar
 		title="课程表"
 		:border="false"
 		left-text="返回"
 		left-arrow
-		@click-left="goBack"
-    style="height: 5%">
+		@click-left="goBack">
       <template #right>
         <van-pagination v-model="week" :page-count="totalWeek" mode="simple" @change="getSelect">
           <template #prev-text>
@@ -82,9 +77,11 @@
   import {Dialog, Toast} from "vant";
 	import lesson from "../components/class.vue"
   import {selectedCourse, useLocalCourse, getCourse} from "/src/api/getCourse";
+	import LoadingView from "@/components/LoadingView.vue";
 	export default {
 		name: "courseTable",
 		components: {
+			LoadingView,
 			lesson
 		},
 		data() {
@@ -250,15 +247,6 @@
 </script>
 
 <style scoped>
-	#loading {
-		height: 100%;
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-
-	}
 	#grid1 {
 		position: relative;
 		background-color: white;
@@ -267,7 +255,7 @@
 		max-height: 100%;
 	}
 	#table {
-		height: 5%;
+		height: 4.5%;
 		padding: 1%;
 		top: 0;
 		background-color: white;
@@ -289,8 +277,6 @@
 		text-align: center;
 	}
 	#noTable {
-    border-right: solid #ebedf0;
-    border-width: 1px;
     height: 100%;
 		width: 100%;
 		max-height: 100%;

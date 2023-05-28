@@ -45,6 +45,18 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2023.5.24
+- 修复了考试缓存不正常的问题
+# 2023.5.22
+- 应用页增加了对分易未完成作业查看的功能
+# 2023.5.16
+- 增加了验证码自动识别功能
+# 2023.4.16
+- 修改了查成绩页面的样式
+- 修改了导航栏隐藏的策略
+# 2023.4.13
+- 增加了扩展组件的能力
+- 添加了ChatGPT和MikuTap作为测试
 # 2023.3.11
 - 经过了长时间准备，迁移至更加规范的V2版Api
 # 2022.1.1 - 2022.2.20
@@ -165,10 +177,8 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 </template>
 
 <script>
-import {save, test} from "@/api/pushApi";
-  import {Toast} from "vant";
 
-  export default {
+export default {
 		name: "aboutUs",
 		data() {
 			return {
@@ -184,9 +194,6 @@ import {save, test} from "@/api/pushApi";
 </script>
 
 <style scoped>
-  #bar {
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
-  }
 	#about {
 		position: relative;
 		background-color: #f2f2f2;

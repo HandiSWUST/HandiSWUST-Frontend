@@ -6,7 +6,10 @@
       </div>
 
     </van-overlay>
-    <van-nav-bar title="登录" id="bar" left-text="首页" left-arrow @click-left="goIndex"/>
+    <van-nav-bar title="登录"
+                 id="bar"
+                 left-text="首页"
+                 left-arrow @click-left="this.$router.push('/');"/>
     <van-form @submit="login" id="form">
       <van-cell-group inset>
         <van-field
@@ -14,6 +17,7 @@
             name="学号"
             label="学号"
             placeholder="学号"
+            clearable
         />
         <van-field
             v-model="password"
@@ -21,18 +25,19 @@
             name="一站式密码"
             label="一站式密码"
             placeholder="一站式密码"
+            clearable
         />
         <van-field
             v-model="captcha"
             name="验证码"
             label="验证码"
             placeholder="验证码"
+            clearable
         />
-
         <br/>
         <div style="display: flex;">
           <img v-bind:src="imgUrl" style="margin-left: 3%;"/>
-          <van-button plain type="primary" color="#1989fa" size="small" v-on:click="getCaptcha"
+          <van-button plain type="primary" color="#1989fa" size="small" v-on:click="loadCaptcha"
                       style="margin-left: 3%;">获取验证码
           </van-button>
 
@@ -59,7 +64,8 @@ import axios from "axios"
 import {Base64} from "js-base64"
 import {Toast} from "vant";
 import {BASE_URL} from "../common/final.js"
-import {captcha} from "../api/getCaptcha"
+import {getCaptcha} from "../api/login.js"
+import {cr} from "@/api/crApi";
 
 export default {
   name: "loginPanel",
@@ -70,7 +76,8 @@ export default {
       captcha: "",
       imgUrl: "",
       remember: true,
-      show: false
+      show: false,
+      captchaBase64: ""
     }
   },
   mounted() {
@@ -78,7 +85,7 @@ export default {
   },
   methods: {
     goIndex: function () {
-      this.$router.push("/");
+
     },
     login: function () {
       this.show = true;
@@ -96,19 +103,22 @@ export default {
           this.$router.go(-1);
         } else if (response.data.code === 1502) {
           Toast.fail("登录失败，一站式登录接口崩溃");
-          this.getCaptcha();
+          this.loadCaptcha();
         }
         else {
           Toast.fail("登录失败，请检查账号密码及验证码是否正确");
-          this.getCaptcha();
+          this.loadCaptcha();
         }
       }).finally(() => {
         this.show = false;
       });
     },
-    getCaptcha: function () {
-      captcha().then((res) => {
+    loadCaptcha: function () {
+      getCaptcha().then((res) => {
         this.imgUrl = "data:image/png;base64," + res.data.data;
+        this.captchaBase64 = res.data.data;
+        this.showCR = true;
+        this.captchaRecognize();
       })
     },
     getPwd() {
@@ -119,11 +129,16 @@ export default {
         this.password = Base64.decode(pwd);
       }
     },
+    captchaRecognize() {
+      cr({data: this.captchaBase64}).then((resp) => {
+          this.captcha = resp.data;
+      })
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 #loading_login {
   height: 100%;
   width: 100%;
@@ -131,10 +146,6 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-}
-
-#bar {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 }
 
 #login {

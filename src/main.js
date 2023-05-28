@@ -27,10 +27,11 @@ import { Circle } from 'vant';
 import { Badge } from 'vant';
 import { Tabbar, TabbarItem } from 'vant';
 import { ConfigProvider } from 'vant';
-
-
+import { Card } from 'vant';
+import { Tag } from 'vant';
+import { DropdownMenu, DropdownItem } from 'vant';
 // 千万不要从idea的提示里安装缺少的依赖，否则后果会很严重！！！
-// WTM今天已经重装了3次nodejs了
+
 
 
 
@@ -109,4 +110,8 @@ app.use(CollapseItem);
 app.use(Pagination);
 app.use(Cell);
 app.use(Circle);
+app.use(Card);
+app.use(Tag);
+app.use(DropdownMenu);
+app.use(DropdownItem);
 app.mount('#app')

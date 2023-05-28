@@ -10,9 +10,6 @@
 
     <van-row style="margin-top: 2%" v-show="!ifLoading">
       <van-col span="24">
-<!--            <van-cell-group  inset  style="margin-top: 2%">-->
-<!--              <Table-vant :option="option" :tableData="tableData"></Table-vant>-->
-<!--            </van-cell-group>-->
         <ul v-for="(termScore,key,i) in tableData" :key="i" >
           <li>
             <van-cell-group inset :title="key" >
@@ -34,6 +31,7 @@ import TableVant from "../components/table.vue"
 import axios from "axios"
 import {Dialog, Notify, Toast} from "vant";
 import { BASE_URL } from "../common/final.js"
+import {getExam} from "@/api/getExam";
 
 
 
@@ -48,10 +46,10 @@ export default {
   },
   mounted () {
     // 0点之后自动使用缓存
-    if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
+    if (new Date().getHours() >= 0 && new Date().getHours() < 7) {
       this.useCache();
     } else {
-      this.getExam();
+      this.loadExam();
     }
   },
   components:{TableVant},
@@ -65,13 +63,8 @@ export default {
         this.ifLoading = false;
       }
     },
-    getExam() {
-      axios.defaults.withCredentials = true;
-      return axios({
-        url: BASE_URL+"/api/v2/extension/getExam",
-        method: "get",
-        withCredentials: true
-      }).then((resp)=>{
+    loadExam() {
+      getExam().then((resp)=>{
         if(resp.status === 200) {
           if(resp.data.code === 3401)
           {
@@ -112,8 +105,8 @@ export default {
           }
           else{
             this.ifLoading=false;
-            this.tableData = resp.data;
-            window.localStorage.setItem("exam", JSON.stringify(resp.data));
+            this.tableData = JSON.parse(resp.data.data);
+            window.localStorage.setItem("exam", resp.data.data);
           }
 
 
@@ -183,11 +176,5 @@ export default {
 #loading{
   vertical-align: top;
   align-items: center;
-
-  /* top:50% */
-
-}
-#bar {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
 }
 </style>

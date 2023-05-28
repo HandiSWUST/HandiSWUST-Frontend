@@ -1,18 +1,23 @@
 <template>
-<div id="calender">
-  <van-image
-      src="/calender1.jpg"
-      class="img"
-  />
-  <van-image
-      src="/calender2.jpg"
-      class="img"
-  />
-  <van-image
-      src="/calender3.jpg"
-      class="img"
-  />
-</div>
+  <div id="calender">
+    <van-nav-bar title="校历"
+                 id="bar"
+                 left-text="首页"
+                 left-arrow @click-left="this.$router.push('/');"
+    />
+    <van-image
+        src="/calender1.jpg"
+        class="img"
+    />
+    <van-image
+        src="/calender2.jpg"
+        class="img"
+    />
+    <van-image
+        src="/calender3.jpg"
+        class="img"
+    />
+  </div>
 </template>
 
 <script>

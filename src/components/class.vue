@@ -47,8 +47,7 @@
 				}else{
 					this.show = true;
 				}
-				
-				// console.log(this.show);
+
 			}
 		}
 	}
@@ -57,18 +56,15 @@
 <style scoped>
 	#lesson {
 		position: fixed;
-		padding-left: 0.3%;
-		padding-right: 0.3%;
-		padding-top: 1%;
-		padding-bottom: 1%;
+		padding: 1% 0.3%;
 		max-height: 15%;
 		height: 14%;
 		background-color: #588505;
-		width: 10.945%;
+		width: 11%;
 		border-radius: 10px;
-		margin: 1.5%;
-		margin-top: 2.3%;
-		margin-bottom: 2%;
+		margin-right: 0.75%;
+		margin-left: 0.75%;
+		margin-top: 1%;
 	}
 	.txt {
 		color: white;

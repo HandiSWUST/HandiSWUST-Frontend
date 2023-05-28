@@ -1,7 +1,23 @@
-import axios from "axios"
-import {getKey} from "./getKey.js"
 import { BASE_URL } from "@/common/final"
 import "/src/js/security.js"
+import axios from "axios";
+
+function getKey() {
+    axios.defaults.withCredentials = true
+    return axios({
+        url: BASE_URL + "/api/v2/login/key",
+        method: "get"
+    })
+}
+
+export function getCaptcha() {
+    axios.defaults.withCredentials = true;
+    return axios({
+        method: "get",
+        url: BASE_URL + "/api/v2/login/captcha",
+        withCredentials: true
+    })
+}
 
 export async function login(username, password, captcha) {
     let formData = new FormData();
