@@ -52,7 +52,7 @@
             @load="onLoad(this.value,this.pageHelper++)"
         >
           <van-cell v-for="item in list" :key="item" :title="item.title" value="查看馆藏" :label="item.author" is-link @click="showPopup(item.marcRecNo)">查看馆藏</van-cell>
-          <van-popup  v-model:show="show"  round position="bottom" :style="{ height: '50%' }" v-html="showLocation"></van-popup>
+          <van-popup  v-model:show="show"  round position="bottom" :style="{ height: '50%' }" v-html ="showLocation"></van-popup>
 <!--          <van-cell v-for="item in books" :key="item" :title="item.title" value="查看馆藏" :label="item.author"/>-->
         </van-list>
       </van-col>
@@ -93,21 +93,16 @@ export default {
       if(loadFlag.value)finished.value = true;
       setTimeout(() => {
         queryBooks(a,b).then((resp)=>{
-          for(let item in resp.data.data.content){
-
-            list.value.push(resp.data.data.content[item]);
-
+          let data = JSON.parse(resp.data.data)
+          for(let item in data.content){
+            list.value.push(data.content[item]);
           }
         });
         // 注意，for循环完成后，一定要立马 this.new_loading = false;
         loading.value = false;
       }, 1000);
-
-
        if(b>=10)
       finished.value = true;
-
-
 
     };
 
