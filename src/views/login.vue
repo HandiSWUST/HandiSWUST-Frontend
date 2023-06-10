@@ -58,12 +58,9 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
 import {login} from '../api/login'
-import axios from "axios"
 import {Base64} from "js-base64"
 import {Toast} from "vant";
-import {BASE_URL} from "../common/final.js"
 import {getCaptcha} from "../api/login.js"
 import {cr} from "@/api/crApi";
 
@@ -84,9 +81,6 @@ export default {
     this.getPwd();
   },
   methods: {
-    goIndex: function () {
-
-    },
     login: function () {
       this.show = true;
       login(this.username, this.password, this.captcha).then((response) => {
@@ -115,10 +109,14 @@ export default {
     },
     loadCaptcha: function () {
       getCaptcha().then((res) => {
-        this.imgUrl = "data:image/png;base64," + res.data.data;
-        this.captchaBase64 = res.data.data;
-        this.showCR = true;
-        this.captchaRecognize();
+        if (res.status !== 200) {
+          Toast.fail("验证码获取失败");
+        } else {
+          this.imgUrl = "data:image/png;base64," + res.data.data;
+          this.captchaBase64 = res.data.data;
+          this.showCR = true;
+          this.captchaRecognize();
+        }
       })
     },
     getPwd() {

@@ -45,6 +45,9 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2023.6.2
+- 后端升级至Spring Boot 3.1
+- 后端代码架构优化完成
 # 2023.5.24
 - 修复了考试缓存不正常的问题
 # 2023.5.22
