@@ -45,6 +45,10 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2023.6.11
+- 后端增加熔断机制，确保上游离线时快速失败
+- 修复了含英文学号无法使用课表的问题
+- 前端增加验证码获取失败提示
 # 2023.6.2
 - 后端升级至Spring Boot 3.1
 - 后端代码架构优化完成
