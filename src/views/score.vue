@@ -58,11 +58,11 @@
                 <span class="custom-title">必修课绩点</span>
               </template>
               <template #label>
-                <van-tag size="large" type="primary">{{this.scores[term].credit}}</van-tag>
+                <van-tag size="large" type="primary">{{this.scores[term].scroll}}</van-tag>
               </template>
               <template #value>
                 <span class="custom-title">平均学分绩点</span><br>
-                <van-tag type="primary">{{this.scores[term].scroll}}</van-tag>
+                <van-tag type="primary">{{this.scores[term].credit}}</van-tag>
               </template>
             </van-cell>
             <van-cell-group v-for="(score,i) in this.tableData[term]" :key="i">
