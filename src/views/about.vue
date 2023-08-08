@@ -45,6 +45,7 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+
 # 2023.8.8
 - 更新vite以避免CVE-2023-34092
 - 课表加入左右滑动切换周
