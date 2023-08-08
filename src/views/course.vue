@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import {TOTAL_WEEK} from "/src/common/final.js"
+import {START_TIME, TOTAL_WEEK} from "/src/common/final.js"
 import {closeDialog, showConfirmDialog, showFailToast} from "vant";
 import lesson from "../components/class.vue"
 import {selectedCourse, useLocalCourse, getCourse} from "/src/api/getCourse";
