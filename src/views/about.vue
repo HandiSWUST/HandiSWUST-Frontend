@@ -45,6 +45,10 @@ c) 我们的服务器将会获取您的课表、考试、成绩等信息，但�
 			  </van-collapse-item>
       <van-collapse-item title="更新日志">
         <textarea id="privacy" rows="20" readonly>
+# 2023.8.8
+- 更新vite以避免CVE-2023-34092
+- 课表加入左右滑动切换周
+- VantUI升级至4.16
 # 2023.6.11
 - 后端增加熔断机制，确保上游离线时快速失败
 - 修复了含英文学号无法使用课表的问题
