@@ -44,8 +44,8 @@
         </div>
         <van-checkbox v-model="remember" checked-color="#1989fa" style="margin-top: 5%; margin-left: 3%;">记住密码
         </van-checkbox>
-        <p style="margin-top: 3%; margin-left: 3%; color: #2c2c2c;">登录即代表您同意我们的<a style="color: #1989fa"
-            href="https://note.shirakawatyu.top/#/article/53">隐私政策</a></p>
+        <p style="margin-top: 3%; margin-left: 3%; color: #2c2c2c;">登录即代表您同意我们的<a style="color: #1989fa" href="https://note.shirakawatyu.top/#/article/53">隐私政策</a>
+        </p>
       </van-cell-group>
 
       <div style="margin: 16px;">
@@ -58,10 +58,10 @@
 </template>
 
 <script>
-import {login} from '../api/login'
+import {login} from '@/api/login'
 import {Base64} from "js-base64"
-import {Toast} from "vant";
-import {getCaptcha} from "../api/login.js"
+import {showFailToast} from "vant";
+import {getCaptcha} from "@/api/login"
 import {cr} from "@/api/crApi";
 
 export default {
@@ -96,11 +96,10 @@ export default {
           }
           this.$router.go(-1);
         } else if (response.data.code === 1502) {
-          Toast.fail("登录失败，一站式登录接口崩溃");
+          showFailToast("登录失败，一站式登录接口崩溃");
           this.loadCaptcha();
-        }
-        else {
-          Toast.fail("登录失败，请检查账号密码及验证码是否正确");
+        } else {
+          showFailToast("登录失败，请检查账号密码及验证码是否正确");
           this.loadCaptcha();
         }
       }).finally(() => {
@@ -110,7 +109,7 @@ export default {
     loadCaptcha: function () {
       getCaptcha().then((res) => {
         if (res.status !== 200) {
-          Toast.fail("验证码获取失败");
+          showFailToast("验证码获取失败");
         } else {
           this.imgUrl = "data:image/png;base64," + res.data.data;
           this.captchaBase64 = res.data.data;
@@ -129,7 +128,7 @@ export default {
     },
     captchaRecognize() {
       cr({data: this.captchaBase64}).then((resp) => {
-          this.captcha = resp.data;
+        this.captcha = resp.data;
       })
     }
   }

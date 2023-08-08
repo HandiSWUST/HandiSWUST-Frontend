@@ -1,37 +1,37 @@
 <template>
   <div id="grid1">
-<!--  导航栏及公告栏  -->
-    <div style="height: 11vh">
-        <van-nav-bar
-            title="首页"
-            id="bar"
-            right-text="关于"
-            @click-right="$router.push('/about')">
-          <template #left>
-            <van-badge :dot="update">
-              <p @click="downApp" style="color: #1989fa;">下载APP</p>
-            </van-badge>
-          </template>
-        </van-nav-bar>
+    <!--  导航栏及公告栏  -->
+    <div v-if="active != 1" style="height: 11vh">
+      <van-nav-bar
+          title="首页"
+          id="bar"
+          right-text="关于"
+          @click-right="$router.push('/about')">
+        <template #left>
+          <van-badge :dot="update">
+            <p @click="downApp" style="color: #1989fa;">下载APP</p>
+          </van-badge>
+        </template>
+      </van-nav-bar>
 
-        <van-notice-bar
-            style="height: 50%; min-height: 40px"
-            color="#1989fa"
-            background="#ecf9ff"
-            left-icon="volume-o"
-            speed="30"
-            text="(真的可以加了) 掌上西科反馈QQ群：550324793，如遇到小部件不正常的情况请更新~"
-        />
+      <van-notice-bar
+          style="height: 50%; min-height: 40px"
+          color="#1989fa"
+          background="#ecf9ff"
+          left-icon="volume-o"
+          speed="30"
+          text="(真的可以加了) 掌上西科反馈QQ群：550324793，如遇到小部件不正常的情况请更新~"
+      />
     </div>
-<!--  主页  -->
+    <!--  主页  -->
     <div id="page" v-if="active == 0">
       <!--  时间、周数、一言  -->
       <van-row style="width: 100%">
         <van-col span="12">
           <div id="clock-container">
             <p id="clock1">北京时间</p>
-            <p id="clock2">{{time}}</p>
-            <p id="clock3">{{day}}</p>
+            <p id="clock2">{{ time }}</p>
+            <p id="clock3">{{ day }}</p>
           </div>
           <div>
             <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#00bcd4"/>
@@ -48,7 +48,7 @@
               <p style="margin-left: 5%; float: left;">一言</p>
             </div>
             <br/>
-            <p id="sentence">{{sentence}}</p>
+            <p id="sentence">{{ sentence }}</p>
           </div>
         </van-col>
       </van-row>
@@ -116,24 +116,22 @@
             </van-grid-item>
           </van-grid>
         </div>
-        <van-divider @click="jump" style="font-size: 12px; margin: 0;" v-if="!isMobile()">蜀ICP备2022019214号</van-divider>
       </van-col>
     </div>
-<!--  应用页  -->
-    <div id="page" v-if="active == 1">
-        <AppCard category="实用工具">
-            <van-grid-item icon="todo-list-o" text="课程推送"/>
-            <AppButton text="ChatGPT" title="ChatGPT" src="chatgpt" icon="/plugins/chatgpt.png"/>
-            <AppButton text="GPT(gpt.bz)" title="chat.gpt.bz" src="ails" icon="/plugins/chatgpt.png"/>
-            <AppButton text="未交作业查询" title="对分易未交作业查询" src="duifene" icon="/plugins/duifene.png"/>
-        </AppCard>
-        <AppCard category="小游戏">
-            <AppButton text="MikuTap" title="MikuTap" src="mikutap" icon="/plugins/mikutap.png"/>
-        </AppCard>
-    </div>
+    <!--  应用页  -->
+    <!--    <div id="page" v-if="active == 1">-->
+    <!--        <AppCard category="实用工具">-->
+    <!--            <AppButton text="GPT(gpt.bz)" title="chat.gpt.bz" src="ails" icon="/plugins/chatgpt.png"/>-->
+    <!--        </AppCard>-->
+    <!--        <AppCard category="小游戏">-->
+    <!--            <AppButton text="MikuTap" title="MikuTap" src="mikutap" icon="/plugins/mikutap.png"/>-->
+    <!--        </AppCard>-->
+    <!--    </div>-->
+    <p v-if="active === 1">加载中...</p>
+    <iframe v-if="active === 1" ref="iframe" src="https://chat.shirakawatyu.top" id="iframe"/>
     <van-tabbar v-model="active" style="height: 7vh">
       <van-tabbar-item icon="home-o">主页</van-tabbar-item>
-      <van-tabbar-item icon="apps-o">更多</van-tabbar-item>
+      <van-tabbar-item icon="/plugins/chatgpt.png">ChatGPT</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -144,17 +142,14 @@ import {TOTAL_WEEK} from "/src/common/final.js"
 import {VERSION} from "/src/common/final.js"
 import {WEB_VERSION} from "/src/common/final.js"
 import {getCourse} from "/src/api/getCourse";
-import {Dialog, Notify, Toast} from "vant"
+import {showDialog, showNotify, showToast} from "vant"
 import {checkLogin} from "@/api/loginCheck";
 import {logOut} from "@/api/logout";
 import {hitokoto} from "@/api/hitokotoApi";
 import {isMobile} from "@/js/ua";
-import AppCard from "@/components/AppCard.vue";
-import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "indexPanel",
-  components: {AppButton, AppCard},
   mounted() {
     // 获取一言
     this.getSentence();
@@ -169,7 +164,7 @@ export default {
     this.checkWebUpdate();
     // 0点后提示
     if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
-      Notify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
+      showNotify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
     }
   },
   data() {
@@ -207,13 +202,13 @@ export default {
     }
   },
   methods: {
-      isMobile,
+    isMobile,
     // 获取一言
     getSentence: function () {
       hitokoto("", "json").then((resp) => {
         // console.log(resp.data);
         let fromWho = resp.data.from_who;
-        if(fromWho == null) {
+        if (fromWho == null) {
           fromWho = "";
         }
         this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
@@ -224,23 +219,23 @@ export default {
       let date = new Date();
       let hour = date.getHours();
       let minutes = date.getMinutes();
-      if(hour < 10) {
+      if (hour < 10) {
         hour = "0" + hour.toString();
-      }else {
+      } else {
         hour = hour.toString();
       }
-      if(minutes < 10) {
+      if (minutes < 10) {
         minutes = "0" + minutes.toString();
-      }else {
+      } else {
         minutes = minutes.toString();
       }
       this.time = hour + ":" + minutes;
-      this.day = date.getDate().toString() + "TH " +  (date.getMonth() + 1).toString() + "月";
+      this.day = date.getDate().toString() + "TH " + (date.getMonth() + 1).toString() + "月";
     },
     // 检查更新
     updateCheck: function () {
       let ver = localStorage.getItem("version");
-      if(ver != null && ver == VERSION.toString()) {
+      if (ver != null && ver == VERSION.toString()) {
         this.update = false;
       }
     },
@@ -252,17 +247,17 @@ export default {
           localStorage.setItem("isLogin", "false");
         }
         // 已经登录的话就顺便更新下课表
-        else{
+        else {
           this.isLogin = true;
           // 更新推送课表
           localStorage.setItem("isLogin", "true");
           getCourse(true).then((response) => {
-            if(response.status === 200 && response.data.data != null) {
+            if (response.status === 200 && response.data.data != null) {
               localStorage.setItem("lessons", response.data.data);
             }
           })
           getCourse(false).then((response) => {
-            if(response.status === 200 && response.data.data != null) {
+            if (response.status === 200 && response.data.data != null) {
               localStorage.setItem("raw", response.data.data);
             }
           })
@@ -273,18 +268,18 @@ export default {
     logout: function () {
       if (this.isLogin)
         logOut().then(() => {
-          Toast("退出成功");
+          showToast("退出成功");
           location.reload();
         })
-      else Toast("未登录");
+      else showToast("未登录");
     },
     // 下载App按钮跳转
     downApp: function () {
-      Dialog.alert({
+      showDialog({
         message:
-            '2023.4.13\n' +
-            '移除小部件更新课表的提示\n' +
-            '允许底部上移以适应插件\n' +
+            '2023.7.15\n' +
+            '=====必须更新=====\n' +
+            '由于域名过期，原版本将在7.17停止使用\n' +
             '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
             '提取码: 2333',
         confirmButtonColor: "#1989fa",
@@ -292,7 +287,7 @@ export default {
     },
     // 备案跳转
     jump() {
-        location.href="https://beian.miit.gov.cn/"
+      location.href = "https://beian.miit.gov.cn/"
     },
     // 检查web是否需要更新
     checkWebUpdate() {
@@ -331,6 +326,15 @@ export default {
   background-color: white;
 }
 
+#iframe {
+  height: 93vh;
+  width: 100vw;
+  top: 0;
+  position: absolute;
+  border: transparent;
+  z-index: 999;
+}
+
 #hitokoto {
   margin-bottom: 10%;
   height: 0;
@@ -358,6 +362,7 @@ export default {
   color: #03a9f4;
   font-size: 2.5vw;
 }
+
 #clock2 {
   margin-left: 10%;
   color: black;
@@ -369,6 +374,7 @@ export default {
   color: gray;
   font-size: 3vw;
 }
+
 #sentence {
   font-size: small;
   margin-left: 10%;
@@ -379,6 +385,7 @@ export default {
   -webkit-line-clamp: 5;
   overflow: hidden;
 }
+
 .text {
   color: black;
 }

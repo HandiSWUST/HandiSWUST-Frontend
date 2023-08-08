@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vant/compat": "^1.0.0",
     "@vant/weapp": "^1.10.5",
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",
@@ -17,7 +18,7 @@
     "sass": "^1.55.0",
     "stylus": "^0.59.0",
     "terser": "^5.15.0",
-    "vant": "^3.6.3",
+    "vant": "^4.6.4",
     "vue": "^3.2.38",
     "vue-router": "^4.1.5"
   },
@@ -26,6 +27,6 @@
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
     "js-base64": "^3.7.2",
-    "vite": "^3.0.9"
+    "vite": "3.2.7"
   }
 }
