@@ -105,7 +105,8 @@ export default {
   },
   computed: {
     curWeek: function () {
-      return Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
+      let w = Math.ceil((new Date().getTime() - START_TIME) / (1000 * 60 * 60 * 24 * 7));
+      return w > 0 ? w : 0;
     },
     totalWeek: function () {
       return TOTAL_WEEK;
