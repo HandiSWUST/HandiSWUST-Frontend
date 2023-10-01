@@ -7,7 +7,7 @@
 
     </van-overlay>
     <van-nav-bar title="登录"
-                 id="bar"
+                 class="bar"
                  left-text="首页"
                  left-arrow @click-left="this.$router.push('/');"/>
     <van-form @submit="login" id="form">

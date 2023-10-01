@@ -21,7 +21,7 @@
       </template>
     </van-nav-bar>
     <!--  导航栏底下的星期条  -->
-    <van-row id="table">
+    <van-row class="week-bar">
       <van-col span="3"><p class="time">{{ curWeek }}周</p></van-col>
       <van-col span="3"><p class="time" :class="{ active: activeDay[1] }">周一</p></van-col>
       <van-col span="3"><p class="time" :class="{ active: activeDay[2] }">周二</p></van-col>
@@ -285,7 +285,7 @@ export default {
   max-height: 100%;
 }
 
-#table {
+.week-bar {
   height: 4.5vh;
   padding: 1%;
   top: 0;

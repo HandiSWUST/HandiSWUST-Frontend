@@ -1,7 +1,7 @@
 <template>
   <div id="exam" class="text-wrapper">
     <van-nav-bar
-        id="bar"
+        class="bar"
         title="考试安排"
         left-text="返回"
         left-arrow

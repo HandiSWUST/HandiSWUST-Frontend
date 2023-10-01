@@ -1,7 +1,7 @@
 <template>
 	<div id="about">
 		<van-collapse v-model="activeNames">
-			<van-nav-bar id="bar" title="关于" left-text="返回" left-arrow @click-left="goBack"/>
+			<van-nav-bar class="bar" title="关于" left-text="返回" left-arrow @click-left="goBack"/>
 			  <van-collapse-item title="作者">
 				  <p>全栈 (排名不分先后，出BUG可通过下面方式联系): </p>
 				  <p>卓计2101 Alice-in-oven: QQ 1071142396</p>

@@ -1,7 +1,7 @@
 <template>
   <div id="score">
     <van-nav-bar
-        id="bar"
+        class="bar"
         style="box-shadow: 0 0 0 0, 0 0 0 0;"
         title="成绩"
         left-text="返回"

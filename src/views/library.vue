@@ -1,7 +1,7 @@
 <template>
   <div id="library" class="text-wrapper">
     <van-nav-bar
-        id="bar"
+        class="bar"
         title="图书借阅信息"
         left-text="返回"
         left-arrow

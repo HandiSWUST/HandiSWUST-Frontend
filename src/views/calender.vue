@@ -1,7 +1,7 @@
 <template>
   <div id="calender">
     <van-nav-bar title="校历"
-                 id="bar"
+                 class="bar"
                  left-text="首页"
                  left-arrow @click-left="this.$router.push('/');"
     />

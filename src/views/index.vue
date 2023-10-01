@@ -4,7 +4,7 @@
     <div v-if="active != 1" style="height: 11vh">
       <van-nav-bar
           title="首页"
-          id="bar"
+          class="bar"
           right-text="关于"
           @click-right="$router.push('/about')">
         <template #left>
