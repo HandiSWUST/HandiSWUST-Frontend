@@ -1,7 +1,7 @@
 <template>
   <div id="grid1">
     <!--  导航栏及公告栏  -->
-    <div v-if="active != 1" style="height: 11vh">
+    <div v-if="active == 0" style="height: 11vh">
       <van-nav-bar
           title="首页"
           class="bar"
@@ -127,11 +127,13 @@
     <!--            <AppButton text="MikuTap" title="MikuTap" src="mikutap" icon="/plugins/mikutap.png"/>-->
     <!--        </AppCard>-->
     <!--    </div>-->
-    <p v-if="active === 1">加载中...</p>
+    <p v-if="active !== 0">加载中...</p>
     <iframe v-if="active === 1" ref="iframe" src="https://chat.shirakawatyu.top" id="iframe"/>
+    <iframe v-if="active === 2" ref="iframe" src="https://swust.devin.cool/plugins/dfy" id="iframe2"/>
     <van-tabbar v-model="active" style="height: 7vh">
       <van-tabbar-item icon="home-o">主页</van-tabbar-item>
       <van-tabbar-item icon="/plugins/chatgpt.png">ChatGPT</van-tabbar-item>
+      <van-tabbar-item icon="/plugins/duifene.png">对分易作业助手</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -334,7 +336,14 @@ export default {
   border: transparent;
   z-index: 999;
 }
-
+#iframe2 {
+  height: 93vh;
+  width: 100vw;
+  top: 0;
+  position: absolute;
+  border: transparent;
+  z-index: 999;
+}
 #hitokoto {
   margin-bottom: 10%;
   height: 0;
