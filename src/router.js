@@ -7,6 +7,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import library from "./views/library.vue";
 import calender from "./views/calender.vue";
 import exam from "./views/Exam.vue"
+import PluginFramework from "@/views/PluginFramework.vue";
 
 const routers = [
 	{path: "/", component: indexPanel},
@@ -16,7 +17,8 @@ const routers = [
 	{path: "/score",component: score},
 	{path: "/library",component: library},
 	{path: "/calender",component: calender},
-	{path: "/exam",component: exam}
+	{path: "/exam",component: exam},
+	{path: "/plugin/:src/:title", component: PluginFramework, props: true},
 ];
 
 

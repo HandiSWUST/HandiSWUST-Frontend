@@ -1,7 +1,7 @@
 <template>
   <div id="grid1">
     <!--  导航栏及公告栏  -->
-    <div v-if="active == 0" style="height: 11vh">
+    <div style="height: 11vh">
       <van-nav-bar
           title="首页"
           class="bar"
@@ -24,7 +24,7 @@
       />
     </div>
     <!--  主页  -->
-    <div id="page" v-if="active == 0">
+    <div class="page" v-if="active === 0">
       <!--  时间、周数、一言  -->
       <van-row style="width: 100%">
         <van-col span="12">
@@ -119,21 +119,15 @@
       </van-col>
     </div>
     <!--  应用页  -->
-    <!--    <div id="page" v-if="active == 1">-->
-    <!--        <AppCard category="实用工具">-->
-    <!--            <AppButton text="GPT(gpt.bz)" title="chat.gpt.bz" src="ails" icon="/plugins/chatgpt.png"/>-->
-    <!--        </AppCard>-->
-    <!--        <AppCard category="小游戏">-->
-    <!--            <AppButton text="MikuTap" title="MikuTap" src="mikutap" icon="/plugins/mikutap.png"/>-->
-    <!--        </AppCard>-->
-    <!--    </div>-->
-    <p v-if="active !== 0">加载中...</p>
-    <iframe v-if="active === 1" ref="iframe" src="https://chat.shirakawatyu.top" id="iframe"/>
-    <iframe v-if="active === 2" ref="iframe" src="https://swust.devin.cool/plugins/dfy" id="iframe2"/>
+    <div class="page" v-if="active === 1">
+      <AppCard category="实用工具">
+        <AppButton text="GPT" title="ChatGPT" src="https://chat.shirakawatyu.top" icon="/plugins/chatgpt.png"/>
+        <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy" icon="/plugins/duifene.png"/>
+      </AppCard>
+    </div>
     <van-tabbar v-model="active" style="height: 7vh">
       <van-tabbar-item icon="home-o">主页</van-tabbar-item>
-      <van-tabbar-item icon="/plugins/chatgpt.png">ChatGPT</van-tabbar-item>
-      <van-tabbar-item icon="/plugins/duifene.png">对分易作业助手</van-tabbar-item>
+      <van-tabbar-item icon="more-o">更多</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -149,9 +143,12 @@ import {checkLogin} from "@/api/loginCheck";
 import {logOut} from "@/api/logout";
 import {hitokoto} from "@/api/hitokotoApi";
 import {isMobile} from "@/js/ua";
+import AppCard from "@/components/AppCard.vue";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "indexPanel",
+  components: {AppButton, AppCard},
   mounted() {
     // 获取一言
     this.getSentence();
@@ -336,14 +333,7 @@ export default {
   border: transparent;
   z-index: 999;
 }
-#iframe2 {
-  height: 93vh;
-  width: 100vw;
-  top: 0;
-  position: absolute;
-  border: transparent;
-  z-index: 999;
-}
+
 #hitokoto {
   margin-bottom: 10%;
   height: 0;
@@ -411,7 +401,7 @@ export default {
   -webkit-overflow-scrolling: touch;
 }
 
-#page {
+.page {
   padding-top: 6%;
   padding-bottom: 6%;
   max-height: 82vh;
