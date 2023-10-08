@@ -168,7 +168,7 @@ export default {
     // 获取所选周课表
     getSelect: function (index) {
       if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
-        this.useLocal(true);
+        this.useLocal(true, index);
       } else {
         selectedCourse(index).then((response) => {
           if (response.status === 200) {
