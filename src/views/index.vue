@@ -151,11 +151,10 @@ import {hitokoto} from "@/api/hitokotoApi";
 import {isMobile} from "@/js/ua";
 import AppCard from "@/components/AppCard.vue";
 import AppButton from "@/components/AppButton.vue";
-import App from "@/App.vue";
 
 export default {
   name: "indexPanel",
-  components: {App, AppButton, AppCard},
+  components: {AppButton, AppCard},
   mounted() {
     // 获取一言
     this.getSentence();
@@ -377,7 +376,7 @@ export default {
 
 #clock3 {
   margin-left: 10%;
-  color: gray;
+  color: rgb(128, 128, 128);
   font-size: 3vw;
 }
 
