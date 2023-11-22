@@ -80,7 +80,7 @@
 
 <script>
 import {START_TIME, TOTAL_WEEK} from "/src/common/final.js"
-import {closeDialog, showConfirmDialog, showFailToast} from "vant";
+import {closeDialog, showFailToast, showToast} from "vant";
 import lesson from "../components/class.vue"
 import {selectedCourse, useLocalCourse, getCourse} from "/src/api/getCourse";
 import LoadingView from "@/components/LoadingView.vue";
@@ -202,33 +202,20 @@ export default {
           showFailToast("本地没有缓存哦");
         }
       } else {
-        let beforeClose = (action) => {
-          if (action === "confirm") {
-            this.local = true;
-            closeDialog();
-            if (courseData != null) {
-              useLocalCourse(index, courseData).then((response) => {
-                if (response.status === 200 && response.data != null) {
-                  this.lessonsList[index] = JSON.parse(response.data.data);
-                }
-              })
-            } else {
-              showFailToast("本地没有缓存哦");
-              this.$router.push("/login");
+        if (!this.local) {
+          showToast("未登录，正在使用本地缓存");
+        }
+        this.local = true;
+        closeDialog();
+        if (courseData != null) {
+          useLocalCourse(index, courseData).then((response) => {
+            if (response.status === 200 && response.data != null) {
+              this.lessonsList[index] = JSON.parse(response.data.data);
             }
-          } else {
-            closeDialog();
-            this.$router.push("/login");
-          }
-        };
-        if (this.local) {
-          beforeClose("confirm");
+          })
         } else {
-          showConfirmDialog({
-            message: "未登录，是否尝试使用本地缓存？",
-            confirmButtonColor: "#1989fa",
-            beforeClose,
-          });
+          showFailToast("本地没有缓存哦");
+          this.$router.push("/login");
         }
       }
     },
