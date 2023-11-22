@@ -125,7 +125,7 @@
       </AppCard>
       <AppCard category="语言大模型">
         <!--        <AppButton text="GPT" title="ChatGPT" src="https://chat.shirakawatyu.top" icon="/plugins/chatgpt.png"/>-->
-        <AppButton text="llama" title="HuggingChat" src="https://chat.shirakawatyu.top/chat" icon="/plugins/meta.png"/>
+        <AppButton text="Llama" title="Llama" src="https://chat.shirakawatyu.top" icon="/plugins/meta.png"/>
         <AppButton text="文心一言" title="文心一言" src="https://yiyan.baidu.com" icon="/plugins/wenxin.png"/>
         <AppButton text="讯飞星火" title="讯飞星火" src="https://xinghuo.xfyun.cn/desk" icon="/plugins/spark.png"/>
         <AppButton text="通义千问" title="通义千问" src="https://qianwen.aliyun.com" icon="/plugins/qwen.png"/>
