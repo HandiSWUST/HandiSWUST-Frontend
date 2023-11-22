@@ -121,8 +121,14 @@
     <!--  应用页  -->
     <div class="page" v-if="active === 1">
       <AppCard category="实用工具">
-        <AppButton text="GPT" title="ChatGPT" src="https://chat.shirakawatyu.top" icon="/plugins/chatgpt.png"/>
         <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy" icon="/plugins/duifene.png"/>
+      </AppCard>
+      <AppCard category="语言大模型">
+        <!--        <AppButton text="GPT" title="ChatGPT" src="https://chat.shirakawatyu.top" icon="/plugins/chatgpt.png"/>-->
+        <AppButton text="llama" title="HuggingChat" src="https://chat.shirakawatyu.top/chat" icon="/plugins/meta.png"/>
+        <AppButton text="文心一言" title="文心一言" src="https://yiyan.baidu.com" icon="/plugins/wenxin.png"/>
+        <AppButton text="讯飞星火" title="讯飞星火" src="https://xinghuo.xfyun.cn/desk" icon="/plugins/spark.png"/>
+        <AppButton text="通义千问" title="通义千问" src="https://qianwen.aliyun.com" icon="/plugins/qwen.png"/>
       </AppCard>
     </div>
     <van-tabbar v-model="active" style="height: 7vh">
@@ -145,10 +151,11 @@ import {hitokoto} from "@/api/hitokotoApi";
 import {isMobile} from "@/js/ua";
 import AppCard from "@/components/AppCard.vue";
 import AppButton from "@/components/AppButton.vue";
+import App from "@/App.vue";
 
 export default {
   name: "indexPanel",
-  components: {AppButton, AppCard},
+  components: {App, AppButton, AppCard},
   mounted() {
     // 获取一言
     this.getSentence();
