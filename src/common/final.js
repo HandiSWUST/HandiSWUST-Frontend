@@ -4,4 +4,4 @@ export const END_TIME = new Date("2024/1/15").getTime();
 export const TOTAL_WEEK = 19;
 export const BASE_URL = "";
 export const VERSION = 0.39;
-export const WEB_VERSION = 0.39;
+export const WEB_VERSION = 0.40;
