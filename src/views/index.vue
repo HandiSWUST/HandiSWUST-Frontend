@@ -20,7 +20,7 @@
           background="#ecf9ff"
           left-icon="volume-o"
           speed="30"
-          text="(真的可以加了) 掌上西科反馈QQ群：550324793，如遇到小部件不正常的情况请更新~"
+          text="(真的可以加了) 掌上西科反馈QQ群：706437676，如遇到小部件不正常的情况请更新~"
       />
     </div>
     <!--  主页  -->
@@ -124,11 +124,8 @@
         <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy" icon="/plugins/duifene.png"/>
       </AppCard>
       <AppCard category="语言大模型">
-        <!--        <AppButton text="GPT" title="ChatGPT" src="https://chat.shirakawatyu.top" icon="/plugins/chatgpt.png"/>-->
-        <AppButton text="Llama" title="Llama" src="https://chat.shirakawatyu.top" icon="/plugins/meta.png"/>
-        <AppButton text="文心一言" title="文心一言" src="https://yiyan.baidu.com" icon="/plugins/wenxin.png"/>
-        <AppButton text="讯飞星火" title="讯飞星火" src="https://xinghuo.xfyun.cn/desk" icon="/plugins/spark.png"/>
-        <AppButton text="通义千问" title="通义千问" src="https://qianwen.aliyun.com" icon="/plugins/qwen.png"/>
+        <AppButton text="GPT" title="ChatGPT" src="https://chat.shirakawatyu.top" icon="/plugins/chatgpt.png"/>
+        <AppButton text="Llama" title="Llama" src="https://llama.shirakawatyu.top" icon="/plugins/meta.png"/>
       </AppCard>
     </div>
     <van-tabbar v-model="active" style="height: 7vh">
