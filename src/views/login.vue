@@ -44,7 +44,7 @@
         </div>
         <van-checkbox v-model="remember" checked-color="#1989fa" style="margin-top: 5%; margin-left: 3%;">记住密码
         </van-checkbox>
-        <p style="margin-top: 3%; margin-left: 3%; color: #2c2c2c;">登录即代表您同意我们的<a style="color: #1989fa" href="https://note.shirakawatyu.top/#/article/53">隐私政策</a>
+        <p style="margin-top: 3%; margin-left: 3%; color: #2c2c2c;">登录即代表您同意我们的<a style="color: #1989fa" href="https://note.shirakawatyu.top/article/187">隐私政策</a>
         </p>
       </van-cell-group>
 

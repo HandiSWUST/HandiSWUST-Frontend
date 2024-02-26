@@ -20,7 +20,6 @@ export default {
 }
 </script>
 
-
 <template>
   <div id="app">
     <router-view v-slot="{ Component }">
@@ -31,7 +30,6 @@ export default {
     </router-view>
   </div>
 </template>
-
 
 <style>
 #app {

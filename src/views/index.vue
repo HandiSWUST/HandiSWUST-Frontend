@@ -20,7 +20,7 @@
           background="#ecf9ff"
           left-icon="volume-o"
           speed="30"
-          text="(真的可以加了) 掌上西科反馈QQ群：706437676，如遇到小部件不正常的情况请更新~"
+          :text="getNotice()"
       />
     </div>
     <!--  主页  -->
@@ -28,100 +28,41 @@
       <!--  时间、周数、一言  -->
       <van-row style="width: 100%">
         <van-col span="12">
-          <div id="clock-container">
-            <p id="clock1">北京时间</p>
-            <p id="clock2">{{ time }}</p>
-            <p id="clock3">{{ day }}</p>
-          </div>
+          <digital-clock/>
           <div>
             <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#00bcd4"/>
           </div>
         </van-col>
 
         <van-col span="12">
-          <div id="hitokoto">
-            <div style="padding-left: 10%; padding-top: 10%; margin-bottom: 5%">
-              <van-image
-                  src="/hitokoto.svg"
-                  style="width: 15%; float: left"
-              />
-              <p style="margin-left: 5%; float: left;">一言</p>
-            </div>
-            <br/>
-            <p id="sentence">{{ sentence }}</p>
-          </div>
+          <hitokoto-panel/>
         </van-col>
       </van-row>
 
       <!--  按钮面板  -->
       <van-col span="24">
-        <div id="row">
-          <van-grid :column-num="2" id="g" :border="false" :clickable="true">
-            <van-grid-item v-on:click="$router.push('/login')" v-if="!isLogin">
-              <van-image
-                  src="/login.svg"
-                  class="img"
-              />
-              <p class="text">登录</p>
-            </van-grid-item>
-            <van-grid-item v-on:click="$router.push('/library')" v-if="isLogin">
-              <van-image
-                  src="/lib.svg"
-                  class="img"
-              />
-              <p class="text">图书借阅信息</p>
-            </van-grid-item>
-            <van-grid-item v-on:click="logout" v-if="isLogin">
-              <van-image
-                  src="/logout.svg"
-                  class="img"
-              />
-              <p class="text">退出登录</p>
-            </van-grid-item>
-          </van-grid>
-        </div>
-        <div id="row">
-          <van-grid :column-num="2" id="g" :border="false" :clickable="true">
-            <van-grid-item v-on:click="$router.push('/course')">
-              <van-image
-                  src="/table.svg"
-                  class="img"
-              />
-              <p class="text">课程表</p>
-            </van-grid-item>
-            <van-grid-item v-on:click="$router.push('/exam')">
-              <van-image
-                  src="/exam.svg"
-                  class="img"
-              />
-              <p class="text">考试</p>
-            </van-grid-item>
-          </van-grid>
-        </div>
-        <div id="row">
-          <van-grid :column-num="2" id="g" :border="false" :clickable="true">
-            <van-grid-item v-on:click="$router.push('/score')">
-              <van-image
-                  src="/score.svg"
-                  class="img"
-              />
-              <p class="text">成绩</p>
-            </van-grid-item>
-            <van-grid-item v-on:click="$router.push('/calender')">
-              <van-image
-                  src="/date.svg"
-                  class="img"
-              />
-              <p class="text">校历</p>
-            </van-grid-item>
-          </van-grid>
-        </div>
+        <index-grid>
+          <index-button v-if="!isLogin" @click="$router.push('/login')" image="/login.svg" text="登录"/>
+          <index-button v-if="isLogin" @click="$router.push('/library')" image="/lib.svg" text="图书借阅信息"/>
+          <index-button v-if="isLogin" @click="logout" image="/logout.svg" text="退出登录"/>
+        </index-grid>
+        <index-grid>
+          <index-button @click="$router.push('/course')" image="/table.svg" text="课程表"/>
+          <index-button @click="$router.push('/calender')" image="/date.svg" text="校历"/>
+        </index-grid>
+        <index-grid v-if="isLogin">
+          <index-button @click="$router.push('/score')" image="/score.svg" text="成绩"/>
+          <index-button @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
+        </index-grid>
       </van-col>
     </div>
     <!--  应用页  -->
     <div class="page" v-if="active === 1">
       <AppCard category="实用工具">
-        <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy" icon="/plugins/duifene.png"/>
+        <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy"
+                   icon="/plugins/duifene.png"/>
+        <AppButton text="服务状态" title="西科大服务状态监控" src="https://gyrsjk.gyrs.online/service"
+                   icon="/plugins/gauge.png"/>
       </AppCard>
       <AppCard category="语言大模型">
         <AppButton text="GPT" title="ChatGPT" src="https://chat.shirakawatyu.top" icon="/plugins/chatgpt.png"/>
@@ -136,34 +77,29 @@
 </template>
 
 <script>
-import {START_TIME} from "/src/common/final.js"
+import {NOTICE, START_TIME, WEB_VERSION} from "/src/common/final.js"
 import {TOTAL_WEEK} from "/src/common/final.js"
 import {VERSION} from "/src/common/final.js"
-import {WEB_VERSION} from "/src/common/final.js"
 import {getCourse} from "/src/api/getCourse";
 import {showDialog, showNotify, showToast} from "vant"
 import {checkLogin} from "@/api/loginCheck";
 import {logOut} from "@/api/logout";
-import {hitokoto} from "@/api/hitokotoApi";
-import {isMobile} from "@/js/ua";
 import AppCard from "@/components/AppCard.vue";
 import AppButton from "@/components/AppButton.vue";
+import IndexButton from "@/components/IndexButton.vue";
+import IndexGrid from "@/components/IndexGrid.vue";
+import DigitalClock from "@/components/DigitalClock.vue";
+import HitokotoPanel from "@/components/HitokotoPanel.vue";
+import {getWebVersion} from "@/api/webInfoApi";
 
 export default {
   name: "indexPanel",
-  components: {AppButton, AppCard},
+  components: {HitokotoPanel, DigitalClock, IndexGrid, IndexButton, AppButton, AppCard},
   mounted() {
-    // 获取一言
-    this.getSentence();
-    // 更新一次时间，之后每10s更新一次时钟组件的数据
-    this.date();
-    setInterval(this.date, 10000);
     // 更新检查
     this.updateCheck();
     // 登录检查
     this.loginCheck();
-    // 检查Web版本
-    this.checkWebUpdate();
     // 0点后提示
     if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
       showNotify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
@@ -171,20 +107,14 @@ export default {
   },
   data() {
     return {
-      // 时间、日期
-      time: "0:00",
-      day: "24TH 10月",
       // 是否需要更新, 为true表示需要
       update: true,
       // 当前周数
       curWeek: 0,
       // 登录状态
       isLogin: false,
-      // 一言
-      sentence: "世上本没有路，走的人多了也便成了路",
       // tabber
       active: 0,
-
       themeVars: {NavBarHeight: "5.5vh"}
     }
   },
@@ -204,42 +134,23 @@ export default {
     }
   },
   methods: {
-    isMobile,
-    // 获取一言
-    getSentence: function () {
-      hitokoto("", "json").then((resp) => {
-        // console.log(resp.data);
-        let fromWho = resp.data.from_who;
-        if (fromWho == null) {
-          fromWho = "";
-        }
-        this.sentence = resp.data.hitokoto + "\n ——" + resp.data.from + " " + fromWho;
-      });
-    },
-    // 获取日期
-    date: function () {
-      let date = new Date();
-      let hour = date.getHours();
-      let minutes = date.getMinutes();
-      if (hour < 10) {
-        hour = "0" + hour.toString();
-      } else {
-        hour = hour.toString();
-      }
-      if (minutes < 10) {
-        minutes = "0" + minutes.toString();
-      } else {
-        minutes = minutes.toString();
-      }
-      this.time = hour + ":" + minutes;
-      this.day = date.getDate().toString() + "TH " + (date.getMonth() + 1).toString() + "月";
+    getNotice() {
+      return NOTICE
     },
     // 检查更新
     updateCheck: function () {
+      // 检查APP更新
       let ver = localStorage.getItem("version");
-      if (ver != null && ver == VERSION.toString()) {
+      if (ver != null && ver === VERSION.toString()) {
         this.update = false;
       }
+      // 检查WEB更新
+      getWebVersion().then((resp) => {
+        console.log(resp.data)
+        if (resp.status === 200 && Number(resp.data) !== Number(WEB_VERSION)) {
+            location.reload();
+        }
+      })
     },
     // 检查登录
     loginCheck: function () {
@@ -286,18 +197,6 @@ export default {
             '提取码: 2333',
         confirmButtonColor: "#1989fa",
       })
-    },
-    // 备案跳转
-    jump() {
-      location.href = "https://beian.miit.gov.cn/"
-    },
-    // 检查web是否需要更新
-    checkWebUpdate() {
-      let webVersion = localStorage.getItem("webVersion");
-      if (Number(webVersion) < WEB_VERSION || webVersion == null) {
-        localStorage.setItem("webVersion", WEB_VERSION.toString());
-        location.reload();
-      }
     }
   },
 }
@@ -311,85 +210,6 @@ export default {
   width: 85%;
   border-radius: 15px;
   background-color: white;
-}
-
-.img {
-  max-width: 35%;
-  max-height: 100%;
-  margin-bottom: 5%;
-}
-
-#row {
-  left: 5%;
-  padding: 1%;
-  max-width: 90%;
-  margin-bottom: 5%;
-  border-radius: 15px;
-  background-color: white;
-}
-
-#iframe {
-  height: 93vh;
-  width: 100vw;
-  top: 0;
-  position: absolute;
-  border: transparent;
-  z-index: 999;
-}
-
-#hitokoto {
-  margin-bottom: 10%;
-  height: 0;
-  padding-bottom: 90%;
-  width: 85%;
-  border-radius: 15px;
-  margin-right: 10%;
-  margin-left: 5%;
-  background-color: white;
-}
-
-#clock-container {
-  margin-bottom: 10%;
-  margin-left: 10%;
-  height: 0;
-  padding-bottom: 60%;
-  width: 85%;
-  border-radius: 15px;
-  background-color: white;
-}
-
-#clock1 {
-  margin-left: 10%;
-  padding-top: 10%;
-  color: #03a9f4;
-  font-size: 2.5vw;
-}
-
-#clock2 {
-  margin-left: 10%;
-  color: black;
-  font-size: 7vw;
-}
-
-#clock3 {
-  margin-left: 10%;
-  color: rgb(128, 128, 128);
-  font-size: 3vw;
-}
-
-#sentence {
-  font-size: small;
-  margin-left: 10%;
-  margin-right: 10%;
-  white-space: pre-wrap;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
-  overflow: hidden;
-}
-
-.text {
-  color: black;
 }
 
 #grid1 {
