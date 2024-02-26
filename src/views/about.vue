@@ -8,19 +8,13 @@
         <p>计科2101 ShirakawaTyu: QQ 2541028866</p>
       </van-collapse-item>
       <van-collapse-item title="隐私协议">
-        <textarea class="info" rows="20" readonly>
-          {{ getPrivacy() }}
-        </textarea>
+        <textarea class="info" rows="20" v-model="privacy" readonly/>
       </van-collapse-item>
       <van-collapse-item title="更新日志">
-        <textarea class="info" rows="20" readonly>
-          {{ getUpdateLog() }}
-        </textarea>
+        <textarea class="info" rows="20" v-model="updateLog" readonly/>
       </van-collapse-item>
       <van-collapse-item title="主要借物表">
-        <textarea class="info" rows="20" readonly>
-          {{ getOpenSource() }}
-        </textarea>
+        <textarea class="info" rows="20" v-model="openSource" readonly/>
       </van-collapse-item>
       <van-collapse-item title="Github">
         <p>Web前端代码: https://github.com/flben233/HandiSWUST</p>
@@ -45,20 +39,14 @@ export default {
   data() {
     return {
       activeNames: ["1", "2", "3", "5", "6"],
+      openSource: OPEN_SOURCE,
+      updateLog: UPDATE_LOG,
+      privacy: PRIVACY_POLICY
     }
   },
   methods: {
     goBack: function () {
       this.$router.push("/");
-    },
-    getOpenSource: function () {
-      return OPEN_SOURCE;
-    },
-    getUpdateLog: function () {
-      return UPDATE_LOG;
-    },
-    getPrivacy: function () {
-      return PRIVACY_POLICY;
     }
   }
 }
