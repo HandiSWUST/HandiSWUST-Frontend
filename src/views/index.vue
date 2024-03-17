@@ -190,9 +190,8 @@ export default {
     downApp: function () {
       showDialog({
         message:
-            '2023.7.15\n' +
-            '=====必须更新=====\n' +
-            '由于域名过期，原版本将在7.17停止使用\n' +
+            '2024.3.18\n' +
+            '修复了登录状态没有保存的问题\n' +
             '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
             '提取码: 2333',
         confirmButtonColor: "#1989fa",
