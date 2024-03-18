@@ -67,6 +67,7 @@
                     :week_day="l.week_day"
                     :start="l.section_start"
                     :end="l.section_end"
+                    :course_code="l.jw_course_code"
                     :style='{ "top": computeTop(l.section_start), "left": computeLeft(l.week_day), "background-color": randomColor(l.section_start + l.week_day)}'>
                 </lesson>
               </div>

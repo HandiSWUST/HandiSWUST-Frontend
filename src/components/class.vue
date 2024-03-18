@@ -1,5 +1,5 @@
 <template>
-  <div id="lesson" @click="floatWindow">
+  <div class="lesson" @click="floatWindow">
     <p class="txt">{{ course_name }}</p>
     <p class="txt2">{{ "@" + base_room_name }}</p>
     <van-popup
@@ -10,10 +10,10 @@
         round
         teleport="#app"
     >
-      <p id="cname">{{ course_name }}</p>
-      <p id="rname">{{ base_room_name }}</p>
-      <p id="weekday"> {{ "星期: " + week_day + " 节次: " + start + "-" + end }}</p>
-      <p id="weeks">
+      <p class="cname">{{ course_name }}</p>
+      <p class="rname">{{ base_room_name }}</p>
+      <p class="weekday"> {{ "星期: " + week_day + " 节次: " + start + "-" + end }}</p>
+      <p class="weeks">
         <van-image
             width="5%"
             height="5%"
@@ -21,13 +21,21 @@
         />
         {{ week + " Week" }}
       </p>
-      <p id="weeks">
+      <p class="weeks">
         <van-image
             width="5%"
             height="5%"
             src="/teacher.png"
         />
         {{ teacher }}
+      </p>
+      <p class="weeks">
+        <van-image
+            width="5%"
+            height="5%"
+            src="/course_code.png"
+        />
+        {{ course_code }}
       </p>
     </van-popup>
   </div>
@@ -36,7 +44,7 @@
 <script>
 export default {
   name: "lesson",
-  props: ["course_name", "base_room_name", "week", "teacher", "week_day", "start", "end"],
+  props: ["course_name", "base_room_name", "week", "teacher", "week_day", "start", "end", "course_code"],
   data() {
     return {
       show: false,
@@ -56,7 +64,7 @@ export default {
 </script>
 
 <style scoped>
-#lesson {
+.lesson {
   position: absolute;
   padding: 1% 0.3%;
   height: 15.6%;
@@ -90,7 +98,7 @@ export default {
   font-size: 80%;
 }
 
-#cname {
+.cname {
   font-size: 200%;
   padding: 5%;
   padding-top: 7%;
@@ -98,21 +106,21 @@ export default {
   color: black;
 }
 
-#rname {
+.rname {
   font-size: 130%;
   padding-left: 5%;
   padding-bottom: 1%;
-  color: gray;
+  color: rgb(128, 128, 128);
 }
 
-#weeks {
+.weeks {
   font-size: 150%;
   padding-left: 5%;
   padding-bottom: 3%;
   color: black;
 }
 
-#weekday {
+.weekday {
   background-color: #39C5BB;
   font-size: 100%;
   margin-left: 5%;
