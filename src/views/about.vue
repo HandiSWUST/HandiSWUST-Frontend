@@ -20,6 +20,15 @@
         <p>Web前端代码: https://github.com/flben233/HandiSWUST</p>
         <p>Android端代码: https://github.com/flben233/HandiSWUST-Android-Rebuild</p>
       </van-collapse-item>
+      <van-collapse-item title="清除缓存 (没有二次确认，考虑好了再点)">
+        <van-button block type="danger" @click="clearLocalCache" style="border-radius: 6px">
+          清除本地课程缓存
+        </van-button>
+        <br/>
+        <van-button block type="danger" @click="clearCloudCache" style="border-radius: 6px">
+          清除云端课程缓存（可用于刷新课程表）
+        </van-button>
+      </van-collapse-item>
       <van-collapse-item title="投喂作者们">
         投喂的收入将用于服务器维护<br>
         （以及作者们的日常开销）
@@ -33,6 +42,8 @@
 <script>
 
 import {UPDATE_LOG, OPEN_SOURCE, PRIVACY_POLICY} from "@/common/doc";
+import {showLoadingToast, showSuccessToast} from "vant";
+import {deleteLocalCourse} from "@/api/getCourse";
 
 export default {
   name: "aboutUs",
@@ -47,6 +58,24 @@ export default {
   methods: {
     goBack: function () {
       this.$router.push("/");
+    },
+    clearLocalCache: function () {
+      localStorage.removeItem("lessons");
+      localStorage.removeItem("raw");
+      showSuccessToast("清除成功");
+    },
+    clearCloudCache: function () {
+      showLoadingToast({
+        message: '清除中...',
+        forbidClick: true,
+      });
+      deleteLocalCourse().then((response) => {
+        if (response.data.success) {
+          showSuccessToast("清除成功");
+        } else {
+          showSuccessToast("清除失败");
+        }
+      });
     }
   }
 }

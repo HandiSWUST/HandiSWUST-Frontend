@@ -37,3 +37,13 @@ export function useLocalCourse(week, courseData) {
 		data: courseData
 	})
 }
+
+export function deleteLocalCourse() {
+	let url = BASE_URL + "/api/v2/course/clear";
+	axios.defaults.withCredentials = true;
+	return axios({
+		url: url,
+		method: "post",
+		withCredentials: true
+	})
+}

@@ -1,7 +1,10 @@
-function heredoc(fn) {
-  return fn.toString().split('\n').slice(1,-1).join('\n') + '\n'
-}
-export const UPDATE_LOG = "# 2024.2.26\n" +
+
+export const UPDATE_LOG =
+    "# 2024.3.20\n" +
+    "- 增加了手动刷新课表的选项\n" +
+    "- 实验课添加课程名显示\n" +
+    "- 后端无状态化+更换底层请求客户端=性能大幅提升"+
+    "# 2024.2.26\n" +
     "- 整理代码\n" +
     "- 修复一言API\n" +
     "# 2023.8.8\n" +
