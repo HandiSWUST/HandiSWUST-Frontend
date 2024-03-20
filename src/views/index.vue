@@ -141,7 +141,7 @@ export default {
     updateCheck: function () {
       // 检查APP更新
       let ver = localStorage.getItem("version");
-      if (ver != null && ver === VERSION.toString()) {
+      if (ver != null && Number(ver) === VERSION) {
         this.update = false;
       }
       // 检查WEB更新
