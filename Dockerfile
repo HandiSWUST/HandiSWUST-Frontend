@@ -1,3 +1,4 @@
 FROM busybox
 ADD dist/* /web
-ENTRYPOINT ["cp", "-f", "-r", "/web/", "/share/"]
+ADD run.sh run.sh
+ENTRYPOINT ["sh run.sh"]
