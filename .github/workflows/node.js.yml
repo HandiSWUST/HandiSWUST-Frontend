@@ -1,0 +1,39 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+
+    - name: Alibaba Cloud Container Registry (ACR) Login
+      uses: aliyun/acr-login@v1
+      with:
+        username: "${{secrets.ALI_ACR_USERNAME}}"
+        password: "${{secrets.ALI_ACR_PASSWD}}"
+        region-id: "cn-hangzhou"
+        login-server: "registry.cn-hangzhou.aliyuncs.com"
+        
+    - name: Build and Push Docker Image
+      run: |
+        docker build --tag registry.cn-hangzhou.aliyuncs.com/handiswust/frontend:latest .
+        docker push registry.cn-hangzhou.aliyuncs.com/handiswust/frontend:latest
