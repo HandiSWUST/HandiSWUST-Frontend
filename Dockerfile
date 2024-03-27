@@ -1,3 +1,3 @@
 FROM busybox
 ADD dist/* /web
-ENTRYPOINT ["cp", "-f", "-r", "/web", "/share/"]
+ENTRYPOINT ["cp", "-f", "-r", "/web/", "/share/"]
