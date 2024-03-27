@@ -1,3 +1,3 @@
 FROM busybox
 ADD dist/* /web
-ENTRYPOINT ["echo", "'HandiSWUST-Frontend Started.'", "&&", "tail", "-F", "/dev/null"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
