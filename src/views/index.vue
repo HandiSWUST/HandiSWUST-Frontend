@@ -67,7 +67,7 @@
                    icon="/plugins/gauge.svg"/>
       </AppCard>
       <AppCard category="语言大模型">
-        <AppButton text="Gemini" title="Gemini Pro" src="https://gemini.ivresse.top" icon="/plugins/gemini.png"/>
+        <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
       </AppCard>
     </div>
     <van-tabbar v-model="active" style="height: 7vh">
