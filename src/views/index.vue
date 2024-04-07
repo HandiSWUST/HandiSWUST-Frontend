@@ -67,8 +67,7 @@
                    icon="/plugins/gauge.svg"/>
       </AppCard>
       <AppCard category="语言大模型">
-        <AppButton text="GPT" title="ChatGPT" src="https://chat.shirakawatyu.top" icon="/plugins/chatgpt.png"/>
-        <AppButton text="Llama" title="Llama" src="https://llama.shirakawatyu.top" icon="/plugins/meta.png"/>
+        <AppButton text="Gemini" title="Gemini Pro" src="https://gemini.ivresse.top" icon="/plugins/gemini.png"/>
       </AppCard>
     </div>
     <van-tabbar v-model="active" style="height: 7vh">
