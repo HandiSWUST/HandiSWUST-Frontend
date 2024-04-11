@@ -43,6 +43,9 @@ axios.interceptors.response.use(response => {
 
     // console.log(response.data)
     if (response.data) {
+        if(response.data.msg === "WeChat"){
+             router.push('/WeChatProhibition')
+        }
         // 数据正常，进行的逻辑功能
         return response;
     } else {
