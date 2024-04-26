@@ -38,11 +38,19 @@ import { Swipe, SwipeItem } from 'vant';
 
 axios.defaults.withCredentials = true;
 const app = createApp(App);
+axios.interceptors.request.use(request=>{
+      if (navigator.userAgent.includes("MicroMessenger")) {
+          router.push('/WeChatProhibition')
+          return Promise.reject();
+    }
+      return request;
+})
 axios.interceptors.response.use(response => {
 
 
     // console.log(response.data)
     if (response.data) {
+
         // 数据正常，进行的逻辑功能
         return response;
     } else {

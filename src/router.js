@@ -2,6 +2,7 @@ import indexPanel from "./views/index.vue"
 import loginPanel from "./views/login.vue"
 import courseTable from "./views/course.vue"
 import aboutUs from "./views/about.vue"
+import WeChat from "./views/WeChatProhibition.vue"
 import score from "./views/score.vue";
 import { createRouter, createWebHashHistory } from 'vue-router'
 import library from "./views/library.vue";
@@ -18,6 +19,7 @@ const routers = [
 	{path: "/library",component: library},
 	{path: "/calender",component: calender},
 	{path: "/exam",component: exam},
+	{path: "/WeChatProhibition",component: WeChat},
 	{path: "/plugin/:src/:title", component: PluginFramework, props: true},
 ];
 
