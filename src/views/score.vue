@@ -132,6 +132,8 @@ export default {
         if (resp.data.code === 3401) {
           showFailToast("登录过期或未登录");
           this.$router.push("/login");
+        } else if (resp.data.code === 3403) {
+          showFailToast("欠费了呢~");
         } else if (resp.data == null || resp.data.status == 500) {
           showFailToast("当前没有成绩和绩点呢,可能是一站式服务大厅崩掉了~");
           this.$router.push("/");

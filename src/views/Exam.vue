@@ -62,7 +62,10 @@ export default {
     loadExam() {
       getExam().then((resp) => {
         if (resp.status === 200) {
-          if (resp.data.code === 3401) {
+          if (resp.data.code === 3401 || resp.data.code === 3403) {
+            if (resp.data.code === 3403) {
+              showFailToast("欠费了呢~");
+            }
             let beforeClose = (action) => {
               new Promise((resolve) => {
                 if (action == "confirm") {
