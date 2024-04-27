@@ -13,7 +13,7 @@
 </script>
 
 <template>
-  <div id="hitokoto">
+  <div id="hitokoto" class="miku-theme">
     <div style="padding-left: 10%; padding-top: 10%; margin-bottom: 5%">
       <van-image
           src="/hitokoto.svg"
@@ -35,7 +35,7 @@
   border-radius: 15px;
   margin-right: 10%;
   margin-left: 5%;
-  background-color: white;
+  //background-color: white;
 }
 
 #sentence {

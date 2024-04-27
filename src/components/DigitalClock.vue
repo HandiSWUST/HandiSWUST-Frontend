@@ -27,7 +27,7 @@
 </script>
 
 <template>
-  <div id="clock-container">
+  <div id="clock-container" class="miku-theme">
     <p id="clock1">北京时间</p>
     <p id="clock2">{{ time }}</p>
     <p id="clock3">{{ day }}</p>
@@ -42,7 +42,7 @@
   padding-bottom: 60%;
   width: 85%;
   border-radius: 15px;
-  background-color: white;
+  //background-color: white;
 }
 
 #clock1 {

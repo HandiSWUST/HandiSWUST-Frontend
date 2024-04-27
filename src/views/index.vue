@@ -4,7 +4,7 @@
     <div style="height: 11vh">
       <van-nav-bar
           title="首页"
-          class="bar"
+          class="bar miku-theme"
           right-text="关于"
           @click-right="$router.push('/about')">
         <template #left>
@@ -15,9 +15,9 @@
       </van-nav-bar>
 
       <van-notice-bar
-          style="height: 50%; min-height: 40px"
+          style="height: 50%; min-height: 40px; backdrop-filter: blur(5px); background: rgba(236, 249, 255, 0.5)"
           color="#1989fa"
-          background="#ecf9ff"
+
           left-icon="volume-o"
           speed="30"
           :text="getNotice()"
@@ -30,7 +30,7 @@
         <van-col span="12">
           <digital-clock/>
           <div>
-            <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#00bcd4"/>
+            <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" class="miku-theme" color="#00bcd4"/>
           </div>
         </van-col>
 
@@ -70,7 +70,7 @@
         <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
       </AppCard>
     </div>
-    <van-tabbar v-model="active" style="height: 7vh">
+    <van-tabbar v-model="active" style="height: 7vh" class="miku-theme">
       <van-tabbar-item icon="home-o">主页</van-tabbar-item>
       <van-tabbar-item icon="more-o">更多</van-tabbar-item>
     </van-tabbar>
@@ -209,14 +209,14 @@ export default {
   padding-bottom: 20%;
   width: 85%;
   border-radius: 15px;
-  background-color: white;
+  //background-color: white;
 }
 
 #grid1 {
   display: flex;
   flex-flow: column;
   position: relative;
-  background-color: #f2f2f2;
+  //background-color: #f2f2f2;
   width: 100%;
   height: 100%;
   overflow-x: hidden;

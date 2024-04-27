@@ -1,6 +1,6 @@
 <template>
-    <van-divider style="margin: 0">{{ category }}</van-divider>
-    <div style="border-radius: 15px; background-color: white; padding: 1%; margin: 3%">
+    <van-divider style="margin: 0; color: #2c2c2c">{{ category }}</van-divider>
+    <div class="app-card miku-theme">
         <van-grid square :clickable="true" :border="false">
             <slot/>
         </van-grid>
@@ -15,5 +15,10 @@ export default {
 </script>
 
 <style scoped>
-
+.app-card {
+  border-radius: 15px;
+  //background-color: white;
+  padding: 1%;
+  margin: 3%
+}
 </style>
