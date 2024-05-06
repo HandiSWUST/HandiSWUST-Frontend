@@ -64,7 +64,7 @@ export default {
         if (resp.status === 200) {
           if (resp.data.code === 3401 || resp.data.code === 3403) {
             if (resp.data.code === 3403) {
-              showFailToast("欠费了呢~");
+              showFailToast("学费/书费欠费，请在计划财务处公众号查看详情");
             }
             let beforeClose = (action) => {
               new Promise((resolve) => {
