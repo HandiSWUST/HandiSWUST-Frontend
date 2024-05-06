@@ -133,7 +133,7 @@ export default {
           showFailToast("登录过期或未登录");
           this.$router.push("/login");
         } else if (resp.data.code === 3403) {
-          showFailToast("欠费了呢~");
+          showFailToast("学费/书费欠费，请在计划财务处公众号查看详情");
         } else if (resp.data == null || resp.data.status == 500) {
           showFailToast("当前没有成绩和绩点呢,可能是一站式服务大厅崩掉了~");
           this.$router.push("/");
