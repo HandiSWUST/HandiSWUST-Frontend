@@ -149,7 +149,7 @@ export default {
       getWebVersion().then((resp) => {
         console.log(resp.data)
         if (resp.status === 200 && Number(resp.data) !== Number(WEB_VERSION)) {
-            location.reload();
+            // location.reload();
         }
       })
     },
