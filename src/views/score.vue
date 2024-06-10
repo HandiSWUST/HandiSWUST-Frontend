@@ -94,9 +94,9 @@ export default {
   inject: ['reload'],
   setup() {
     const onClickLeft = () => history.back();
-    const term = ref("2022-2023-2");
+    const term = ref("2023-2024-2");
     const option1 = [
-      {text: "点击选择学期", value: "2022-2023-2"}
+      {text: "点击选择学期", value: "2023-2024-2"}
     ];
     fetch(BASE_URL + "/api/v2/extension/scores").then(response => response.json())
         .then(data => {
