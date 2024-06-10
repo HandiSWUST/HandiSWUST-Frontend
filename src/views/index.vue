@@ -191,8 +191,8 @@ export default {
     downApp: function () {
       showDialog({
         message:
-            '2024.3.18\n' +
-            '修复了登录状态没有保存的问题\n' +
+            '2024.6.10\n' +
+            '增加了启动等待画面，更新访问地址\n' +
             '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
             '提取码: 2333',
         confirmButtonColor: "#1989fa",
