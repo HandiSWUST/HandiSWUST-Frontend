@@ -95,9 +95,9 @@ export default {
             localStorage.removeItem("password");
           }
           this.$router.go(-1);
-        } else if (response.data.code === 1502) {
+        } else if (response.data.code === 1502 || response.data.code === 5501) {
           showFailToast("登录失败，一站式登录接口崩溃");
-          this.loadCaptcha();
+          // this.loadCaptcha();
         } else {
           showFailToast("登录失败，请检查账号密码及验证码是否正确");
           this.loadCaptcha();

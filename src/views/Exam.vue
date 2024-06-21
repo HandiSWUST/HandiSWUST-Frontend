@@ -28,7 +28,7 @@
 
 <script>
 import TableVant from "../components/table.vue"
-import {closeDialog, showConfirmDialog, showFailToast, showNotify} from "vant";
+import {closeDialog, showConfirmDialog, showFailToast, showNotify, showToast} from "vant";
 import {getExam} from "@/api/getExam";
 
 
@@ -60,62 +60,42 @@ export default {
       }
     },
     loadExam() {
+      let examData = JSON.parse(window.localStorage.getItem("exam"));
       getExam().then((resp) => {
         if (resp.status === 200) {
           if (resp.data.code === 3401 || resp.data.code === 3403) {
             if (resp.data.code === 3403) {
               showFailToast("学费/书费欠费，请在计划财务处公众号查看详情");
             }
-            let beforeClose = (action) => {
-              new Promise((resolve) => {
-                if (action == "confirm") {
-                  closeDialog();
-                  let examData = JSON.parse(window.localStorage.getItem("exam"));
-                  if (examData != null) {
-                    this.tableData = examData;
-                    this.ifLoading = false;
-                  } else {
-                    showFailToast("本地没有缓存哦");
-                    this.$router.push("/login");
-                  }
-                } else {
-                  closeDialog();
-                  this.$router.push("/login");
-                }
-              })
-            };
-            showConfirmDialog({
-              message: "未登录，是否尝试使用本地缓存？",
-              confirmButtonColor: "#1989fa",
-              beforeClose,
-            });
+            showToast("自动使用本地缓存");
+            if (examData != null) {
+              this.tableData = examData;
+            } else {
+              showFailToast("本地没有缓存哦");
+              this.$router.push("/login");
+            }
           } else if (resp.data.msg === "no data") {
             showFailToast("教务系统当前没有考试安排哦");
           } else if (resp.data.msg === "s" || resp.data.msg === "sys err") {
-            let examData = JSON.parse(window.localStorage.getItem("exam"));
             if (examData != null) {
               showFailToast("教务系统寄了或者需要重新登录，使用本地缓存");
               this.tableData = examData;
-              this.ifLoading = false;
             } else {
               this.$router.push("/login");
             }
           } else {
-            this.ifLoading = false;
             this.tableData = JSON.parse(resp.data.data);
             window.localStorage.setItem("exam", resp.data.data);
           }
         } else {
-          let examData = JSON.parse(window.localStorage.getItem("exam"));
           if (examData != null) {
             showFailToast("教务系统寄了或者需要重新登录，使用本地缓存");
             this.tableData = examData;
-            console.log(examData)
-            this.ifLoading = false;
           } else {
             this.$router.push("/login");
           }
         }
+        this.ifLoading = false;
       });
     }
   },

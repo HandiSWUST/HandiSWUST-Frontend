@@ -43,6 +43,7 @@
       <van-col span="24">
         <index-grid>
           <index-button v-if="!isLogin" @click="$router.push('/login')" image="/login.svg" text="登录"/>
+          <index-button v-if="!isLogin" @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
           <index-button v-if="isLogin" @click="$router.push('/library')" image="/lib.svg" text="图书借阅信息"/>
           <index-button v-if="isLogin" @click="logout" image="/logout.svg" text="退出登录"/>
         </index-grid>
