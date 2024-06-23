@@ -135,7 +135,7 @@ export default {
       } else {
         getCourse(this.cur).then((response) => {
           if (response.status === 200) {
-            if (response.data.code === 3401) {
+            if (response.data.code !== 0) {
               this.useLocal(false, this.curWeek);
             } else {
               this.lessonsList[this.curWeek] = JSON.parse(response.data.data);
@@ -173,11 +173,13 @@ export default {
       } else {
         selectedCourse(index).then((response) => {
           if (response.status === 200) {
-            if (response.data.code === 3401) {
+            if (response.data.code === 0) {
+              this.lessonsList[index] = JSON.parse(response.data.data);
+            } else if (response.data.code === 3401) {
               // 询问是否使用本地缓存
               this.useLocal(false, index);
             } else {
-              this.lessonsList[index] = JSON.parse(response.data.data);
+              this.useLocal(true, index);
             }
           } else {
             this.useLocal(true, index);
