@@ -24,9 +24,9 @@
         text=" 补考的成绩同样会显示在页面中哦，大伙只要记得自己补考的是哪几科就行！"
     />
     <div id="loading">
-      <van-loading v-show="ifLoading" size="50px" vertical a>加载中...</van-loading>
+      <van-loading v-if="ifLoading" size="50px" vertical a>加载中...</van-loading>
     </div>
-    <van-row v-show="!ifLoading">
+    <van-row v-if="!ifLoading">
       <van-col span="24">
         <van-cell-group inset title="GPA" style="text-align: center">
           <van-circle
@@ -50,7 +50,7 @@
     </van-row>
 
 
-    <van-row v-show="!ifLoading" style="margin-bottom: 2%">
+    <van-row v-if="!ifLoading" style="margin-bottom: 2%">
       <van-col span="24">
         <van-cell-group inset :title="term">
           <van-cell v-show="term!=='外语等级考试'">

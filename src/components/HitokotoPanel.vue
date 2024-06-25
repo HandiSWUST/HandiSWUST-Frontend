@@ -3,13 +3,18 @@
   import {hitokoto} from "@/api/hitokotoApi";
 
   let sentence = ref("世上本没有路，走的人多了也便成了路");
-  hitokoto("", "json").then((resp) => {
-    let fromWho = resp.from_who;
-    if (fromWho == null) {
-      fromWho = "";
-    }
-    sentence.value = resp.hitokoto + "\n ——" + resp.from + " " + fromWho;
-  });
+  if (window.sentence != null) {
+    sentence.value = window.sentence;
+  } else {
+    hitokoto("", "json").then((resp) => {
+      let fromWho = resp.from_who;
+      if (fromWho == null) {
+        fromWho = "";
+      }
+      sentence.value = resp.hitokoto + "\n ——" + resp.from + " " + fromWho;
+      window.sentence = sentence.value;
+    });
+  }
 </script>
 
 <template>

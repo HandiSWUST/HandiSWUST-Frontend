@@ -156,6 +156,7 @@ export default {
     },
     // 检查登录
     loginCheck: function () {
+      this.isLogin = localStorage.getItem("isLogin") === "true";
       checkLogin().then((resp) => {
         if (resp.data.code === 3401) {
           this.isLogin = false;

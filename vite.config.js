@@ -22,6 +22,11 @@ export default defineConfig({
                 ws: true,
                 changeOrigin: true,
             },
+            '/api/hitokoto': {
+                target: 'https://v1.hitokoto.cn',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api\/hitokoto/, '')
+            },
             '/api': {
                 target: 'http://localhost:8080',
                 ws: true,
