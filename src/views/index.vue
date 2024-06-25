@@ -9,7 +9,7 @@
           @click-right="$router.push('/about')">
         <template #left>
           <van-badge :dot="update">
-            <p @click="downApp" style="color: #1989fa;">下载APP</p>
+            <p @click="downApp" style="color: #1989fa;">{{ appText }}</p>
           </van-badge>
         </template>
       </van-nav-bar>
@@ -117,6 +117,7 @@ export default {
       isLogin: false,
       // tabber
       active: 0,
+      appText: "下载APP",
       themeVars: {NavBarHeight: "5.5vh"}
     }
   },
@@ -143,8 +144,13 @@ export default {
     updateCheck: function () {
       // 检查APP更新
       let ver = localStorage.getItem("version");
-      if (ver != null && Number(ver) === VERSION) {
-        this.update = false;
+      if (ver != null) {
+        if (Number(ver) === VERSION) {
+          this.appText = "已是最新版";
+          this.update = false;
+        } else {
+          this.appText = "有新版本";
+        }
       }
       // 检查WEB更新
       getWebVersion().then((resp) => {
@@ -193,10 +199,10 @@ export default {
     downApp: function () {
       showDialog({
         message:
-            '2024.6.10\n' +
+            '2024.6.25\n' +
+            '服务端升级，为防止无法使用请尽快更新\n' +
             '增加了启动等待画面，更新访问地址\n' +
-            '下载链接: https://wwn.lanzoul.com/b0419zkwh\n' +
-            '提取码: 2333',
+            '\n下载链接: https://update.devin.cool',
         confirmButtonColor: "#1989fa",
       })
     }
