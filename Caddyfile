@@ -3,7 +3,22 @@
     handle_path /api/hitokoto {
         reverse_proxy hitokoto_api:8088
     }
-    reverse_proxy /api/* backend:8080
+    reverse_proxy /api/v2/login/* {
+        to backend:8080 10.13.13.2:8080
+        lb_policy first
+        health_uri /api/v2/test/ping
+        health_interval 10s
+        health_timeout 2s
+        health_status 2xx
+    }
+    reverse_proxy /api/* {
+        to backend:8080 10.13.13.2:8080
+        lb_policy random
+        health_uri /api/v2/test/ping
+        health_interval 10s
+        health_timeout 2s
+        health_status 2xx
+    }
     handle_path /plugins/* {
         handle_path /djs/*  {
             rewrite * /djs/{path}
@@ -29,8 +44,8 @@ swust.devin.cool {
     handle_path /api/hitokoto {
         reverse_proxy hitokoto_api:8000
     }
-    reverse_proxy /api/v2/login/* backend:8080 {
-        # to backend:8080
+    reverse_proxy /api/v2/login/* {
+        to backend:8080 10.13.13.2:8080
         lb_policy first
         health_uri /api/v2/test/ping
         health_interval 10s
@@ -38,7 +53,7 @@ swust.devin.cool {
         health_status 2xx
     }
     reverse_proxy /api/* {
-        to backend:8080
+        to backend:8080 10.13.13.2:8080
         lb_policy random
         health_uri /api/v2/test/ping
         health_interval 10s
