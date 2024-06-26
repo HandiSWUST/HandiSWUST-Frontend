@@ -1,5 +1,5 @@
 :82 {
-    reverse_proxy /api/v2/extension/cr 172.10.0.1:8000
+    reverse_proxy /api/v2/extension/cr 172.17.0.1:8000
     handle_path /api/hitokoto {
         reverse_proxy backend:8088
     }
@@ -25,7 +25,7 @@
 }
 
 swust.devin.cool {
-    reverse_proxy /api/v2/extension/cr 172.10.0.1:8000
+    reverse_proxy /api/v2/extension/cr 172.17.0.1:8000
     handle_path /api/hitokoto {
         reverse_proxy backend:8088
     }
@@ -48,15 +48,15 @@ swust.devin.cool {
     handle_path /plugins/* {
         handle_path /djs/*  {
             rewrite * /djs/{path}
-            reverse_proxy 172.10.0.1:50002
+            reverse_proxy 172.17.0.1:50002
         }
         handle_path /dfy* {
             rewrite * /
-            reverse_proxy 172.10.0.1:50002
+            reverse_proxy 172.17.0.1:50002
         }
         handle_path /homework* {
             rewrite * /plugins/homework
-            reverse_proxy 172.10.0.1:50001
+            reverse_proxy 172.17.0.1:50001
         }
         root * /swust/plugins
     }
@@ -73,7 +73,7 @@ update.devin.cool {
 
 :50002 {
     root * /mht/dist
-    reverse_proxy /homework* 172.10.0.1:50001
+    reverse_proxy /homework* 172.17.0.1:50001
     file_server
     log
 }
