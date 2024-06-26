@@ -1,7 +1,7 @@
 :82 {
     reverse_proxy /api/v2/extension/cr 172.17.0.1:8000
     handle_path /api/hitokoto {
-        reverse_proxy hitokoto_api:8088
+        reverse_proxy hitokoto_api:8000
     }
     reverse_proxy /api/v2/login/* {
         to backend:8080 10.13.13.2:8080
