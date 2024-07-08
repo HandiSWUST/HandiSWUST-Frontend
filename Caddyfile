@@ -3,6 +3,15 @@
     log
 }
 
+guide.devin.cool {
+    header -X-Frame-Options
+    reverse_proxy * https://xszn.gyrs.online {
+        transport http {
+            tls_trusted_ca_certs /swust/plugins/xszn-gyrs-online.pem
+        }
+    }
+}
+
 swust.devin.cool {
     reverse_proxy /api/v2/extension/cr 172.17.0.1:8000
     handle_path /api/hitokoto {
