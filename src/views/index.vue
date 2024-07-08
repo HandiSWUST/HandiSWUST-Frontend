@@ -62,10 +62,11 @@
       <AppCard category="实用工具">
         <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy"
                    icon="/plugins/duifene.svg"/>
-                <AppButton text="对分易小帮手" title="对分易小帮手" src="https://dfe.ivresse.top/"
+        <AppButton text="对分易小帮手" title="对分易小帮手" src="https://dfe.ivresse.top/"
                    icon="/plugins/dfe-help.svg"/>
         <AppButton text="服务状态" title="西科大服务状态监控" src="https://gyrsjk.gyrs.online/service"
                    icon="/plugins/gauge.svg"/>
+        <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online" icon="/plugins/guide.svg"/>
       </AppCard>
       <AppCard category="语言大模型">
         <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
