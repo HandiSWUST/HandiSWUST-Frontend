@@ -4,8 +4,12 @@
 }
 
 guide.devin.cool {
-    header -X-Frame-Options
     reverse_proxy * https://xszn.gyrs.online {
+        header_down -X-Frame-Options
+        header_up Host {upstream_hostport}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up Accept-Encoding identity
         transport http {
             tls_trusted_ca_certs /swust/plugins/xszn-gyrs-online.pem
         }
