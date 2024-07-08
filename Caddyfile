@@ -5,7 +5,11 @@
 
 guide.devin.cool {
     header -X-Frame-Options
-    reverse_proxy * https://xszn.gyrs.online
+    reverse_proxy * https://xszn.gyrs.online {
+        transport http {
+            tls_trusted_ca_certs /swust/plugins/xszn-gyrs-online.pem
+        }
+    }
 }
 
 swust.devin.cool {
