@@ -66,7 +66,6 @@
                    icon="/plugins/dfe-help.svg"/>
         <AppButton text="服务状态" title="西科大服务状态监控" src="https://gyrsjk.gyrs.online/service"
                    icon="/plugins/gauge.svg"/>
-        <AppButton text="新生指南" title="新生指南" src="https://guide.devin.cool" icon="/plugins/guide.svg"/>
       </AppCard>
       <AppCard category="语言大模型">
         <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
