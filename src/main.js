@@ -31,6 +31,7 @@ import { Card } from 'vant';
 import { Tag } from 'vant';
 import { DropdownMenu, DropdownItem } from 'vant';
 import { Swipe, SwipeItem } from 'vant';
+import { RadioGroup, Radio } from 'vant';
 // 千万不要从idea的提示里安装缺少的依赖，否则后果会很严重！！！
 
 
@@ -84,6 +85,8 @@ axios.interceptors.response.use(response => {
     })
 })
 
+app.use(Radio);
+app.use(RadioGroup);
 app.use(Swipe);
 app.use(SwipeItem);
 app.use(ConfigProvider);

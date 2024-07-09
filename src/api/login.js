@@ -19,6 +19,27 @@ export function getCaptcha() {
     })
 }
 
+export function getPhoneCaptcha(phone) {
+    axios.defaults.withCredentials = true;
+    return axios({
+        method: "get",
+        url: BASE_URL + "/api/v2/login/dynamicCode?phone="+phone
+    })
+}
+
+export function loginByPhone(phone, captcha) {
+    let formData = new FormData();
+    formData.append("phone", phone);
+    formData.append("code", captcha);
+    return axios({
+        url: BASE_URL+'/api/v2/login/phone',
+        method: 'post',
+        withCredentials: true,
+        data: formData
+    })
+
+}
+
 export async function login(username, password, captcha) {
     let formData = new FormData();
     axios.defaults.withCredentials = true;
