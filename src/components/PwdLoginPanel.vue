@@ -99,13 +99,13 @@ export default {
       clearable
   />
   <br/>
-  <div style="display: flex;">
-    <img v-bind:src="imgUrl" style="margin-left: 3%;"/>
-    <van-button plain type="primary" color="#1989fa" size="small" v-on:click="loadCaptcha"
-                style="margin-left: 3%;">获取验证码
+  <div style="display: flex; align-content: baseline">
+    <img v-bind:src="imgUrl" style="margin-right: 16px"/>
+    <van-button plain type="primary" color="#1989fa" size="small" v-on:click="loadCaptcha">
+      获取验证码
     </van-button>
   </div>
-  <van-checkbox v-model="remember" checked-color="#1989fa" style="margin-top: 5%; margin-left: 3%;">记住密码
+  <van-checkbox v-model="remember" checked-color="#1989fa" style="margin-top: 16px; margin-left: 16px">记住密码
   </van-checkbox>
 </div>
 </template>

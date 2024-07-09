@@ -86,7 +86,7 @@ export default {
     <br/>
     <div style="display: flex;">
       <van-button plain type="primary" color="#1989fa" size="small" v-on:click="loadCaptcha" :disabled="disabled"
-                  style="margin-left: 3%;">
+                  style="margin-left: 16px">
         {{captchaBtnText}}
       </van-button>
     </div>
