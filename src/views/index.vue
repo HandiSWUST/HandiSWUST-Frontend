@@ -64,7 +64,7 @@
                    icon="/plugins/duifene.svg"/>
         <AppButton text="对分易小帮手" title="对分易小帮手" src="https://dfe.ivresse.top/"
                    icon="/plugins/dfe-help.svg"/>
-        <AppButton text="服务状态" title="西科大服务状态监控" src="https://gyrsjk.gyrs.online/service"
+        <AppButton text="服务状态" title="西科大服务状态监控" src="https://jk.gyrs.fun/service"
                    icon="/plugins/gauge.svg"/>
         <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online/" icon="/plugins/guide.svg"/>
       </AppCard>
