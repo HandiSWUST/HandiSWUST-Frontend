@@ -77,7 +77,7 @@
       <div class="page blurred-theme" v-if="active === 2">
         <div style="display: flex;justify-content:center;font-family:'Douyin Sans';">敬请期待</div>
       </div>
-      <van-tabbar v-model="active" style="height: 7vh;font-family:'Douyin Sans';">
+      <van-tabbar v-model="active" style="height: 7vh;">
         <van-tabbar-item icon="home-o">主页</van-tabbar-item>
         <van-tabbar-item icon="more-o">更多</van-tabbar-item>
         <van-tabbar-item icon="logistics">探索</van-tabbar-item>
