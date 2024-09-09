@@ -1,24 +1,19 @@
 <script setup>
-  import {ref} from "vue";
-  import {hitokoto} from "@/api/hitokotoApi";
+import {ref} from "vue";
+import {hitokoto} from "@/api/hitokotoApi";
+import {debounce} from "lodash";
 
-  let sentence = ref("世上本没有路，走的人多了也便成了路");
-  if (window.sentence != null) {
-    sentence.value = window.sentence;
-  } else {
-    hitokoto("", "json").then((resp) => {
-      let fromWho = resp.from_who;
-      if (fromWho == null) {
-        fromWho = "";
-      }
-      sentence.value = resp.hitokoto + "\n ——" + resp.from + " " + fromWho;
-      window.sentence = sentence.value;
-    });
-  }
+const sentence = ref("世上本没有路，走的人多了也便成了路");
+const fresh = debounce(() => {
+  hitokoto("", "json").then((resp) => {
+    sentence.value = `${resp.hitokoto}    \n —— ${resp.from}  ${resp.from_who ?? ''}`;
+  });
+}, 677)
+fresh()
 </script>
 
 <template>
-  <div id="hitokoto">
+  <div id="hitokoto" @click="fresh">
     <div style="padding-left: 10%; padding-top: 10%; margin-bottom: 5%">
       <van-image
           src="/hitokoto.svg"
@@ -27,12 +22,13 @@
       <p style="margin-left: 5%; float: left;">一言</p>
     </div>
     <br/>
-    <p id="sentence">{{ sentence }}</p>
+    <p id="sentence-ct">{{ sentence }}</p>
   </div>
 </template>
 
 <style scoped>
 #hitokoto {
+  font-family: 'Smiley Sans Oblique';
   margin-bottom: 10%;
   height: 0;
   padding-bottom: 90%;
@@ -40,10 +36,11 @@
   border-radius: 15px;
   margin-right: 10%;
   margin-left: 5%;
+  color: black;
   background-color: white;
 }
 
-#sentence {
+#sentence-ct {
   font-size: small;
   margin-left: 10%;
   margin-right: 10%;

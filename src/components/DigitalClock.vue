@@ -1,28 +1,16 @@
 <script setup>
-  import {ref} from "vue";
+import {ref} from "vue";
+import dayjs from "dayjs";
 
-  let time = ref("0:00");
-  let day = ref("24TH 10月");
+const time = ref("0:00");
+const day = ref("24TH 10月");
 
-  let freshDate = () => {
-    let date = new Date();
-    let hour = date.getHours();
-    let minutes = date.getMinutes();
-    if (hour < 10) {
-      hour = "0" + hour.toString();
-    } else {
-      hour = hour.toString();
-    }
-    if (minutes < 10) {
-      minutes = "0" + minutes.toString();
-    } else {
-      minutes = minutes.toString();
-    }
-    time.value = hour + ":" + minutes;
-    day.value = date.getDate().toString() + "TH " + (date.getMonth() + 1).toString() + "月";
-  }
-  freshDate();
-  setInterval(freshDate, 1000);
+const freshDate = () => {
+  time.value = dayjs().format('HH:mm:ss');
+  day.value = dayjs().format('MMMM DD, YYYY');
+}
+freshDate();
+setInterval(freshDate, 1000);
 
 </script>
 
@@ -36,6 +24,7 @@
 
 <style scoped>
 #clock-container {
+  font-family: 'Smiley Sans Oblique';
   margin-bottom: 10%;
   margin-left: 10%;
   height: 0;

@@ -1,9 +1,10 @@
-
 export const UPDATE_LOG =
+    "# 2024.09.10\n" +
+    "- 诈尸更新 增加ACG-MODE 稍微美化内容\n" +
     "# 2024.3.20\n" +
     "- 增加了手动刷新课表的选项\n" +
     "- 实验课添加课程名显示\n" +
-    "- 后端无状态化+更换底层请求客户端=性能大幅提升"+
+    "- 后端无状态化+更换底层请求客户端=性能大幅提升" +
     "# 2024.2.26\n" +
     "- 整理代码\n" +
     "- 修复一言API\n" +
@@ -213,28 +214,22 @@ export const UPDATE_LOG =
 - 首次提交，实现了登录和基本的首页
 */
 
-export const OPEN_SOURCE = "# 图标\n" +
+export const OPEN_SOURCE = "\n" +
     "- Bitsies! https://iconstore.co/icons/bitsies\n" +
-    "# 一言Api\n" +
     "- Hitokoto https://hitokoto.cn/\n" +
-    "# 组件库\n" +
     "- Vant3 https://vant-contrib.gitee.io/vant/v3/#/zh-CN\n" +
-    "# Web服务器\n" +
+    "- Lodash https://www.lodashjs.com/\n" +
+    "- Dayjs https://day.js.org/zh-CN/\n" +
     "- Caddy2 https://github.com/caddyserver/caddy\n" +
-    "# 后端开发框架\n" +
     "- SpringBoot https://spring.io/projects/spring-boot\n" +
-    "# QQ机器人\n" +
     "- Mirai https://github.com/mamoe/mirai\n" +
-    "# JSON\n" +
     "- FastJSON2 https://github.com/alibaba/fastjson2\n" +
-    "# ORM框架\n" +
     "- Mybatis-Plus https://github.com/baomidou/mybatis-plus\n" +
-    "# 好用的工具库\n" +
     "- Hutool https://github.com/dromara/hutool\n" +
     "- Jsoup https://github.com/jhy/jsoup/\n" +
-    "# 数据库\n" +
     "- MySQL https://www.mysql.com\n" +
-    "- Redis https://github.com/redis/redis"
+    "- Redis https://github.com/redis/redis \n" +
+    "- Pixiv [114523297, 114131969, 111107585, 106191768, 108028778]"
 
 /*
 # 图标

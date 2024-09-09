@@ -1,81 +1,88 @@
 <template>
-  <div id="grid1">
-    <!--  导航栏及公告栏  -->
-    <div style="height: 11vh">
-      <van-nav-bar
-          title="首页"
-          class="bar"
-          right-text="关于"
-          @click-right="$router.push('/about')">
-        <template #left>
-          <van-badge :dot="update">
-            <p @click="downApp" style="color: #1989fa;">{{ appText }}</p>
-          </van-badge>
-        </template>
-      </van-nav-bar>
+  <div id="mask">
+    <div id="grid1">
+      <!--  导航栏及公告栏  -->
+      <div style="height: 11vh">
+        <van-nav-bar
+            title="首页"
+            class="bar"
+            right-text="关于"
+            @click-right="$router.push('/about')">
+          <template #left>
+            <van-badge :dot="update">
+              <p @click="downApp" style="color: #1989fa;">{{ appText }}</p>
+            </van-badge>
+          </template>
+        </van-nav-bar>
 
-      <van-notice-bar
-          style="height: 50%; min-height: 40px"
-          color="#1989fa"
-          background="#ecf9ff"
-          left-icon="volume-o"
-          speed="30"
-          :text="getNotice()"
-      />
-    </div>
-    <!--  主页  -->
-    <div class="page" v-if="active === 0">
-      <!--  时间、周数、一言  -->
-      <van-row style="width: 100%">
-        <van-col span="12">
-          <digital-clock/>
-          <div>
-            <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#00bcd4"/>
-          </div>
+        <van-notice-bar
+            style="height: 50%; min-height: 40px"
+            color="#1989fa"
+            background="#ecf9ff"
+            left-icon="volume-o"
+            speed="30"
+            :text="getNotice()"
+        />
+      </div>
+      <!--  主页  -->
+      <div class="page blurred-theme" v-if="active === 0">
+        <!--  时间、周数、一言  -->
+        <van-row style="width: 100%">
+          <van-col span="12">
+            <digital-clock/>
+            <div>
+              <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#00bcd4"/>
+            </div>
+          </van-col>
+
+          <van-col span="12">
+            <hitokoto-panel/>
+          </van-col>
+        </van-row>
+
+        <!--  按钮面板  -->
+        <van-col span="24" style="font-family:'Douyin Sans';">
+          <index-grid>
+            <index-button v-if="!isLogin" @click="$router.push('/login')" image="/login.svg" text="登录"/>
+            <index-button v-if="!isLogin" @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
+            <index-button v-if="isLogin" @click="$router.push('/library')" image="/lib.svg" text="图书借阅信息"/>
+            <index-button v-if="isLogin" @click="logout" image="/logout.svg" text="退出登录"/>
+          </index-grid>
+          <index-grid>
+            <index-button @click="$router.push('/course')" image="/table.svg" text="课程表"/>
+            <index-button @click="$router.push('/calender')" image="/date.svg" text="校历"/>
+          </index-grid>
+          <index-grid v-if="isLogin">
+            <index-button @click="$router.push('/score')" image="/score.svg" text="成绩"/>
+            <index-button @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
+          </index-grid>
         </van-col>
+      </div>
+      <!--  应用页  -->
+      <div class="page blurred-theme" v-if="active === 1">
+        <AppCard category="实用工具">
+          <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy"
+                     icon="/plugins/duifene.svg"/>
+          <AppButton text="对分易小帮手" title="对分易小帮手" src="https://dfe.ivresse.top/"
+                     icon="/plugins/dfe-help.svg"/>
+          <AppButton text="服务状态" title="西科大服务状态监控" src="https://jk.gyrs.fun/service"
+                     icon="/plugins/gauge.svg"/>
+          <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online/" icon="/plugins/guide.svg"/>
+        </AppCard>
+        <AppCard category="语言大模型">
+          <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
+        </AppCard>
+      </div>
 
-        <van-col span="12">
-          <hitokoto-panel/>
-        </van-col>
-      </van-row>
-
-      <!--  按钮面板  -->
-      <van-col span="24">
-        <index-grid>
-          <index-button v-if="!isLogin" @click="$router.push('/login')" image="/login.svg" text="登录"/>
-          <index-button v-if="!isLogin" @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
-          <index-button v-if="isLogin" @click="$router.push('/library')" image="/lib.svg" text="图书借阅信息"/>
-          <index-button v-if="isLogin" @click="logout" image="/logout.svg" text="退出登录"/>
-        </index-grid>
-        <index-grid>
-          <index-button @click="$router.push('/course')" image="/table.svg" text="课程表"/>
-          <index-button @click="$router.push('/calender')" image="/date.svg" text="校历"/>
-        </index-grid>
-        <index-grid v-if="isLogin">
-          <index-button @click="$router.push('/score')" image="/score.svg" text="成绩"/>
-          <index-button @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
-        </index-grid>
-      </van-col>
+      <div class="page blurred-theme" v-if="active === 2">
+        <div style="display: flex;justify-content:center;font-family:'Douyin Sans';">敬请期待</div>
+      </div>
+      <van-tabbar v-model="active" style="height: 7vh;font-family:'Douyin Sans';">
+        <van-tabbar-item icon="home-o">主页</van-tabbar-item>
+        <van-tabbar-item icon="more-o">更多</van-tabbar-item>
+        <van-tabbar-item icon="logistics">探索</van-tabbar-item>
+      </van-tabbar>
     </div>
-    <!--  应用页  -->
-    <div class="page" v-if="active === 1">
-      <AppCard category="实用工具">
-        <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy"
-                   icon="/plugins/duifene.svg"/>
-        <AppButton text="对分易小帮手" title="对分易小帮手" src="https://dfe.ivresse.top/"
-                   icon="/plugins/dfe-help.svg"/>
-        <AppButton text="服务状态" title="西科大服务状态监控" src="https://jk.gyrs.fun/service"
-                   icon="/plugins/gauge.svg"/>
-        <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online/" icon="/plugins/guide.svg"/>
-      </AppCard>
-      <AppCard category="语言大模型">
-        <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
-      </AppCard>
-    </div>
-    <van-tabbar v-model="active" style="height: 7vh">
-      <van-tabbar-item icon="home-o">主页</van-tabbar-item>
-      <van-tabbar-item icon="more-o">更多</van-tabbar-item>
-    </van-tabbar>
   </div>
 </template>
 
@@ -99,6 +106,12 @@ export default {
   name: "indexPanel",
   components: {HitokotoPanel, DigitalClock, IndexGrid, IndexButton, AppButton, AppCard},
   mounted() {
+    // ACG模式
+    if (localStorage.getItem('ACG_MODE') === 'true') {
+      const el = document.querySelector('#mask')
+      el.style.cssText = `background-image: url("/sercet/${Math.floor(Math.random() * 5) + 1}.jpg");`
+    }
+
     // 更新检查
     this.updateCheck();
     // 登录检查
@@ -107,6 +120,9 @@ export default {
     if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
       showNotify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
     }
+    //
+
+
   },
   data() {
     return {
@@ -129,6 +145,7 @@ export default {
       if (cur > TOTAL_WEEK) {
         cur = TOTAL_WEEK;
       }
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       this.curWeek = cur;
       return "第" + cur.toString() + "/" + TOTAL_WEEK + "周";
     },
@@ -157,7 +174,7 @@ export default {
       getWebVersion().then((resp) => {
         console.log(resp.data)
         if (resp.status === 200 && Number(resp.data) !== Number(WEB_VERSION)) {
-            // location.reload();
+          // location.reload();
         }
       })
     },
@@ -213,6 +230,9 @@ export default {
 
 <style scoped>
 #progr {
+  font-family: 'Smiley Sans Oblique';
+  font-weight: 400;
+  font-size: 1.5rem;
   margin-left: 10%;
   height: 0;
   padding-bottom: 20%;
@@ -236,7 +256,21 @@ export default {
 .page {
   padding-top: 6%;
   padding-bottom: 6%;
-  max-height: 82vh;
+  max-height: 100vh;
   overflow: auto;
+}
+
+#grid1 {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(2px);
+}
+
+#mask {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  height: 100%;
+  width: 100%;
 }
 </style>

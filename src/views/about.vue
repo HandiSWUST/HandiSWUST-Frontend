@@ -20,6 +20,7 @@
         <p>Web前端代码: https://github.com/flben233/HandiSWUST</p>
         <p>Android端代码: https://github.com/flben233/HandiSWUST-Android-Rebuild</p>
       </van-collapse-item>
+
       <van-collapse-item title="清除缓存 (没有二次确认，考虑好了再点)">
         <van-button block type="danger" @click="clearLocalCache" style="border-radius: 6px">
           清除本地课程缓存
@@ -35,6 +36,9 @@
         <van-image src="/payCode.JPG"></van-image>
         <van-image src="/payZ.JPG"></van-image>
       </van-collapse-item>
+      <van-collapse-item title="SWUST 二次元最速传说と绝凶の猛虎！">
+        <van-switch v-model="status" @update:model-value="recordInfo"/>
+      </van-collapse-item>
     </van-collapse>
   </div>
 </template>
@@ -42,7 +46,7 @@
 <script>
 
 import {UPDATE_LOG, OPEN_SOURCE, PRIVACY_POLICY} from "@/common/doc";
-import {showLoadingToast, showSuccessToast} from "vant";
+import {showConfirmDialog, showLoadingToast, showSuccessToast} from "vant";
 import {deleteLocalCourse} from "@/api/getCourse";
 
 export default {
@@ -52,7 +56,8 @@ export default {
       activeNames: ["1", "2", "3", "5", "6"],
       openSource: OPEN_SOURCE,
       updateLog: UPDATE_LOG,
-      privacy: PRIVACY_POLICY
+      privacy: PRIVACY_POLICY,
+      status: localStorage.getItem('ACG_MODE') === 'true'
     }
   },
   methods: {
@@ -76,6 +81,18 @@ export default {
           showSuccessToast("清除失败");
         }
       });
+    },
+    recordInfo: async function (status) {
+      if (status) {
+        const data = await showConfirmDialog({
+          title: '警告',
+          message: '真的真的要打开吗？',
+        }).then(() => 'true').catch(() => 'false')
+        localStorage.setItem('ACG_MODE', data)
+      } else {
+        localStorage.setItem('ACG_MODE', 'false')
+      }
+
     }
   }
 }
