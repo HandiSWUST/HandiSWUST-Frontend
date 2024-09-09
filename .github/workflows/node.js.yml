@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [16.x]
@@ -21,7 +21,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: npm install
     - run: npm run build --if-present
 
     - name: Alibaba Cloud Container Registry (ACR) Login
@@ -31,7 +31,7 @@ jobs:
         password: "${{secrets.ALI_ACR_PASSWD}}"
         region-id: "cn-hangzhou"
         login-server: "registry.cn-hangzhou.aliyuncs.com"
-        
+
     - name: Build and Push Docker Image
       run: |
         docker build --tag registry.cn-hangzhou.aliyuncs.com/handiswust/frontend:latest .
