@@ -3,10 +3,11 @@ import {ref} from "vue";
 import {hitokoto} from "@/api/hitokotoApi";
 import {debounce} from "lodash";
 
-const sentence = ref("世上本没有路，走的人多了也便成了路");
+const sentence = ref(localStorage.getItem('Hitokoto') ?? "世上本没有路，走的人多了也便成了路");
 const fresh = debounce(() => {
   hitokoto("", "json").then((resp) => {
     sentence.value = `${resp.hitokoto}    \n —— ${resp.from}  ${resp.from_who ?? ''}`;
+    localStorage.setItem('Hitokoto', sentence.value)
   });
 }, 677)
 fresh()
