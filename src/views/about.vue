@@ -6,6 +6,7 @@
         <p>全栈 (排名不分先后，出BUG可通过下面方式联系): </p>
         <p>卓计2101 Alice-in-oven: QQ 1071142396</p>
         <p>计科2101 ShirakawaTyu: QQ 2541028866</p>
+        <p>卓计2101 Aliothmoon: QQ 3210670566</p>
       </van-collapse-item>
       <van-collapse-item title="隐私协议">
         <textarea class="info" rows="20" v-model="privacy" readonly/>

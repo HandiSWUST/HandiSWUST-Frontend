@@ -13,7 +13,7 @@
     "@vant/compat": "^1.0.0",
     "@vant/weapp": "^1.10.5",
     "animate.css": "^4.1.1",
-    "axios": "1.6.0",
+    "axios": "^1.7.7",
     "blueimp-md5": "^2.19.0",
     "dayjs": "^1.11.13",
     "js-cookie": "^3.0.1",
