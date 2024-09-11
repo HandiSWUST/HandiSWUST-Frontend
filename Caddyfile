@@ -44,6 +44,7 @@ swust.devin.cool {
     }
     root * /swust
     file_server
+    encode zstd gzip
     log
 }
 
