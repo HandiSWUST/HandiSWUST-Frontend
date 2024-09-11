@@ -6,8 +6,10 @@
 swust.devin.cool {
     reverse_proxy /api/v2/extension/cr 172.17.0.1:8000
     handle_path /api/hitokoto {
-        to hitokoto_api:8000 8.137.92.6:8000
-        lb_policy random
+        reverse_proxy * {
+            to hitokoto_api:8000 8.137.92.6:8000
+            lb_policy random
+        }
     }
     reverse_proxy /api/v2/login/* {
         to backend:8080 10.13.13.2:8080
