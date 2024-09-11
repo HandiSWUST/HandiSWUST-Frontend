@@ -4,6 +4,9 @@
 }
 
 swust.devin.cool {
+    encode {
+      gzip 9
+    }
     reverse_proxy /api/v2/extension/cr 172.17.0.1:8000
     handle_path /api/hitokoto {
         reverse_proxy {
