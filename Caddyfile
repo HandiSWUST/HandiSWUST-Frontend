@@ -4,15 +4,16 @@
 }
 
 swust.devin.cool {
-    encode {
-      gzip 9
+
+    handle_path /api/v2/extension/cr {
+        reverse_proxy 172.17.0.1:8000
+        header_down +Access-Control-Allow-Origin *
+        header_down +Access-Control-Allow-Methods *
+        header_down +Access-Control-Allow-Headers *
     }
-    reverse_proxy /api/v2/extension/cr 172.17.0.1:8000
+
     handle_path /api/hitokoto {
-        reverse_proxy {
-            to hitokoto_api:8000 8.137.92.6:8000
-            lb_policy random
-        }
+        reverse_proxy hitokoto_api:8000
     }
     reverse_proxy /api/v2/login/* {
         to backend:8080 10.13.13.2:8080
@@ -21,6 +22,10 @@ swust.devin.cool {
         health_interval 10s
         health_timeout 2s
         health_status 2xx
+
+        header_down +Access-Control-Allow-Origin *
+        header_down +Access-Control-Allow-Methods *
+        header_down +Access-Control-Allow-Headers *
     }
     reverse_proxy /api/* {
         to backend:8080 10.13.13.2:8080
@@ -29,6 +34,9 @@ swust.devin.cool {
         health_interval 10s
         health_timeout 2s
         health_status 2xx
+        header_down +Access-Control-Allow-Origin *
+        header_down +Access-Control-Allow-Methods *
+        header_down +Access-Control-Allow-Headers *
     }
     handle_path /plugins/* {
         handle_path /djs/*  {
