@@ -43,34 +43,31 @@
         <!--  按钮面板  -->
         <van-col span="24" style="font-family:'Douyin Sans';">
           <index-grid>
-            <index-button v-if="!isLogin" @click="$router.push('/login')" image="/login.svg" text="登录"/>
-            <index-button v-if="!isLogin" @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
-            <index-button v-if="isLogin" @click="$router.push('/library')" image="/lib.svg" text="图书借阅信息"/>
-            <index-button v-if="isLogin" @click="logout" image="/logout.svg" text="退出登录"/>
+            <index-button v-if="!isLogin" @click="$router.push('/login')" image="login.svg" text="登录"/>
+            <index-button v-if="!isLogin" @click="$router.push('/exam')" image="exam.svg" text="考试"/>
+            <index-button v-if="isLogin" @click="$router.push('/library')" image="lib.svg" text="图书借阅信息"/>
+            <index-button v-if="isLogin" @click="logout" image="logout.svg" text="退出登录"/>
           </index-grid>
           <index-grid>
-            <index-button @click="$router.push('/course')" image="/table.svg" text="课程表"/>
-            <index-button @click="$router.push('/calender')" image="/date.svg" text="校历"/>
+            <index-button @click="$router.push('/course')" image="table.svg" text="课程表"/>
+            <index-button @click="$router.push('/calender')" image="date.svg" text="校历"/>
           </index-grid>
           <index-grid v-if="isLogin">
-            <index-button @click="$router.push('/score')" image="/score.svg" text="成绩"/>
-            <index-button @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
+            <index-button @click="$router.push('/score')" image="score.svg" text="成绩"/>
+            <index-button @click="$router.push('/exam')" image="exam.svg" text="考试"/>
           </index-grid>
         </van-col>
       </div>
       <!--  应用页  -->
       <div class="page blurred-theme" v-if="active === 1">
         <AppCard category="实用工具">
-          <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy"
-                     icon="/plugins/duifene.svg"/>
-          <AppButton text="对分易小帮手" title="对分易小帮手" src="https://dfe.ivresse.top/"
-                     icon="/plugins/dfe-help.svg"/>
-          <AppButton text="服务状态" title="西科大服务状态监控" src="https://jk.gyrs.fun/service"
-                     icon="/plugins/gauge.svg"/>
-          <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online/" icon="/plugins/guide.svg"/>
+          <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy" icon="plugins/duifene.svg"/>
+          <AppButton text="对分易小帮手" title="对分易小帮手" src="https://dfe.ivresse.top/" icon="plugins/dfe-help.svg"/>
+          <AppButton text="服务状态" title="西科大服务状态监控" src="https://jk.gyrs.fun/service" icon="plugins/gauge.svg"/>
+          <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online/" icon="plugins/guide.svg"/>
         </AppCard>
         <AppCard category="语言大模型">
-          <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
+          <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="plugins/gemini.png"/>
         </AppCard>
       </div>
 
@@ -109,7 +106,7 @@ export default {
     // ACG模式
     if (localStorage.getItem('ACG_MODE') === 'true') {
       const el = document.querySelector('#mask')
-      el.style.cssText = `background-image: url("/sercet/${Math.floor(Math.random() * 5) + 1}.jpg");`
+      el.style.cssText = `background-image: url("sercet/${Math.floor(Math.random() * 5) + 1}.jpg");`
     }
 
     // 更新检查

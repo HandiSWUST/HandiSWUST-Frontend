@@ -6,11 +6,11 @@
                  left-arrow @click-left="this.$router.push('/');"
     />
     <van-image
-        src="/calender2.jpg"
+        src="calender2.jpg"
         class="img"
     />
     <van-image
-        src="/calender3.jpg"
+        src="calender3.jpg"
         class="img"
     />
   </div>

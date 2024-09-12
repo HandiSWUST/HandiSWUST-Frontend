@@ -17,7 +17,7 @@ fresh()
   <div id="hitokoto" @click="fresh">
     <div style="padding-left: 10%; padding-top: 10%; margin-bottom: 5%">
       <van-image
-          src="/hitokoto.svg"
+          src="hitokoto.svg"
           style="width: 15%; float: left"
       />
       <p style="margin-left: 5%; float: left;">一言</p>

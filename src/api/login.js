@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/common/final"
-import "/src/js/security.js"
+import "@/js/security.js"
 import axios from "axios";
 
 function getKey() {

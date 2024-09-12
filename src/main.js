@@ -40,6 +40,8 @@ import {Switch} from 'vant';
 
 axios.defaults.withCredentials = true;
 const app = createApp(App);
+axios.defaults.baseURL = 'https://swust.ivresse.top/'
+// axios.defaults.baseURL = 'http://127.0.0.1:8080/'
 axios.interceptors.request.use(request => {
     if (navigator.userAgent.includes("MicroMessenger")) {
         router.push('/WeChatProhibition')

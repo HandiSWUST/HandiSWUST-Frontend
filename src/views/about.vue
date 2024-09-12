@@ -34,8 +34,8 @@
       <van-collapse-item title="投喂作者们">
         投喂的收入将用于服务器维护<br>
         （以及作者们的日常开销）
-        <van-image src="/payCode.JPG"></van-image>
-        <van-image src="/payZ.JPG"></van-image>
+        <van-image src="payCode.JPG"></van-image>
+        <van-image src="payZ.JPG"></van-image>
       </van-collapse-item>
       <van-collapse-item title="SWUST 二次元最速传说と绝凶の猛虎！">
         <van-switch v-model="status" @update:model-value="recordInfo"/>

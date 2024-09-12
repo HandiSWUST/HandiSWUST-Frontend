@@ -1,11 +1,11 @@
 import axios from "axios";
-import {BASE_URL} from "@/common/final";
+// import {BASE_URL} from "@/common/final";
 
 export function cr(img) {
     return axios({
-        url: BASE_URL + "/api/v2/extension/cr",
+        url: 'https://swust.devin.cool' + "/api/v2/extension/cr",
         method: "POST",
         data: img,
-        withCredentials: true
+        withCredentials: false
     });
 }
