@@ -5,12 +5,16 @@ import {debounce} from "lodash";
 
 const sentence = ref(localStorage.getItem('Hitokoto') ?? "世上本没有路，走的人多了也便成了路");
 const fresh = debounce(() => {
+  console.log(window.hitokotoValid)
   hitokoto("", "json").then((resp) => {
     sentence.value = `${resp.hitokoto}    \n —— ${resp.from}  ${resp.from_who ?? ''}`;
-    localStorage.setItem('Hitokoto', sentence.value)
+    localStorage.setItem('Hitokoto', sentence.value);
+    window.hitokotoValid = true;
   });
 }, 677)
-fresh()
+if (window.hitokotoValid == null) {
+  fresh()
+}
 </script>
 
 <template>
