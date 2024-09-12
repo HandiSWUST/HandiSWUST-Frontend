@@ -8,8 +8,6 @@ import router from './router.js'
 import './assets/main.css'
 import 'vant/lib/index.css';
 import 'animate.css';
-import '@chinese-fonts/dyh/dist/SmileySans-Oblique/result.css';
-import '@chinese-fonts/dymh/dist/DouyinSansBold/result.css';
 import {Divider} from 'vant';
 import {Col, Row} from 'vant';
 import {NavBar} from 'vant';

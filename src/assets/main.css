@@ -1,4 +1,6 @@
 @import "./base.css";
+@import url('https://static.zeoseven.com/cn/92/main/result.css');
+@import url('https://static.zeoseven.com/cn/84/main/result.css');
 
 #app {
     font-weight: normal;

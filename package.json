@@ -8,8 +8,6 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@chinese-fonts/dyh": "^2.0.1",
-    "@chinese-fonts/dymh": "^2.0.1",
     "@vant/compat": "^1.0.0",
     "@vant/weapp": "^1.10.5",
     "animate.css": "^4.1.1",
