@@ -1,58 +1,69 @@
 :82 {
-    redir https://swust.devin.cool permanent
-    log
+        redir https://swust.devin.cool permanent
+        log
 }
 
 swust.devin.cool {
-    reverse_proxy /api/v2/extension/cr 172.17.0.1:8000
-    handle_path /api/hitokoto {
-        reverse_proxy 8.137.92.6:8000
-    }
-    reverse_proxy /api/v2/login/* {
-        to backend:8080 10.13.13.2:8080
-        lb_policy first
-        health_uri /api/v2/test/ping
-        health_interval 10s
-        health_timeout 2s
-        health_status 2xx
-    }
-    reverse_proxy /api/* {
-        to backend:8080 10.13.13.2:8080
-        lb_policy random
-        health_uri /api/v2/test/ping
-        health_interval 10s
-        health_timeout 2s
-        health_status 2xx
-    }
-    handle_path /plugins/* {
-        handle_path /djs/*  {
-            rewrite * /djs/{path}
-            reverse_proxy 172.17.0.1:50002
+        reverse_proxy /api/v2/extension/cr {
+                to 172.17.0.1:8000
+                header_down +Access-Control-Allow-Origin *
+                header_down +Access-Control-Allow-Methods *
+                header_down +Access-Control-Allow-Headers *
+                header_down +Access-Control-Allow-Credentials true
         }
-        handle_path /dfy* {
-            rewrite * /
-            reverse_proxy 172.17.0.1:50002
-        }
-        handle_path /homework* {
-            rewrite * /plugins/homework
-            reverse_proxy 172.17.0.1:50001
-        }
-        root * /swust/plugins
-    }
-    root * /swust
-    file_server
-    log
-}
 
-update.devin.cool {
-    root * /files
-    file_server browse
-    log
+        reverse_proxy /api/hitokoto {
+                to hitokoto_api:8000
+        }
+        reverse_proxy /api/v2/login/* {
+                to backend:8080 10.13.13.2:8080
+                lb_policy first
+                health_uri /api/v2/test/ping
+                health_interval 10s
+                health_timeout 2s
+                health_status 2xx
+
+                header_down +Access-Control-Allow-Origin *
+                header_down +Access-Control-Allow-Methods *
+                header_down +Access-Control-Allow-Headers *
+                header_down +Access-Control-Allow-Credentials true
+        }
+        reverse_proxy /api/* {
+                to backend:8080 10.13.13.2:8080
+                lb_policy random
+                health_uri /api/v2/test/ping
+                health_interval 10s
+                health_timeout 2s
+                health_status 2xx
+                header_down +Access-Control-Allow-Origin *
+                header_down +Access-Control-Allow-Methods *
+                header_down +Access-Control-Allow-Headers *
+                header_down +Access-Control-Allow-Credentials true
+        }
+        handle_path /plugins/* {
+                handle_path /djs/* {
+                        rewrite * /djs/{path}
+                        reverse_proxy 172.17.0.1:50002
+                }
+                handle_path /dfy* {
+                        rewrite * /
+                        reverse_proxy 172.17.0.1:50002
+                }
+                handle_path /homework* {
+                        rewrite * /plugins/homework
+                        reverse_proxy 172.17.0.1:50001
+                }
+                root * /swust/plugins
+        }
+        root * /swust
+        file_server
+        encode zstd gzip
+        log
 }
 
 :50002 {
-    root * /mht/dist
-    reverse_proxy /homework* 172.17.0.1:50001
-    file_server
-    log
+        root * /mht/dist
+        reverse_proxy /homework* 172.17.0.1:50001
+        file_server
+        log
 }
