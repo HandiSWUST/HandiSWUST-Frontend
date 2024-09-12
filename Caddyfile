@@ -57,7 +57,10 @@ swust.devin.cool {
 		}
 		root * /swust/plugins
 	}
-	header /assets/* ?Cache-Control "max-age=0"
+	@static {
+	  path_regexp \.(ico|css|js|gif|jpg|jpeg|png|svg|woff)$
+	}
+	header @static ?Cache-Control "max-age=0"
 	root * /swust
 	file_server
 	encode {
