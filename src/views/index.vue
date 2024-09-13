@@ -17,8 +17,7 @@
 
         <van-notice-bar
             style="height: 50%; min-height: 40px"
-            color="#1989fa"
-            background="#ecf9ff"
+            id="notice"
             left-icon="volume-o"
             speed="30"
             :text="getNotice()"
@@ -110,6 +109,13 @@ export default {
     if (localStorage.getItem('ACG_MODE') === 'true') {
       const el = document.querySelector('#mask')
       el.style.cssText = `background-image: url("/sercet/${Math.floor(Math.random() * 5) + 1}.jpg");`
+      const opacity = "0.7";
+      document.documentElement.style.setProperty("--van-background-2", "rgba(255, 255, 255, " + opacity + ")");
+      document.documentElement.style.setProperty("--van-grid-item-content-background", "none");
+      document.documentElement.style.setProperty("--van-grid-item-content-active-color", "rgba(242, 243, 245, " + opacity + ")");
+      document.documentElement.style.setProperty("--van-tabbar-item-active-background", "none");
+      document.getElementById("progr").style.opacity = opacity;
+      document.getElementById("notice").style.opacity = opacity;
     }
 
     // 更新检查
@@ -260,9 +266,14 @@ export default {
   overflow: auto;
 }
 
+#notice {
+  background: rgb(236, 249, 255);
+  color: rgb(25, 137, 250)
+}
+
 #grid1 {
   background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(2px);
+//backdrop-filter: blur(2px);
 }
 
 #mask {

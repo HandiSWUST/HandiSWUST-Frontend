@@ -15,6 +15,6 @@
   max-width: 90%;
   margin-bottom: 5%;
   border-radius: 15px;
-  background-color: white;
+  background-color: var(--van-background-2);
 }
 </style>

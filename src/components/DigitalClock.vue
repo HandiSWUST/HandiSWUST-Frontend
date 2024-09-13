@@ -31,7 +31,7 @@ setInterval(freshDate, 1000);
   padding-bottom: 60%;
   width: 85%;
   border-radius: 15px;
-  background-color: white;
+  background-color: var(--van-background-2);
 }
 
 #clock1 {

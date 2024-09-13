@@ -42,7 +42,7 @@ if (window.hitokotoValid == null) {
   margin-right: 10%;
   margin-left: 5%;
   color: black;
-  background-color: white;
+  background-color: var(--van-background-2);
 }
 
 #sentence-ct {

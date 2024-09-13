@@ -1,6 +1,6 @@
 <template>
     <van-divider style="margin: 0">{{ category }}</van-divider>
-    <div style="border-radius: 15px; background-color: white; padding: 1%; margin: 3%">
+    <div style="border-radius: 15px; background-color: var(--van-background-2); padding: 1%; margin: 3%">
         <van-grid square :clickable="true" :border="false">
             <slot/>
         </van-grid>
