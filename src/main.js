@@ -35,58 +35,13 @@ import {DropdownMenu, DropdownItem} from 'vant';
 import {Swipe, SwipeItem} from 'vant';
 import {RadioGroup, Radio} from 'vant';
 import {Switch} from 'vant';
+import {configure} from "@/config/config";
 // 千万不要从idea的提示里安装缺少的依赖，否则后果会很严重！！！
 
 
-axios.defaults.withCredentials = true;
 const app = createApp(App);
-axios.defaults.baseURL = 'https://swust.ivresse.top/'
-// axios.defaults.baseURL = 'http://127.0.0.1:8080/'
-axios.interceptors.request.use(request => {
-    if (navigator.userAgent.includes("MicroMessenger")) {
-        router.push('/WeChatProhibition')
-        return Promise.reject();
-    }
-    return request;
-})
-axios.interceptors.response.use(response => {
 
-
-    // console.log(response.data)
-    if (response.data) {
-
-        // 数据正常，进行的逻辑功能
-        return response;
-    } else {
-        if (+response.data.getStats() === 500) {
-            Toast.fail("登录状态过期");
-            this.$router.push("/login");
-        }
-        // 如果返回的 success 是 false，表明业务出错，直接触发 reject
-        // 抛出的错误，被 catch 捕获
-        return Promise.reject(new Error(response.data.message));
-    }
-}, error => {
-    // 只重传2次，超过后抛异常
-    const cfg = error.config;
-    if (cfg.retryCount === undefined) {
-        cfg.retryCount = 0;
-    }
-    if (cfg.retryCount >= 2) {
-        // 不要使用reject，否则没法捕捉
-        return Promise.resolve(error);
-    }
-    cfg.retryCount++;
-    // 对响应错误做点什么
-    // 延时500ms
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, 500)
-    }).then(() => {
-        return axios(error.config);
-    })
-})
+configure()
 
 app.use(Radio);
 app.use(RadioGroup);
