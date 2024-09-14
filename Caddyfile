@@ -24,11 +24,6 @@ swust.devin.cool {
 		health_interval 10s
 		health_timeout 2s
 		health_status 2xx
-
-		header_down +Access-Control-Allow-Origin *
-		header_down +Access-Control-Allow-Methods *
-		header_down +Access-Control-Allow-Headers *
-		header_down +Access-Control-Allow-Credentials true
 	}
 	reverse_proxy /api/* {
 		to backend:8080 10.13.13.2:8080
@@ -37,10 +32,6 @@ swust.devin.cool {
 		health_interval 10s
 		health_timeout 2s
 		health_status 2xx
-		header_down +Access-Control-Allow-Origin *
-		header_down +Access-Control-Allow-Methods *
-		header_down +Access-Control-Allow-Headers *
-		header_down +Access-Control-Allow-Credentials true
 	}
 	handle_path /plugins/* {
 		handle_path /djs/* {
@@ -60,7 +51,8 @@ swust.devin.cool {
 	@static {
 	  path_regexp \.(ico|css|js|gif|jpg|jpeg|png|svg|woff)$
 	}
-	header @static ?Cache-Control "max-age=0"
+	header ?Cache-Control "stale-if-error=31536000"
+	header @static Cache-Control "max-age=0,stale-while-revalidate=31536000"
 	root * /swust
 	file_server
 	encode {
