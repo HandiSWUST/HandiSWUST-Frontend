@@ -217,8 +217,10 @@ export default {
             }
           })
         } else {
-          showFailToast("本地没有缓存哦");
-          this.$router.push("/login");
+          this.lessonsList[index] = JSON.parse(localStorage.getItem("lessons"));
+          if (localStorage.getItem("lessons") == null) {
+            showFailToast("本地没有缓存哦");
+          }
         }
       }
     },
