@@ -61,18 +61,8 @@ function lessonSplit(lesson, lessons) {
 
 function lessonMerge(lesson1, lesson2) {
     let jw_course_code = lesson1.jw_course_code + " | " + lesson2.jw_course_code;
-    let base_teacher_name;
-    if (!lesson1.base_teacher_name === lesson2.base_teacher_name) {
-        base_teacher_name = lesson1.base_teacher_name + " | " + lesson2.base_teacher_name;
-    } else {
-        base_teacher_name = lesson1.base_teacher_name;
-    }
-    let base_room_name;
-    if (!lesson1.base_room_name === lesson2.base_room_name) {
-        base_room_name = lesson1.base_room_name + " | " + lesson2.base_room_name;
-    } else {
-        base_room_name = lesson1.base_room_name;
-    }
+    let base_teacher_name = lesson1.base_teacher_name + " | " + lesson2.base_teacher_name;
+    let base_room_name = lesson1.base_room_name + " | " + lesson2.base_room_name;
     let week = lesson1.week + " | " + lesson2.week;
     let jw_task_book_no = lesson1.jw_task_book_no + " | " + lesson2.jw_task_book_no;
     let jw_course_name = lesson1.jw_course_name + " | " + lesson2.jw_course_name;
@@ -98,18 +88,21 @@ function process(lessonsArray) {
         }
     }
     lessons = lessons.filter(lesson => lesson != null);
-
+    let lessonsLen = lessons.length;
     // 重课处理，两节合并为一节
-    for (let i = 0; i < lessons.length; i++) {
+    for (let i = 0; i < lessonsLen; i++) {
         let lesson1 = lessons[i];
-        for (let j = 0; lesson1 != null && j < lessons.length; j++) {
+        for (let j = 0; lesson1 != null && j < lessonsLen; j++) {
             let lesson2 = lessons[j];
-            if (j === i || lesson2 == null) continue;
+            if (j === i || lesson2 == null) {
+                continue;
+            }
             if (Number(lesson1.section_start) === Number(lesson2.section_start) && Number(lesson1.week_day) === Number(lesson2.week_day)) {
                 let merge = lessonMerge(lesson1, lesson2);
                 lessons[i] = null;
                 lessons[j] = null;
                 lessons.push(merge);
+                lessonsLen = lessons.length;
                 break;
             }
         }
