@@ -158,8 +158,8 @@ export default {
     },
     // 获取所选周前后一周的课程
     getRound: function (index) {
-      let exp = JSON.parse(localStorage.getItem("exp"));
-      let norm = JSON.parse(localStorage.getItem("norm"));
+      let exp = localStorage.getItem("exp");
+      let norm = localStorage.getItem("norm");
       if (exp == null) {
         this.show = true;
         refreshExpCourse((response) => {
@@ -182,6 +182,8 @@ export default {
           this.show = false;
         });
       }
+      exp = JSON.parse(exp);
+      norm = JSON.parse(norm);
       if (index === 0) {
         this.$refs.swipe.next();
       } else if (index > this.totalWeek) {

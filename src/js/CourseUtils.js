@@ -124,7 +124,10 @@ export default function simpleSelectWeek(selectedWeek, lessonsArray) {
     return lessons;
 }
 
-export function refreshNormalCourse(onError=console.error) {
+export function refreshNormalCourse(onError) {
+    if (onError === undefined) {
+        onError = () => {}
+    }
     getNormCourse().then((response) => {
         if (response.status === 200) {
             if (response.data.code === 0) {
@@ -138,7 +141,10 @@ export function refreshNormalCourse(onError=console.error) {
     });
 }
 
-export function refreshExpCourse(onError=console.error) {
+export function refreshExpCourse(onError) {
+    if (onError === undefined) {
+        onError = () => {}
+    }
     getExpCourse().then((response) => {
         if (response.status === 200) {
             if (response.data.code === 0) {
