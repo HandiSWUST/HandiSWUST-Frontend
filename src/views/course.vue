@@ -189,11 +189,9 @@ export default {
       } else if (index > this.totalWeek) {
         this.$refs.swipe.prev();
       } else {
-        const fillCourse = (w) => {
+        const fillCourse = async (w) => {
           if (this.lessonsList[w].length === 0) {
-            new Promise(() => {
-              this.lessonsList[w] = simpleSelectWeek(w, exp.concat(norm));
-            });
+            this.lessonsList[w] = simpleSelectWeek(w, exp.concat(norm));
           }
         }
         fillCourse(index);
