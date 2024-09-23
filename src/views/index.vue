@@ -100,6 +100,7 @@ import IndexGrid from "@/components/IndexGrid.vue";
 import DigitalClock from "@/components/DigitalClock.vue";
 import HitokotoPanel from "@/components/HitokotoPanel.vue";
 import {getWebVersion} from "@/api/webInfoApi";
+import {refreshExpCourse, refreshNormalCourse} from "@/js/CourseUtils";
 
 export default {
   name: "indexPanel",
@@ -126,9 +127,9 @@ export default {
     if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
       showNotify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
     }
-    //
-
-
+    // 课表更新
+    refreshExpCourse();
+    refreshNormalCourse();
   },
   data() {
     return {
@@ -195,18 +196,7 @@ export default {
         // 已经登录的话就顺便更新下课表
         else {
           this.isLogin = true;
-          // 更新推送课表
           localStorage.setItem("isLogin", "true");
-          getCourse(true).then((response) => {
-            if (response.status === 200 && response.data.data != null) {
-              localStorage.setItem("lessons", response.data.data);
-            }
-          })
-          getCourse(false).then((response) => {
-            if (response.status === 200 && response.data.data != null) {
-              localStorage.setItem("raw", response.data.data);
-            }
-          })
         }
       })
     },

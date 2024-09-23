@@ -81,16 +81,27 @@
 
 <script>
 import {START_TIME, TOTAL_WEEK} from "/src/common/final.js"
-import {closeDialog, showFailToast, showToast} from "vant";
+import {showFailToast} from "vant";
 import lesson from "../components/class.vue"
-import {selectedCourse, useLocalCourse, getCourse} from "/src/api/getCourse";
 import LoadingView from "@/components/LoadingView.vue";
+import simpleSelectWeek, {refreshExpCourse, refreshNormalCourse} from "@/js/CourseUtils";
 
 export default {
   name: "courseTable",
   components: {
     LoadingView,
     lesson
+  },
+  mounted() {
+    for (let i = 0; i <= this.totalWeek; i++) {
+      this.lessonsList.push([]);
+    }
+    this.setActiveDay();
+    this.get();
+    this.week = this.curWeek;
+    this.$nextTick(() => {
+      this.initial = this.curWeek;
+    })
   },
   data() {
     return {
@@ -118,7 +129,22 @@ export default {
     goBack: function () {
       this.$router.push("/");
     },
-
+    handleErrorCode(code, moduleName) {
+      switch (code) {
+        case 3401:
+          showFailToast("登录状态失效，刷新" + moduleName + "失败，建议重登");
+          break;
+        case 1502:
+        case 5501:
+          showFailToast("无法连接到一站式，刷新" + moduleName + "失败");
+          break;
+        case 3403:
+          showFailToast("您的教务系统欠费，刷新" + moduleName + "失败");
+          break;
+        default:
+          showFailToast("刷新" + moduleName + "失败");
+      }
+    },
     // 获取课表的默认方法
     get: function () {
       if (Number(this.curWeek) > Number(this.totalWeek)) {
@@ -126,105 +152,56 @@ export default {
         localStorage.setItem("lessons", "[]");
         return;
       }
-      this.show = true;
+      localStorage.setItem("cur", this.curWeek.toString());
       this.getRound(this.curWeek);
-      let temp = localStorage.getItem("lessons");
-      if (temp != null && localStorage.getItem("cur") == this.curWeek.toString()) {
-        this.lessonsList[this.curWeek] = JSON.parse(temp);
-        this.show = false;
-      } else {
-        getCourse(this.cur).then((response) => {
-          if (response.status === 200) {
-            if (response.data.code !== 0) {
-              this.useLocal(false, this.curWeek);
-            } else {
-              this.lessonsList[this.curWeek] = JSON.parse(response.data.data);
-              localStorage.setItem("cur", this.curWeek.toString())
-              localStorage.setItem("lessons", response.data.data);
-            }
-          } else {
-            this.week = Number(localStorage.getItem("cur"))
-            this.useLocal(true, this.curWeek);
-          }
-          this.show = false;
-        })
-      }
+      localStorage.setItem("lessons", JSON.stringify(this.lessonsList[this.curWeek]));
     },
     // 获取所选周前后一周的课程
     getRound: function (index) {
+      let exp = JSON.parse(localStorage.getItem("exp"));
+      let norm = JSON.parse(localStorage.getItem("norm"));
+      if (exp == null) {
+        this.show = true;
+        refreshExpCourse((response) => {
+          if (response.status !== 200) {
+            showFailToast("后端服务器错误");
+          } else {
+            this.handleErrorCode(response.data.code, "实验课表")
+          }
+          this.show = false;
+        });
+      }
+      if (norm == null) {
+        this.show = true;
+        refreshNormalCourse((response) => {
+          if (response.status !== 200) {
+            showFailToast("后端服务器错误");
+          } else {
+            this.handleErrorCode(response.data.code, "普通课表")
+          }
+          this.show = false;
+        });
+      }
       if (index === 0) {
         this.$refs.swipe.next();
       } else if (index > this.totalWeek) {
         this.$refs.swipe.prev();
       } else {
-        this.getSelect(index);
-        this.getSelect(index - 1);
-        this.getSelect(index + 1);
+        const fillCourse = (w) => {
+          if (this.lessonsList[w].length === 0) {
+            new Promise(() => {
+              this.lessonsList[w] = simpleSelectWeek(w, exp.concat(norm));
+            });
+          }
+        }
+        fillCourse(index);
+        fillCourse(index - 1);
+        fillCourse(index + 1);
         setTimeout(() => {
           this.week = index;
         }, 500);
       }
     },
-
-    // 获取所选周课表
-    getSelect: function (index) {
-      if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
-        this.useLocal(true, index);
-      } else {
-        selectedCourse(index).then((response) => {
-          if (response.status === 200) {
-            if (response.data.code === 0) {
-              this.lessonsList[index] = JSON.parse(response.data.data);
-            } else if (response.data.code === 3401) {
-              // 询问是否使用本地缓存
-              this.useLocal(false, index);
-            } else {
-              this.useLocal(true, index);
-            }
-          } else {
-            this.useLocal(true, index);
-          }
-        })
-      }
-    },
-    // 使用本地缓存查询，未登录使用本地缓存请传入false，否则传入true
-    useLocal: function (isLogin, index) {
-      let courseData = localStorage.getItem("raw");
-      if (isLogin) {
-        if (courseData != null) {
-          useLocalCourse(index, courseData).then((response) => {
-            if (response.status === 200 && response.data != null) {
-              this.lessonsList[index] = JSON.parse(response.data.data);
-              showFailToast("一站式无连接，尝试使用本地数据");
-            } else {
-              showFailToast("获取课表失败");
-            }
-            this.show = false;
-          })
-        } else {
-          showFailToast("本地没有缓存哦");
-        }
-      } else {
-        if (!this.local) {
-          showToast("未登录，正在使用本地缓存");
-        }
-        this.local = true;
-        closeDialog();
-        if (courseData != null) {
-          useLocalCourse(index, courseData).then((response) => {
-            if (response.status === 200 && response.data != null) {
-              this.lessonsList[index] = JSON.parse(response.data.data);
-            }
-          })
-        } else {
-          this.lessonsList[index] = JSON.parse(localStorage.getItem("lessons"));
-          if (localStorage.getItem("lessons") == null) {
-            showFailToast("本地没有缓存哦");
-          }
-        }
-      }
-    },
-
     pageNext: function () {
       if (this.week < this.totalWeek)
         this.$refs.swipe.next();
@@ -250,20 +227,9 @@ export default {
 
     // 随机课程方块的颜色
     randomColor: function (num) {
-      var colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#795548", "#607d8b"];
+      const colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#795548", "#607d8b"];
       return colors[num % colors.length];
     }
-  },
-  mounted() {
-    for (let i = 0; i < this.totalWeek; i++) {
-      this.lessonsList.push([]);
-    }
-    this.setActiveDay();
-    this.get();
-    this.week = this.curWeek;
-    this.$nextTick(() => {
-      this.initial = this.curWeek;
-    })
   }
 }
 </script>
