@@ -124,7 +124,7 @@ export default {
     // 登录检查
     this.loginCheck();
     // 0点后提示
-    if (new Date().getHours() >= 0 && new Date().getHours() <= 7) {
+    if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
       showNotify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
     }
     // 课表更新
