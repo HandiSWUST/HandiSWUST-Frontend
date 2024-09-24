@@ -47,3 +47,23 @@ export function deleteLocalCourse() {
 		withCredentials: true
 	})
 }
+
+export function getExpCourse() {
+	let url = BASE_URL + "/api/v2/course/exp";
+	axios.defaults.withCredentials = true;
+	return axios({
+		url: url,
+		method: "get",
+		withCredentials: true
+	})
+}
+
+export function getNormCourse() {
+	let url = BASE_URL + "/api/v2/course/norm";
+	axios.defaults.withCredentials = true;
+	return axios({
+		url: url,
+		method: "get",
+		withCredentials: true
+	})
+}

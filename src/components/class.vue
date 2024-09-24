@@ -52,12 +52,7 @@ export default {
   },
   methods: {
     floatWindow: function () {
-      if (this.show) {
-        this.show = false;
-      } else {
-        this.show = true;
-      }
-
+      this.show = !this.show;
     }
   }
 }
