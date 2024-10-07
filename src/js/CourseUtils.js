@@ -117,36 +117,26 @@ export default function simpleSelectWeek(selectedWeek, lessonsArray) {
     return lessons;
 }
 
-export function refreshNormalCourse(onError) {
-    if (onError === undefined) {
-        onError = () => {}
+export function refreshNormalCourse(callback) {
+    if (callback === undefined) {
+        callback = () => {}
     }
     getNormCourse().then((response) => {
-        if (response.status === 200) {
-            if (response.data.code === 0) {
-                localStorage.setItem("norm", JSON.stringify(response.data.data));
-            } else {
-                onError(response);
-            }
-        } else {
-            onError(response);
+        if (response.status === 200 && response.data.code === 0) {
+            localStorage.setItem("norm", JSON.stringify(response.data.data));
         }
+        callback(response);
     });
 }
 
-export function refreshExpCourse(onError) {
-    if (onError === undefined) {
-        onError = () => {}
+export function refreshExpCourse(callback) {
+    if (callback === undefined) {
+        callback = () => {}
     }
     getExpCourse().then((response) => {
-        if (response.status === 200) {
-            if (response.data.code === 0) {
-                localStorage.setItem("exp", JSON.stringify(response.data.data));
-            } else {
-                onError(response);
-            }
-        } else {
-            onError(response);
+        if (response.status === 200 && response.data.code === 0) {
+            localStorage.setItem("exp", JSON.stringify(response.data.data));
         }
+        callback(response);
     });
 }

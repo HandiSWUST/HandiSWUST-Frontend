@@ -160,35 +160,9 @@ export default {
     getRound: function (index) {
       let exp = localStorage.getItem("exp");
       let norm = localStorage.getItem("norm");
-      if (exp == null) {
-        this.show = true;
-        refreshExpCourse((response) => {
-          if (response.status !== 200) {
-            showFailToast("后端服务器错误");
-          } else {
-            this.handleErrorCode(response.data.code, "实验课表")
-          }
-          this.show = false;
-        });
-      }
-      if (norm == null) {
-        this.show = true;
-        refreshNormalCourse((response) => {
-          if (response.status !== 200) {
-            showFailToast("后端服务器错误");
-          } else {
-            this.handleErrorCode(response.data.code, "普通课表")
-          }
-          this.show = false;
-        });
-      }
-      exp = JSON.parse(exp);
-      norm = JSON.parse(norm);
-      if (index === 0) {
-        this.$refs.swipe.next();
-      } else if (index > this.totalWeek) {
-        this.$refs.swipe.prev();
-      } else {
+      let setCourse = () => {
+        exp = exp == null ? [] : JSON.parse(exp);
+        norm = norm == null ? [] : JSON.parse(norm);
         const fillCourse = async (w) => {
           if (this.lessonsList[w].length === 0) {
             this.lessonsList[w] = simpleSelectWeek(w, exp.concat(norm));
@@ -200,6 +174,39 @@ export default {
         setTimeout(() => {
           this.week = index;
         }, 500);
+      }
+
+      if (exp == null) {
+        this.show = true;
+        refreshExpCourse((response) => {
+          if (response.status !== 200) {
+            showFailToast("后端服务器错误");
+          } else if (response.data.code !== 0) {
+            this.handleErrorCode(response.data.code, "实验课表")
+          }
+          this.show = false;
+          setCourse();
+        });
+      }
+      if (norm == null) {
+        this.show = true;
+        refreshNormalCourse((response) => {
+          if (response.status !== 200) {
+            showFailToast("后端服务器错误");
+          } else if (response.data.code !== 0) {
+            this.handleErrorCode(response.data.code, "普通课表")
+          }
+          this.show = false;
+          setCourse();
+        });
+      }
+
+      if (index === 0) {
+        this.$refs.swipe.next();
+      } else if (index > this.totalWeek) {
+        this.$refs.swipe.prev();
+      } else {
+        setCourse();
       }
     },
     pageNext: function () {
