@@ -74,7 +74,6 @@
 
       <div class="page blurred-theme" v-if="active === 2">
         <div style="display: flex;justify-content:center;font-family:'Douyin Sans';">敬请期待</div>
-         <button @click="gotoYKT">一卡通</button>
       </div>
       <van-tabbar v-model="active" style="height: 7vh;">
         <van-tabbar-item icon="home-o">主页</van-tabbar-item>
