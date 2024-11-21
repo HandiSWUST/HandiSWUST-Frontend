@@ -2,7 +2,7 @@
   <div id="mask">
     <div id="grid1">
       <!--  导航栏及公告栏  -->
-      <div style="height: 11vh">
+      <div style="height: 10vh">
         <van-nav-bar
             title="首页"
             class="bar"
@@ -60,13 +60,11 @@
       <!--  应用页  -->
       <div class="page blurred-theme" v-if="active === 1">
         <AppCard category="实用工具">
-          <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy"
-                     icon="/plugins/duifene.svg"/>
-          <AppButton text="对分易小帮手" title="对分易小帮手" src="https://dfe.ivresse.top/"
-                     icon="/plugins/dfe-help.svg"/>
-          <AppButton text="服务状态" title="西科大服务状态监控" src="https://jk.gyrs.fun/service"
-                     icon="/plugins/gauge.svg"/>
+          <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy" icon="/plugins/duifene.svg"/>
+          <AppButton text="对分易小帮手" title="对分易小帮手" sty src="https://dfe.ivresse.top/" icon="/plugins/dfe-help.svg"/>
+          <AppButton text="服务状态" title="西科大服务状态监控" src="https://jk.gyrs.fun/service" icon="/plugins/gauge.svg"/>
           <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online/" icon="/plugins/guide.svg"/>
+          <AppButton text="一卡通服务" title="" @click="gotoYKT" :placeholder="true" icon="/plugins/ykt.svg"/>
         </AppCard>
         <AppCard category="语言大模型">
           <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
@@ -89,7 +87,6 @@
 import {NOTICE, START_TIME, WEB_VERSION} from "/src/common/final.js"
 import {TOTAL_WEEK} from "/src/common/final.js"
 import {VERSION} from "/src/common/final.js"
-import {getCourse} from "/src/api/getCourse";
 import {showDialog, showNotify, showToast} from "vant"
 import {checkLogin} from "@/api/loginCheck";
 import {logOut} from "@/api/logout";
@@ -162,6 +159,9 @@ export default {
     }
   },
   methods: {
+    gotoYKT(){
+      window.location = 'http://ykt.swust.edu.cn/plat/shouyeUser'
+    },
     getNotice() {
       return NOTICE
     },
@@ -263,7 +263,7 @@ export default {
 
 #grid1 {
   background: rgba(255, 255, 255, 0.2);
-//backdrop-filter: blur(2px);
+  //backdrop-filter: blur(2px);
 }
 
 #mask {

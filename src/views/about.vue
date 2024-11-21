@@ -19,8 +19,10 @@
       </van-collapse-item>
       <van-collapse-item title="Github">
         <p>Web前端代码: https://github.com/HandiSWUST/HandiSWUST-Frontend</p>
-        <p>后端代码: https://github.com/HandiSWUST/HandiSWUST-Backend</p>
         <p>Android端代码: https://github.com/HandiSWUST/HandiSWUST-Android-Rebuild</p>
+        <p>验证码识别: https://github.com/HandiSWUST/CaptchaWeb</p>
+        <p>后端代码: https://github.com/HandiSWUST/HandiSWUST-Backend</p>
+        <p>对分易小助手: https://github.com/HandiSWUST/DuiFenE-Helper-FrontEnd</p>
         <p>其他模块请在组织页面中查看</p>
       </van-collapse-item>
 
