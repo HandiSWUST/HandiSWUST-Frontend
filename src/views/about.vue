@@ -18,8 +18,10 @@
         <textarea class="info" rows="20" v-model="openSource" readonly/>
       </van-collapse-item>
       <van-collapse-item title="Github">
-        <p>Web前端代码: https://github.com/flben233/HandiSWUST</p>
-        <p>Android端代码: https://github.com/flben233/HandiSWUST-Android-Rebuild</p>
+        <p>Web前端代码: https://github.com/HandiSWUST/HandiSWUST-Frontend</p>
+        <p>Android端代码: https://github.com/HandiSWUST/HandiSWUST-Android-Rebuild</p>
+        <p>验证码识别: https://github.com/HandiSWUST/CaptchaWeb</p>
+        <p>对分易小助手: https://github.com/HandiSWUST/DuiFenE-Helper-FrontEnd</p>
       </van-collapse-item>
 
       <van-collapse-item title="清除缓存 (没有二次确认，考虑好了再点)">
