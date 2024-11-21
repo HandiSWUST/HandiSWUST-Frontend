@@ -13,7 +13,7 @@ export default defineConfig({
         }
     },
     server: {
-        port: 3000,
+        port: 30000,
         open: true,
         // 配置代理
         proxy: {

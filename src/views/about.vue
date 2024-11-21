@@ -18,8 +18,10 @@
         <textarea class="info" rows="20" v-model="openSource" readonly/>
       </van-collapse-item>
       <van-collapse-item title="Github">
-        <p>Web前端代码: https://github.com/flben233/HandiSWUST</p>
-        <p>Android端代码: https://github.com/flben233/HandiSWUST-Android-Rebuild</p>
+        <p>Web前端代码: https://github.com/HandiSWUST/HandiSWUST-Frontend</p>
+        <p>后端代码: https://github.com/HandiSWUST/HandiSWUST-Backend</p>
+        <p>Android端代码: https://github.com/HandiSWUST/HandiSWUST-Android-Rebuild</p>
+        <p>其他模块请在组织页面中查看</p>
       </van-collapse-item>
 
       <van-collapse-item title="清除缓存 (没有二次确认，考虑好了再点)">
