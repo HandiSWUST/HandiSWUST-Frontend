@@ -69,6 +69,9 @@
         <AppCard category="语言大模型">
           <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
         </AppCard>
+        <AppCard category="校友优秀开源项目">
+          <AppButton text="RISC-V仿真框架" title="RISC-V仿真框架" src="https://blkrv.moeyuki.net/" icon="/plugins/os.svg"/>
+        </AppCard>
       </div>
 
       <div class="page blurred-theme" v-if="active === 2">
