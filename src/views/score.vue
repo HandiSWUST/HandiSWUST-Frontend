@@ -94,9 +94,9 @@ export default {
   inject: ['reload'],
   setup() {
     const onClickLeft = () => history.back();
-    const term = ref("2023-2024-2");
+    const term = ref("2024-2025-1");
     const option1 = [
-      {text: "点击选择学期", value: "2023-2024-2"}
+      {text: "点击选择学期", value: "2024-2025-1"}
     ];
     fetch(BASE_URL + "/api/v2/extension/scores").then(response => response.json())
         .then(data => {
@@ -167,7 +167,16 @@ export default {
             if (date == "外语等级考试") continue
             this.tableData[date].pop()
           }
+          let term = "0";
+          Object.keys(this.tableData).forEach((key) => {
+            if (!key.includes("外语等级考试") &&
+                Number(key.replaceAll("-", "")) > Number(term.replaceAll("-", ""))) {
+                term = key;
+            }
+          });
+          this.term = term;
           console.log(this.scores[this.term])
+          console.log(Object.keys(this.tableData))
         }
       });
     }
