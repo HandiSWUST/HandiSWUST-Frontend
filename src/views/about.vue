@@ -71,7 +71,8 @@ export default {
     },
     clearLocalCache: function () {
       localStorage.removeItem("lessons");
-      localStorage.removeItem("raw");
+      localStorage.removeItem("norm");
+      localStorage.removeItem("exp");
       showSuccessToast("清除成功");
     },
     clearCloudCache: function () {
