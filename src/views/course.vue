@@ -96,6 +96,14 @@ export default {
     for (let i = 0; i <= this.totalWeek; i++) {
       this.lessonsList.push([]);
     }
+    // 强制清理一下缓存
+    if (localStorage.getItem("refresh") === null) {
+      this.clearLocalCache();
+      localStorage.setItem("refresh", "true");
+      console.log("清理缓存");
+    } else if (this.curWeek > this.totalWeek || this.curWeek === 0) {
+      localStorage.removeItem("refresh");
+    }
     this.setActiveDay();
     this.get();
     this.week = this.curWeek;
@@ -161,8 +169,8 @@ export default {
       let exp = localStorage.getItem("exp");
       let norm = localStorage.getItem("norm");
       let setCourse = () => {
-        exp = exp == null ? [] : JSON.parse(exp);
-        norm = norm == null ? [] : JSON.parse(norm);
+        exp = (exp == null ? [] : JSON.parse(exp));
+        norm = (norm == null ? [] : JSON.parse(norm));
         const fillCourse = async (w) => {
           if (this.lessonsList[w].length === 0) {
             this.lessonsList[w] = simpleSelectWeek(w, exp.concat(norm));
@@ -236,7 +244,13 @@ export default {
     randomColor: function (num) {
       const colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#795548", "#607d8b"];
       return colors[num % colors.length];
-    }
+    },
+
+    clearLocalCache: function () {
+      localStorage.removeItem("lessons");
+      localStorage.removeItem("norm");
+      localStorage.removeItem("exp");
+    },
   }
 }
 </script>

@@ -82,6 +82,8 @@
         <van-tabbar-item icon="more-o">更多</van-tabbar-item>
         <van-tabbar-item icon="logistics">探索</van-tabbar-item>
       </van-tabbar>
+      <!--  提前加载课程表  -->
+      <course-table v-if="isLogin" style="display: none"/>
     </div>
   </div>
 </template>
@@ -100,11 +102,11 @@ import IndexGrid from "@/components/IndexGrid.vue";
 import DigitalClock from "@/components/DigitalClock.vue";
 import HitokotoPanel from "@/components/HitokotoPanel.vue";
 import {getWebVersion} from "@/api/webInfoApi";
-import {refreshExpCourse, refreshNormalCourse} from "@/js/CourseUtils";
+import CourseTable from "@/views/course.vue";
 
 export default {
   name: "indexPanel",
-  components: {HitokotoPanel, DigitalClock, IndexGrid, IndexButton, AppButton, AppCard},
+  components: {CourseTable, HitokotoPanel, DigitalClock, IndexGrid, IndexButton, AppButton, AppCard},
   mounted() {
     // ACG模式
     if (localStorage.getItem('ACG_MODE') === 'true') {
@@ -127,9 +129,6 @@ export default {
     if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
       showNotify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
     }
-    // 课表更新
-    refreshExpCourse();
-    refreshNormalCourse();
   },
   data() {
     return {
