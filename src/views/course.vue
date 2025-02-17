@@ -104,6 +104,8 @@ export default {
     } else if (this.curWeek > this.totalWeek || this.curWeek === 0) {
       localStorage.removeItem("refresh");
     }
+    refreshExpCourse();
+    refreshNormalCourse();
     this.setActiveDay();
     this.get();
     this.week = this.curWeek;
