@@ -146,7 +146,7 @@ export default {
           break;
         case 1502:
         case 5501:
-          showFailToast("无法连接到一站式，刷新" + moduleName + "失败");
+          showFailToast("一站式故障，刷新" + moduleName + "失败 (如课程正确可忽略)");
           break;
         case 3403:
           showFailToast("您的教务系统欠费，刷新" + moduleName + "失败");
