@@ -1,4 +1,5 @@
 import {getExpCourse, getNormCourse} from "@/api/getCourse";
+import {START_TIME} from "@/common/final";
 
 class Lesson {
     constructor(jw_course_code, base_teacher_name, base_room_name, week, jw_task_book_no, jw_course_name, section_end, week_day, section, base_teacher_no, section_start) {
@@ -124,6 +125,7 @@ export function refreshNormalCourse(callback) {
     getNormCourse().then((response) => {
         if (response.status === 200 && response.data.code === 0) {
             localStorage.setItem("norm", JSON.stringify(response.data.data));
+            localStorage.setItem("normStamp", START_TIME.toString());
         }
         callback(response);
     });
@@ -136,6 +138,7 @@ export function refreshExpCourse(callback) {
     getExpCourse().then((response) => {
         if (response.status === 200 && response.data.code === 0) {
             localStorage.setItem("exp", JSON.stringify(response.data.data));
+            localStorage.setItem("expStamp", START_TIME.toString());
         }
         callback(response);
     });

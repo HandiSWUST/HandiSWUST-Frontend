@@ -96,14 +96,8 @@ export default {
     for (let i = 0; i <= this.totalWeek; i++) {
       this.lessonsList.push([]);
     }
-    // 强制清理一下缓存
-    if (localStorage.getItem("refresh") === null) {
-      this.clearLocalCache();
-      localStorage.setItem("refresh", "true");
-      console.log("清理缓存");
-    } else if (this.curWeek > this.totalWeek || this.curWeek === 0) {
-      localStorage.removeItem("refresh");
-    }
+    // 缓存验证
+    this.validateLocalCache();
     refreshExpCourse();
     refreshNormalCourse();
     this.setActiveDay();
@@ -160,19 +154,19 @@ export default {
       if (Number(this.curWeek) > Number(this.totalWeek)) {
         localStorage.setItem("cur", this.totalWeek.toString())
         localStorage.setItem("lessons", "[]");
-        return;
+      } else {
+        localStorage.setItem("cur", this.curWeek.toString());
+        this.getRound(this.curWeek);
+        localStorage.setItem("lessons", JSON.stringify(this.lessonsList[this.curWeek]));
       }
-      localStorage.setItem("cur", this.curWeek.toString());
-      this.getRound(this.curWeek);
-      localStorage.setItem("lessons", JSON.stringify(this.lessonsList[this.curWeek]));
     },
     // 获取所选周前后一周的课程
     getRound: function (index) {
-      let exp = localStorage.getItem("exp");
-      let norm = localStorage.getItem("norm");
       let setCourse = () => {
-        exp = (exp == null ? [] : JSON.parse(exp));
-        norm = (norm == null ? [] : JSON.parse(norm));
+        let expStr = localStorage.getItem("exp");
+        let normStr = localStorage.getItem("norm");
+        let exp = (expStr == null ? [] : JSON.parse(expStr));
+        let norm = (normStr == null ? [] : JSON.parse(normStr));
         const fillCourse = async (w) => {
           if (this.lessonsList[w].length === 0) {
             this.lessonsList[w] = simpleSelectWeek(w, exp.concat(norm));
@@ -186,7 +180,7 @@ export default {
         }, 500);
       }
 
-      if (exp == null) {
+      if (localStorage.getItem("exp") == null) {
         this.show = true;
         refreshExpCourse((response) => {
           if (response.status !== 200) {
@@ -198,7 +192,7 @@ export default {
           setCourse();
         });
       }
-      if (norm == null) {
+      if (localStorage.getItem("norm") == null) {
         this.show = true;
         refreshNormalCourse((response) => {
           if (response.status !== 200) {
@@ -248,10 +242,20 @@ export default {
       return colors[num % colors.length];
     },
 
-    clearLocalCache: function () {
-      localStorage.removeItem("lessons");
-      localStorage.removeItem("norm");
-      localStorage.removeItem("exp");
+    validateLocalCache: function () {
+      let normStamp = localStorage.getItem("normStamp");
+      let expStamp = localStorage.getItem("expStamp");
+      if (normStamp !== START_TIME.toString() || expStamp !== START_TIME.toString()) {
+        localStorage.removeItem("refresh");
+        localStorage.removeItem("lessons");
+        this.show = true;
+      }
+      if (normStamp !== START_TIME.toString()) {
+        localStorage.removeItem("norm");
+      }
+      if (expStamp !== START_TIME.toString()) {
+        localStorage.removeItem("exp");
+      }
     },
   }
 }
