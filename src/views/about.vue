@@ -43,6 +43,17 @@
       </van-collapse-item>
       <van-collapse-item title="SWUST 二次元最速传说と绝凶の猛虎！">
         <van-switch v-model="status" @update:model-value="recordInfo"/>
+        <van-field
+            placeholder="自定义背景URL (https://...)，留空不使用"
+            v-model="customBg"
+            clearable
+            style="padding: 0; background: transparent"
+            v-if="status"
+        >
+          <template #button>
+            <van-button size="small" type="primary" @click="setBg">✓</van-button>
+          </template>
+        </van-field>
       </van-collapse-item>
     </van-collapse>
   </div>
@@ -62,8 +73,12 @@ export default {
       openSource: OPEN_SOURCE,
       updateLog: UPDATE_LOG,
       privacy: PRIVACY_POLICY,
-      status: localStorage.getItem('ACG_MODE') === 'true'
+      status: localStorage.getItem('ACG_MODE') === 'true',
+      customBg: ""
     }
+  },
+  mounted() {
+    this.customBg = localStorage.getItem('customBg') || '';
   },
   methods: {
     goBack: function () {
@@ -98,7 +113,10 @@ export default {
       } else {
         localStorage.setItem('ACG_MODE', 'false')
       }
-
+    },
+    setBg: function () {
+      localStorage.setItem("customBg", this.customBg);
+      showSuccessToast("设置成功 (过大的图片可能导致加载缓慢)");
     }
   }
 }
