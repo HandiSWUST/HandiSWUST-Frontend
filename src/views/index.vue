@@ -66,7 +66,7 @@
           <AppButton text="一卡通服务" title="" @click="gotoYKT" :placeholder="true" icon="/plugins/ykt.svg"/>
         </AppCard>
         <AppCard category="语言大模型">
-          <AppButton text="Gemini" title="Gemini Pro" src="https://gpt.shirakawatyu.top" icon="/plugins/gemini.png"/>
+          <AppButton text="DeepSeek" title="DeepSeek SCNet" src="https://chat.scnet.cn/" icon="/plugins/deepseek.png"/>
         </AppCard>
         <AppCard category="校友优秀项目">
           <AppButton text="RISC-V仿真框架" title="RISC-V仿真框架" src="https://blkrv.moeyuki.net/" icon="/plugins/os.svg"/>
