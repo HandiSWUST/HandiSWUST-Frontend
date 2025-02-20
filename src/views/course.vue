@@ -10,7 +10,7 @@
         left-arrow
         @click-left="goBack">
       <template #right>
-        <van-pagination v-model="week" :page-count="totalWeek" mode="simple">
+        <van-pagination v-model="week" :page-count="totalWeek" mode="simple" id="pagination">
           <template #prev-text>
             <van-icon name="arrow-left" @click="pagePrev"/>
           </template>
@@ -93,6 +93,12 @@ export default {
     lesson
   },
   mounted() {
+    // 删掉边框
+    let items = document.getElementsByTagName("ul");
+    for (const item of items) {
+      item.setAttribute("style", "margin: -1px !important;")
+    }
+
     for (let i = 0; i <= this.totalWeek; i++) {
       this.lessonsList.push([]);
     }
@@ -275,7 +281,9 @@ export default {
   padding: 1%;
   top: 0;
   background-color: white;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
+  //box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
+  border: 0 solid var(--van-border-color);
+  border-bottom-width: 0.5px;
 }
 
 .time {
@@ -307,4 +315,9 @@ export default {
   width: 100vw;
 }
 
+#pagination {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 0.5px solid var(--van-border-color);
+}
 </style>

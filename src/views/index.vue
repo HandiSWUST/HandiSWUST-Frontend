@@ -23,64 +23,78 @@
             :text="getNotice()"
         />
       </div>
-      <!--  主页  -->
-      <div class="page blurred-theme" v-if="active === 0">
-        <!--  时间、周数、一言  -->
-        <van-row style="width: 100%">
-          <van-col span="12">
-            <digital-clock/>
-            <div>
-              <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr" color="#00bcd4"/>
-            </div>
-          </van-col>
 
-          <van-col span="12">
-            <hitokoto-panel/>
-          </van-col>
-        </van-row>
+      <van-swipe :show-indicators="false" @drag-end="updateIdx" ref="swipe">
+        <!--  主页  -->
+        <van-swipe-item>
+          <div class="page blurred-theme">
+            <!--  时间、周数、一言  -->
+            <van-row style="width: 100%">
+              <van-col span="12">
+                <digital-clock/>
+                <div>
+                  <van-progress :percentage="percent" :pivot-text="week" stroke-width="100%" id="progr"
+                                color="#00bcd4"/>
+                </div>
+              </van-col>
 
-        <!--  按钮面板  -->
-        <van-col span="24" style="font-family:'Douyin Sans';">
-          <index-grid>
-            <index-button v-if="!isLogin" @click="$router.push('/login')" image="/login.svg" text="登录"/>
-            <index-button v-if="!isLogin" @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
-            <index-button v-if="isLogin" @click="$router.push('/library')" image="/lib.svg" text="图书借阅信息"/>
-            <index-button v-if="isLogin" @click="logout" image="/logout.svg" text="退出登录"/>
-          </index-grid>
-          <index-grid>
-            <index-button @click="$router.push('/course')" image="/table.svg" text="课程表"/>
-            <index-button @click="$router.push('/calender')" image="/date.svg" text="校历"/>
-          </index-grid>
-          <index-grid v-if="isLogin">
-            <index-button @click="$router.push('/score')" image="/score.svg" text="成绩"/>
-            <index-button @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
-          </index-grid>
-        </van-col>
-      </div>
-      <!--  应用页  -->
-      <div class="page blurred-theme" v-if="active === 1">
-        <AppCard category="实用工具">
-          <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy" icon="/plugins/duifene.svg"/>
-          <AppButton text="对分易小帮手" title="对分易小帮手" sty src="https://dfe.ivresse.top/" icon="/plugins/dfe-help.svg"/>
-          <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online/" icon="/plugins/guide.svg"/>
-          <AppButton text="一卡通服务" title="" @click="gotoYKT" :placeholder="true" icon="/plugins/ykt.svg"/>
-        </AppCard>
-        <AppCard category="语言大模型">
-          <AppButton text="DeepSeek" title="DeepSeek SCNet" src="https://chat.scnet.cn/" icon="/plugins/deepseek.png"/>
-        </AppCard>
-        <AppCard category="校友优秀项目">
-          <AppButton text="RISC-V仿真框架" title="RISC-V仿真框架" src="https://blkrv.moeyuki.net/" icon="/plugins/os.svg"/>
-          <AppButton text="西科通" title="西科通" src="https://swust.link.yudream.online/" icon="/plugins/xkt.png"/>
-        </AppCard>
-      </div>
+              <van-col span="12">
+                <hitokoto-panel/>
+              </van-col>
+            </van-row>
 
-      <div class="page blurred-theme" v-if="active === 2">
-        <div style="display: flex;justify-content:center;font-family:'Douyin Sans';">敬请期待</div>
-      </div>
-      <van-tabbar v-model="active" style="height: 7vh;">
-        <van-tabbar-item icon="home-o">主页</van-tabbar-item>
-        <van-tabbar-item icon="more-o">更多</van-tabbar-item>
-        <van-tabbar-item icon="logistics">探索</van-tabbar-item>
+            <!--  按钮面板  -->
+            <van-col span="24" style="font-family:'Douyin Sans';">
+              <index-grid>
+                <index-button v-if="!isLogin" @click="$router.push('/login')" image="/login.svg" text="登录"/>
+                <index-button v-if="!isLogin" @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
+                <index-button v-if="isLogin" @click="$router.push('/library')" image="/lib.svg" text="图书借阅信息"/>
+                <index-button v-if="isLogin" @click="logout" image="/logout.svg" text="退出登录"/>
+              </index-grid>
+              <index-grid>
+                <index-button @click="$router.push('/course')" image="/table.svg" text="课程表"/>
+                <index-button @click="$router.push('/calender')" image="/date.svg" text="校历"/>
+              </index-grid>
+              <index-grid v-if="isLogin">
+                <index-button @click="$router.push('/score')" image="/score.svg" text="成绩"/>
+                <index-button @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
+              </index-grid>
+            </van-col>
+          </div>
+        </van-swipe-item>
+
+        <!--  应用页  -->
+        <van-swipe-item>
+          <div class="page blurred-theme">
+            <AppCard category="实用工具">
+              <AppButton text="作业查询" title="对分易作业查询" src="https://swust.devin.cool/plugins/dfy"
+                         icon="/plugins/duifene.svg"/>
+              <AppButton text="对分易小帮手" title="对分易小帮手" sty src="https://dfe.ivresse.top/"
+                         icon="/plugins/dfe-help.svg"/>
+              <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online/" icon="/plugins/guide.svg"/>
+              <AppButton text="一卡通服务" title="" @click="gotoYKT" :placeholder="true" icon="/plugins/ykt.svg"/>
+            </AppCard>
+            <AppCard category="语言大模型">
+              <AppButton text="DeepSeek" title="DeepSeek SCNet" src="https://chat.scnet.cn/"
+                         icon="/plugins/deepseek.png"/>
+            </AppCard>
+            <AppCard category="校友优秀项目">
+              <AppButton text="RISC-V仿真框架" title="RISC-V仿真框架" src="https://blkrv.moeyuki.net/"
+                         icon="/plugins/os.svg"/>
+              <AppButton text="西科通" title="西科通" src="https://swust.link.yudream.online/" icon="/plugins/xkt.png"/>
+            </AppCard>
+          </div>
+        </van-swipe-item>
+        <van-swipe-item>
+          <div class="page blurred-theme">
+            <div style="display: flex;justify-content:center;font-family:'Douyin Sans';">敬请期待</div>
+          </div>
+        </van-swipe-item>
+      </van-swipe>
+      <van-tabbar v-model="active" @change="changePage">
+        <van-tabbar-item icon="home-o"></van-tabbar-item>
+        <van-tabbar-item icon="more-o"></van-tabbar-item>
+        <van-tabbar-item icon="logistics"></van-tabbar-item>
       </van-tabbar>
       <!--  提前加载课程表  -->
       <course-table v-if="isLogin" style="display: none"/>
@@ -166,7 +180,7 @@ export default {
     }
   },
   methods: {
-    gotoYKT(){
+    gotoYKT() {
       window.location = 'http://ykt.swust.edu.cn/plat/shouyeUser'
     },
     getNotice() {
@@ -226,6 +240,12 @@ export default {
             '\n下载链接: https://update.devin.cool',
         confirmButtonColor: "#1989fa",
       })
+    },
+    updateIdx: function (o) {
+      this.active = Number(o.index);
+    },
+    changePage: function (index) {
+      this.$refs.swipe.swipeTo(index);
     }
   },
 }
@@ -241,6 +261,7 @@ export default {
   padding-bottom: 20%;
   width: 85%;
   border-radius: 15px;
+  overflow: hidden;
   background-color: white;
 }
 
