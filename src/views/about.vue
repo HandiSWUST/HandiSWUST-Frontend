@@ -41,6 +41,14 @@
         <van-image src="/payCode.JPG"></van-image>
         <van-image src="/payZ.JPG"></van-image>
       </van-collapse-item>
+      <van-collapse-item title="常见问题">
+        <p>1. 课程不正确</p>
+        <p>请尝试使用下面的清除缓存，若问题仍存在请加群反馈</p>
+        <p>2. 小部件没有刷新</p>
+        <p>退回桌面，点击小部件左上角的今日课表四个字打开app，正常来说会刷新</p>
+        <p>3. 无法登录</p>
+        <p>群里面反馈一下，部分账号确实存在这个问题</p>
+      </van-collapse-item>
       <van-collapse-item title="SWUST 二次元最速传说と绝凶の猛虎！">
         <van-switch v-model="status" @update:model-value="recordInfo"/>
         <van-field
