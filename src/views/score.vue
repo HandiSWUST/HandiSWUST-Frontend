@@ -88,6 +88,7 @@ import axios from "axios"
 import {showFailToast} from "vant";
 import {BASE_URL} from "@/common/final"
 import {ref} from "vue";
+import {setAcgTheme} from "@/js/ThemeUtils";
 
 
 export default {
@@ -119,6 +120,7 @@ export default {
   },
   mounted() {
     this.getGPA();
+    setAcgTheme(document.querySelector("#score"));
   },
   name: "score",
   methods: {
@@ -214,6 +216,9 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #loading {

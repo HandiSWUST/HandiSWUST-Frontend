@@ -30,6 +30,7 @@
 import TableVant from "../components/table.vue"
 import {closeDialog, showConfirmDialog, showFailToast, showNotify, showToast} from "vant";
 import {getExam} from "@/api/getExam";
+import {setAcgTheme} from "@/js/ThemeUtils";
 
 
 export default {
@@ -47,6 +48,7 @@ export default {
     } else {
       this.loadExam();
     }
+    setAcgTheme(document.querySelector("#exam"));
   },
   components: {TableVant},
   name: "exam",

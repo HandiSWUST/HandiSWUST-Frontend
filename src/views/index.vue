@@ -127,9 +127,11 @@ export default {
       const el = document.querySelector('#mask')
       const custBg = localStorage.getItem('customBg');
       if (custBg !== "" && custBg != null) {
-        el.style.cssText = `background-image: url("${custBg}");`
+        el.style.cssText += `background-image: url("${custBg}");`
       } else {
-        el.style.cssText = `background-image: url("/sercet/${Math.floor(Math.random() * 5) + 1}.jpg");`
+        let bgUrl = `/sercet/${Math.floor(Math.random() * 5) + 1}.jpg`;
+        localStorage.setItem("ramdonBg", bgUrl);
+        el.style.cssText += `background-image: url("${bgUrl}");`;
       }
       const opacity = "0.7";
       document.documentElement.style.setProperty("--van-background-2", "rgba(255, 255, 255, " + opacity + ")");

@@ -76,6 +76,7 @@ import {ref} from 'vue';
 import {queryBooks} from "@/api/queryBooks";
 import {queryBookLocation} from "@/api/queryBookLocation"
 import {library} from "@/api/getLibrary";
+import {setAcgTheme} from "@/js/ThemeUtils";
 
 export default {
   components: {TableVant},
@@ -125,6 +126,7 @@ export default {
   name: "library",
   mounted() {
     this.getLibrary();
+    setAcgTheme(document.querySelector("#library"));
   },
   data() {
     return {
@@ -212,6 +214,9 @@ export default {
   overflow-x: auto;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #loading2 {

@@ -1,5 +1,5 @@
 <template>
-  <div id="grid1">
+  <div id="grid1" ref="grid1">
     <!--  加载效果  -->
     <LoadingView :show="show"/>
     <!--  导航栏  -->
@@ -23,13 +23,13 @@
     <!--  导航栏底下的星期条  -->
     <van-row class="week-bar">
       <van-col span="3"><p class="time">{{ curWeek }}周</p></van-col>
-      <van-col span="3"><p class="time" :class="{ active: activeDay[1] }">周一</p></van-col>
-      <van-col span="3"><p class="time" :class="{ active: activeDay[2] }">周二</p></van-col>
-      <van-col span="3"><p class="time" :class="{ active: activeDay[3] }">周三</p></van-col>
-      <van-col span="3"><p class="time" :class="{ active: activeDay[4] }">周四</p></van-col>
-      <van-col span="3"><p class="time" :class="{ active: activeDay[5] }">周五</p></van-col>
-      <van-col span="3"><p class="time" :class="{ active: activeDay[6] }">周六</p></van-col>
-      <van-col span="3"><p class="time" :class="{ active: activeDay[0] }">周日</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[1] }">一</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[2] }">二</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[3] }">三</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[4] }">四</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[5] }">五</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[6] }">六</p></van-col>
+      <van-col span="3"><p class="time" :class="{ active: activeDay[0] }">日</p></van-col>
     </van-row>
 
     <van-row>
@@ -55,11 +55,12 @@
                   <p class="num">12</p>
                 </div>
               </div>
-              <div style="max-height: 100%; width: 87.5vw;">
+              <div style="max-height: 100%; width: 85.75vw; margin-left: 1%">
                 <!--  渲染课表   -->
                 <lesson
                     v-for="l in lessons"
                     :course_name="l.jw_course_name"
+                    :acg-mode="acgMode"
                     :base_room_name="l.base_room_name"
                     :week="l.week"
                     :key="l.jw_task_book_no"
@@ -68,7 +69,8 @@
                     :start="l.section_start"
                     :end="l.section_end"
                     :course_code="l.jw_course_code"
-                    :style='{ "top": computeTop(l.section_start), "left": computeLeft(l.week_day), "background-color": randomColor(l.section_start + l.week_day)}'>
+                    :blur="lessonBlur"
+                >
                 </lesson>
               </div>
             </van-row>
@@ -93,6 +95,21 @@ export default {
     lesson
   },
   mounted() {
+    let grid1 = this.$refs.grid1;
+    const opacity = 0.7;
+    this.acgMode = localStorage.getItem('ACG_MODE') === 'true';
+    if (this.acgMode && grid1.offsetWidth > 0) {
+      let custBg = localStorage.getItem('customBg');
+      if (custBg !== "" && custBg != null) {
+        grid1.style.cssText = `background-image: url("${custBg}");`
+      } else {
+        let bgUrl = localStorage.getItem("ramdonBg");
+        grid1.style.cssText = `background-image: url("${bgUrl}");`;
+      }
+      document.querySelector(".week-bar").style.cssText += `background-color: rgba(255, 255, 255, ${opacity});`
+      document.documentElement.style.setProperty("--van-pagination-background", "none");
+      document.documentElement.style.setProperty("--van-pagination-item-disabled-background", "none");
+    }
     // 删掉边框
     let items = document.getElementsByTagName("ul");
     for (const item of items) {
@@ -122,7 +139,9 @@ export default {
       show: false,
       local: false,
       activeDay: [false, false, false, false, false, false, false],
-      initial: 0
+      initial: 0,
+      acgMode: false,
+      lessonBlur: localStorage.getItem('lessonBlur') === 'true'
     }
   },
   computed: {
@@ -234,20 +253,6 @@ export default {
       this.activeDay[weekday] = true;
     },
 
-    // 计算课程方块的位置
-    computeTop: function (num) {
-      return ((num - 1) * 8.3).toString() + "%";
-    },
-    computeLeft: function (num) {
-      return ((num - 1) * 14.2857).toString() + "%";
-    },
-
-    // 随机课程方块的颜色
-    randomColor: function (num) {
-      const colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#795548", "#607d8b"];
-      return colors[num % colors.length];
-    },
-
     validateLocalCache: function () {
       let normStamp = localStorage.getItem("normStamp");
       let expStamp = localStorage.getItem("expStamp");
@@ -274,11 +279,14 @@ export default {
   width: 100%;
   height: 100%;
   max-height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .week-bar {
   height: 4.5vh;
-  padding: 1%;
+  padding: 1vw;
   top: 0;
   background-color: white;
   //box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);

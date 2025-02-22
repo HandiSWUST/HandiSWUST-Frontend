@@ -35,6 +35,7 @@
 <script>
 import PwdLoginPanel from "@/components/PwdLoginPanel.vue";
 import PhoneLoginPanel from "@/components/PhoneLoginPanel.vue";
+import {setAcgTheme} from "@/js/ThemeUtils";
 
 export default {
   name: "loginPanel",
@@ -46,7 +47,7 @@ export default {
     }
   },
   mounted() {
-    // this.getPwd();
+    setAcgTheme(document.querySelector("#login"));
   },
   methods: {
     login: function () {

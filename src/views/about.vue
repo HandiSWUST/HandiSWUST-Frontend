@@ -50,12 +50,19 @@
         <p>群里面反馈一下，部分账号确实存在这个问题</p>
       </van-collapse-item>
       <van-collapse-item title="SWUST 二次元最速传说と绝凶の猛虎！">
-        <van-switch v-model="status" @update:model-value="recordInfo"/>
+        <div style="align-items: center; display: flex; justify-content: space-between">
+          <div style="margin-right: 10px; color: #1c1c1e">ACG模式</div>
+          <van-switch v-model="status" @update:model-value="recordInfo"/>
+        </div>
+        <div style="align-items: center; display: flex; margin-top: 10px; margin-bottom: 10px; justify-content: space-between">
+          <div style="margin-right: 10px; color: #1c1c1e">课程表方块高斯模糊 (性能开销大)</div>
+          <van-switch v-model="lessonBlur" @update:model-value="blurInfo"/>
+        </div>
         <van-field
             placeholder="自定义背景URL (https://...)，留空不使用"
             v-model="customBg"
             clearable
-            style="padding: 0; background: transparent"
+            style="padding: 5px; border-radius: 8px;"
             v-if="status"
         >
           <template #button>
@@ -72,6 +79,7 @@
 import {UPDATE_LOG, OPEN_SOURCE, PRIVACY_POLICY} from "@/common/doc";
 import {showConfirmDialog, showLoadingToast, showSuccessToast} from "vant";
 import {deleteLocalCourse} from "@/api/getCourse";
+import {setAcgTheme} from "@/js/ThemeUtils";
 
 export default {
   name: "aboutUs",
@@ -82,11 +90,13 @@ export default {
       updateLog: UPDATE_LOG,
       privacy: PRIVACY_POLICY,
       status: localStorage.getItem('ACG_MODE') === 'true',
-      customBg: ""
+      customBg: "",
+      lessonBlur: localStorage.getItem('lessonBlur') === 'true'
     }
   },
   mounted() {
     this.customBg = localStorage.getItem('customBg') || '';
+    setAcgTheme(document.querySelector("#about"));
   },
   methods: {
     goBack: function () {
@@ -120,6 +130,17 @@ export default {
         localStorage.setItem('ACG_MODE', data)
       } else {
         localStorage.setItem('ACG_MODE', 'false')
+      }
+    },
+    blurInfo: async function (status) {
+      if (status) {
+        const data = await showConfirmDialog({
+          title: '警告',
+          message: '打开课程方块高斯模糊可能导致卡顿掉帧，是否继续？',
+        }).then(() => 'true').catch(() => 'false')
+        localStorage.setItem('lessonBlur', data)
+      } else {
+        localStorage.setItem('lessonBlur', 'false')
       }
     },
     setBg: function () {

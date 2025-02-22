@@ -1,11 +1,11 @@
 <template>
-  <div class="lesson" @click="floatWindow">
+  <div class="lesson" @click="floatWindow" ref="lessonRoot">
     <p class="txt">{{ course_name }}</p>
     <p class="txt2">{{ "@" + base_room_name }}</p>
     <van-popup
         v-model:show="show"
         position="bottom"
-        :style="{ height: '45%' }"
+        :style="{ height: '45%', backdropFilter: 'blur(2px)' }"
         closeable
         round
         teleport="#app"
@@ -44,15 +44,39 @@
 <script>
 export default {
   name: "lesson",
-  props: ["course_name", "base_room_name", "week", "teacher", "week_day", "start", "end", "course_code"],
+  props: ["course_name", "base_room_name", "week", "teacher", "week_day", "start", "end", "course_code", "acgMode", "blur"],
+  mounted() {
+    let style = this.$refs.lessonRoot.style;
+    style.cssText += `top: ${this.computeTop(this.start)}; left: ${this.computeLeft(this.week_day)}; background-color: ${this.randomColor(this.start + this.week_day)}`;
+  },
   data() {
     return {
       show: false,
+      colors: ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#795548", "#607d8b"]
     }
   },
   methods: {
     floatWindow: function () {
       this.show = !this.show;
+    },
+    // 计算课程方块的位置
+    computeTop: function (num) {
+      return ((num - 1) * 8.3).toString() + "%";
+    },
+    computeLeft: function (num) {
+      return ((num - 1) * 14.2857).toString() + "%";
+    },
+
+    // 随机课程方块的颜色
+    randomColor: function (num) {
+      let color = this.colors[num % this.colors.length];
+      if (this.acgMode) {
+        color = color + Math.floor(0.7 * 255).toString(16);
+        if (this.blur) {
+          this.$nextTick(() => this.$refs.lessonRoot.style.cssText += "backdrop-filter: blur(2px); transform: translateZ(0);");
+        }
+      }
+      return color;
     }
   }
 }
@@ -62,13 +86,11 @@ export default {
 .lesson {
   position: absolute;
   padding: 1% 0.3%;
-  height: 15.6%;
+  height: 16.1%;
   background-color: #588505;
-  width: 12.5717%;
-  border-radius: 10px;
-  margin-right: 0.857%;
-  margin-left: 0.857%;
-  margin-top: 1%;
+  width: 11.75vw;
+  border-radius: 8px;
+  margin-top: 0.5%;
 }
 
 .txt {
