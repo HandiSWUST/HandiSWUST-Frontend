@@ -71,7 +71,7 @@
                          icon="/plugins/duifene.svg"/>
               <AppButton text="对分易小帮手" title="对分易小帮手" sty src="https://dfe.ivresse.top/"
                          icon="/plugins/dfe-help.svg"/>
-              <AppButton text="新生指南" title="新生指南" src="https://xszn.gyrs.online/" icon="/plugins/guide.svg"/>
+              <AppButton text="新生指南" title="新生指南" src="http://xszn.qfcdn.icu/" icon="/plugins/guide.svg"/>
               <AppButton text="一卡通服务" title="" @click="gotoYKT" :placeholder="true" icon="/plugins/ykt.svg"/>
             </AppCard>
             <AppCard category="语言大模型">
@@ -271,7 +271,6 @@ export default {
   display: flex;
   flex-flow: column;
   position: relative;
-  background-color: #f2f2f2;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -289,11 +288,6 @@ export default {
 #notice {
   background: rgb(236, 249, 255);
   color: rgb(25, 137, 250)
-}
-
-#grid1 {
-  background: rgba(255, 255, 255, 0.2);
-  //backdrop-filter: blur(2px);
 }
 
 #mask {
