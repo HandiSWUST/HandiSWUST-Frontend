@@ -13,6 +13,7 @@
 
 <script>
 import LoadingView from "@/components/LoadingView.vue";
+import {showDialog} from "vant"
 
 export default {
     name: "PluginFramework",
@@ -21,7 +22,16 @@ export default {
     mounted() {
         this.$refs.iframe.onload = () => {
             this.loading = false;
-        }
+            if (this.title === "雨云") {
+              showDialog({
+                message:
+                    '建议复制以下链接到浏览器打开\n' +
+                    '\nhttps://www.rainyun.com/aiyuyun_',
+                confirmButtonColor: "#1989fa",
+                confirmButtonText: "OK"
+              })
+            }
+        };
     },
     data() {
         return {

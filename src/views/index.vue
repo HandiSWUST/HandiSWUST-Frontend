@@ -60,6 +60,11 @@
                 <index-button @click="$router.push('/exam')" image="/exam.svg" text="考试"/>
               </index-grid>
             </van-col>
+
+            <van-divider style="color: #1989fa; border-color: #1989fa; padding: 0 16px;"
+              @click="gotoRainyun"
+            >
+              由 ☁ 雨云提供云计算服务</van-divider>
           </div>
         </van-swipe-item>
 
@@ -82,6 +87,10 @@
               <AppButton text="RISC-V仿真框架" title="RISC-V仿真框架" src="https://blkrv.moeyuki.net/"
                          icon="/plugins/os.svg"/>
               <AppButton text="西科通" title="西科通" src="https://swust.link.yudream.online/" icon="/plugins/xkt.png"/>
+            </AppCard>
+            <AppCard category="掌西在用の服务器">
+              <AppButton text="雨云" title="雨云" src="https://www.rainyun.com/aiyuyun_"
+                         icon="/plugins/rainyun.png"/>
             </AppCard>
           </div>
         </van-swipe-item>
@@ -248,6 +257,9 @@ export default {
     },
     changePage: function (index) {
       this.$refs.swipe.swipeTo(index);
+    },
+    gotoRainyun() {
+      this.$router.push("/plugin/" + encodeURIComponent("https://www.rainyun.com/aiyuyun_") + "/" + "雨云");
     }
   },
 }
