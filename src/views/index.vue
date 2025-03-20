@@ -61,7 +61,7 @@
               </index-grid>
             </van-col>
 
-            <van-divider style="color: #1989fa; border-color: #1989fa; padding: 0 16px;"
+            <van-divider style="color: #1989fa; border-color: #1989fa; padding: 0 5%"
               @click="gotoRainyun"
             >
               由 ☁ 雨云提供云计算服务</van-divider>
