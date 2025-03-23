@@ -24,7 +24,7 @@
         />
       </div>
 
-      <van-swipe :show-indicators="false" @drag-end="updateIdx" ref="swipe">
+      <van-swipe :show-indicators="false" @drag-end="updateIdx" ref="swipe" style="overflow-y: auto">
         <!--  主页  -->
         <van-swipe-item>
           <div class="page blurred-theme">
