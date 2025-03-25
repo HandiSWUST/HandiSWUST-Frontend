@@ -59,6 +59,7 @@ export default {
       }
     },
     finish() {
+      localStorage.setItem("isLogin", "true");
       this.show = false;
     }
   }

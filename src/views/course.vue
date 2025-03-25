@@ -9,6 +9,12 @@
         left-text="返回"
         left-arrow
         @click-left="goBack">
+      <template #title>
+        <div id="refresh" @click="refreshCourse">
+          <div>课程表</div>
+          <van-icon name="replay" />
+        </div>
+      </template>
       <template #right>
         <van-pagination v-model="week" :page-count="totalWeek" mode="simple" id="pagination">
           <template #prev-text>
@@ -83,10 +89,11 @@
 
 <script>
 import {START_TIME, TOTAL_WEEK} from "/src/common/final.js"
-import {showFailToast} from "vant";
+import {showFailToast, showSuccessToast} from "vant";
 import lesson from "../components/class.vue"
 import LoadingView from "@/components/LoadingView.vue";
 import simpleSelectWeek, {refreshExpCourse, refreshNormalCourse} from "@/js/CourseUtils";
+import {checkLogin} from "@/api/loginCheck";
 
 export default {
   name: "courseTable",
@@ -121,8 +128,8 @@ export default {
     }
     // 缓存验证
     this.validateLocalCache();
-    refreshExpCourse();
-    refreshNormalCourse();
+    // refreshExpCourse();
+    // refreshNormalCourse();
     this.setActiveDay();
     this.get();
     this.week = this.curWeek;
@@ -181,19 +188,19 @@ export default {
         localStorage.setItem("lessons", "[]");
       } else {
         localStorage.setItem("cur", this.curWeek.toString());
-        this.getRound(this.curWeek);
+        this.getRound(this.curWeek, true);
         localStorage.setItem("lessons", JSON.stringify(this.lessonsList[this.curWeek]));
       }
     },
     // 获取所选周前后一周的课程
-    getRound: function (index) {
+    getRound: function (index, force=false) {
       let setCourse = () => {
         let expStr = localStorage.getItem("exp");
         let normStr = localStorage.getItem("norm");
         let exp = (expStr == null ? [] : JSON.parse(expStr));
         let norm = (normStr == null ? [] : JSON.parse(normStr));
         const fillCourse = async (w) => {
-          if (this.lessonsList[w].length === 0) {
+          if (force || this.lessonsList[w].length === 0) {
             this.lessonsList[w] = simpleSelectWeek(w, exp.concat(norm));
           }
         }
@@ -252,7 +259,6 @@ export default {
       this.activeDay = [false, false, false, false, false, false, false];
       this.activeDay[weekday] = true;
     },
-
     validateLocalCache: function () {
       let normStamp = localStorage.getItem("normStamp");
       let expStamp = localStorage.getItem("expStamp");
@@ -268,6 +274,22 @@ export default {
         localStorage.removeItem("exp");
       }
     },
+    refreshCourse: async function () {
+      let resp = await checkLogin()
+      if (resp.data.code === 3401) {
+        showFailToast("登录状态失效, 请登录后重试");
+        this.$router.push('/login');
+      } else {
+        this.show = true;
+        refreshExpCourse(() => {
+          refreshNormalCourse(() => {
+            this.get();
+            this.show = false;
+            showSuccessToast("更新成功");
+          });
+        });
+      }
+    }
   }
 }
 </script>
@@ -289,7 +311,6 @@ export default {
   padding: 1vw;
   top: 0;
   background-color: white;
-  //box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 2px 6px 0 rgba(0, 0, 0, 0.05);
   border: 0 solid var(--van-border-color);
   border-bottom-width: 0.5px;
 }
@@ -327,5 +348,10 @@ export default {
   border-radius: 20px;
   overflow: hidden;
   border: 0.5px solid var(--van-border-color);
+}
+
+#refresh {
+  display: flex;
+  align-items: baseline;
 }
 </style>

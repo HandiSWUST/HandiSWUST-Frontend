@@ -106,7 +106,7 @@
         <van-tabbar-item icon="logistics"></van-tabbar-item>
       </van-tabbar>
       <!--  提前加载课程表  -->
-      <course-table v-if="isLogin" style="display: none"/>
+<!--      <course-table v-if="isLogin" style="display: none"/>-->
     </div>
   </div>
 </template>
@@ -154,7 +154,8 @@ export default {
     // 更新检查
     this.updateCheck();
     // 登录检查
-    this.loginCheck();
+    // this.loginCheck();
+    this.isLogin = localStorage.getItem("isLogin") === "true";
     // 0点后提示
     if (new Date().getHours() >= 0 && new Date().getHours() <= 6) {
       showNotify({type: 'primary', message: '每晚0:00一站式认证接口维护'});
@@ -240,6 +241,7 @@ export default {
           location.reload();
         })
       else showToast("未登录");
+      localStorage.setItem("isLogin", "false");
     },
     // 下载App按钮跳转
     downApp: function () {
