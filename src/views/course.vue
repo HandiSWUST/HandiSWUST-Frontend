@@ -275,18 +275,30 @@ export default {
       }
     },
     refreshCourse: async function () {
+      this.show = true;
       let resp = await checkLogin()
       if (resp.data.code === 3401) {
         showFailToast("登录状态失效, 请登录后重试");
         this.$router.push('/login');
       } else {
-        this.show = true;
-        refreshExpCourse(() => {
-          refreshNormalCourse(() => {
-            this.get();
-            this.show = false;
-            showSuccessToast("更新成功");
-          });
+        refreshExpCourse((response) => {
+          if (response.status !== 200) {
+            showFailToast("后端服务器错误");
+          } else if (response.data.code !== 0) {
+            this.handleErrorCode(response.data.code, "实验课表")
+          } else {
+            refreshNormalCourse(() => {
+              if (response.status !== 200) {
+                showFailToast("后端服务器错误");
+              } else if (response.data.code !== 0) {
+                this.handleErrorCode(response.data.code, "普通课表")
+              } else {
+                this.get();
+                showSuccessToast("更新成功");
+              }
+              this.show = false;
+            });
+          }
         });
       }
     }
