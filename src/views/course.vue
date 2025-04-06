@@ -128,8 +128,8 @@ export default {
     }
     // 缓存验证
     this.validateLocalCache();
-    // refreshExpCourse();
-    // refreshNormalCourse();
+    refreshExpCourse();
+    refreshNormalCourse();
     this.setActiveDay();
     this.get();
     this.week = this.curWeek;
