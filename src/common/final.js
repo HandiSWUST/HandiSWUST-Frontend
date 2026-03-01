@@ -1,5 +1,5 @@
 // 记得用斜杠，否则IOS会不正常
-export const START_TIME = new Date("2025/9/1").getTime();
+export const START_TIME = new Date("2026/3/2").getTime();
 // export const END_TIME = new Date("2026/1/14").getTime();
 export const TOTAL_WEEK = 20;
 export const BASE_URL = "";
